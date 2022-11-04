@@ -1,0 +1,72 @@
+.reset
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+#header { border-bottom: black solid 3px;} /* Có thể không cần tới */
+
+#top_menu
+{
+    background: linear-gradient(black, gray);
+    font-size: 25px;
+}
+.menu
+{
+    float: left;
+
+    color: white;
+    background: transparent;
+    border: none;
+    font-size: inherit;
+    
+    margin: 10px 20px;
+}
+    button.menu:hover
+    {
+        color: yellow;
+    }
+
+#textbox
+{
+    box-sizing: border-box;
+
+    border: white solid 2px;
+    border-radius: 5px;
+    background: transparent;
+    font-size:20px;
+    color: white;
+    
+    margin: 8px;
+    margin-right: 20px;
+    padding: 2.5px 5px;
+    
+
+    float: right;
+}
+    input#textbox:focus 
+    {
+        outline-style: none;
+        border: yellow solid 2px;
+
+    }
+
+#main_menu
+{
+    background: linear-gradient(grey, white);
+}
+
+.logo /* có thể thay đổi */
+{
+    display: block;
+    border: purple solid 2px;
+    width: fit-content;
+    color: red;
+    font-size: 50px
+}
+
+#footer
+{
+    background: linear-gradient(white, black);
+    
+}
