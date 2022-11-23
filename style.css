@@ -1,3 +1,9 @@
+*{
+	padding: 0;
+	margin: 0;
+	font-family: 'Exo 2', sans-serif;
+}
+
 .reset
 {
     margin: 0px;
@@ -221,3 +227,320 @@
     background: linear-gradient(white, black);
     
 }
+
+/* Nội dung */
+.container {
+	background-color: white;
+	margin: 0 auto;
+}
+
+/* Thanh menu*/
+.tab-menu {
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	background-color: #000000;
+	padding: 0;
+
+}
+
+/* Sắp xếp vị trí + deco */
+.tab-menu div{
+	align-content: center;
+	margin-right: 10px;
+	list-style: none;
+	float: left;
+	line-height: 50px;
+}
+
+.tab-menu li{
+	align-content: center;
+	margin-right: 10px;
+	list-style: none;
+	float: left;
+	line-height: 50px;
+}
+
+.tab-menu div a{
+	display: block;
+	padding: 0px 15px;
+	color: #FFFFFF;
+	font-size: 16px;
+	text-decoration: none;
+	position: relative;
+}
+
+/* Hiệu ứng link tab */
+.tab-item div a:after {
+	content: "";
+	height: 13%;
+	width: 0%;
+	background: #FF3200;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	transition: all 0.3s ease-in-out;
+}
+
+.tab-item a:hover:after {
+	width: 100%;
+	transform: matrix(100%);
+}
+
+/* Hiệu ứng cho vị trí tab đang ở */
+div.tab-item.active a {
+	background: #FF2600;
+}
+
+/* Khung tìm kiếm */
+nav div.tab-menu li input {
+	font-size: 16px;
+	text-decoration: none;
+	border-radius: 5px;
+	border: 3px solid #FFFFFF;
+	width: 90%;
+	
+}
+
+/* Icon kính lúp */
+nav div.tab-menu li i {
+	position: absolute;
+	font-size: 20px;
+	color: #FFFFFF;
+	line-height: 50px;
+	cursor: pointer;
+	padding-left: 10px;
+	background-color: transparent;
+	height: 50px;
+	width: 20px;
+}
+
+/* Nội dung */
+.all-content {
+	width: 100%;
+	height: auto;
+	border: 5px;
+}
+
+.content {
+	display: none;
+}
+
+.content.active {
+	display: block;
+}
+
+/* Banner slideshow */
+.slider {
+	position: relative;
+	width: 100%;
+	height: 600px;
+	overflow: hidden;
+}
+
+.slider .slide {
+	position: absolute;
+	width: 100%;
+	height: auto;
+	opacity: 0;
+}
+
+/* Slide hoạt động */
+.slider .slide.active {
+	opacity: 1;
+	transition: 1s ease;
+}
+
+/* Ảnh banner */
+.slide img {
+	position: absolute;
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+}
+
+/* Phím trái phải */
+.left-right {
+	height: 600px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+	
+}
+
+/* Hiện thị phím trái phải */
+.slider:hover .left-right {
+	opacity: 1;
+}
+
+/* Vị trí phím trái phải */
+.prev, .next {
+	z-index: 100;
+	font-size: 20px;
+	background: #FF0054;
+	color: #000000;
+	padding: 10px;
+	cursor: pointer;
+}
+
+/* Trang trí riêng: phím trái */
+.prev {
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+/* Trang trí riêng: phím phải */
+.next {
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+/* Đánh dấu vị trí banner */
+.slide-mark {
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+}
+
+.slide-mark .slide-icon {
+	z-index: 100;
+	border: 2px solid #00EFFF;
+	width: 20px;
+	height: 10px;
+	margin: -60px 6px 0px 6px;
+	border-radius: 2px;
+}
+
+/* Vị trí hoạt động */
+.slide-mark .slide-icon.active{
+	background: #FFFFFF;
+}
+
+/* Thông tin shop */
+div.information {
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	justify-content: center;
+	margin: 0 10px;
+}
+
+/* Căn chỉnh vị trí thông tin */
+div.information li{
+	flex-basis: 27%;
+	display: block;
+	margin: 30px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+/* Khung thông tin */
+div.information li div.info {
+	overflow: hidden;
+}
+
+/* Trang trí icon thông tin */
+.info i {
+	align-items: center;
+	font-size: 30px;
+	background: #FF003A;
+	color: white;
+	padding: 15px;
+	border-radius: 100px;
+	transform: translateX(250%);
+	margin-top: 5px;
+}
+
+/* Trang trí tiêu đề thông tin */
+.info h1{
+	text-align: center;
+	color: #FF0004;
+}
+
+/* Giới thiệu */
+.gioiThieu {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+img.gioiThieu {
+    margin-top: 5px;
+    margin-bottom: 5px;
+	justify-content: center;
+	width: 70%;
+	height: auto;
+}
+
+img.gioiThieu-logo {
+    margin-top: 5px;
+    margin-bottom: 5px;
+	justify-content: center;
+	width: 30%;
+	height: auto;
+}
+
+h2 {
+	color: #FF0004;
+	text-align: center;
+	font-size: 40px;
+}
+
+/* Khung sản phẩm */
+div.product {
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	justify-content: flex-start;
+}
+
+/* Căn chỉnh vị trí sản phẩm */
+div.product li{
+	flex-basis: 30%;
+	display: block;
+	margin: 15px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+/* Thiết kế khung sản phẩm */
+div.product li div.product-item {
+	border-radius: 20px;
+	overflow: hidden;
+	box-shadow: 0px 0px 13px -1px;
+}
+
+/* Ảnh sản phẩm */
+div.product li img {
+	width: 100%;
+	height: auto;
+	left: 1px;
+}
+
+/* Tên sản phẩm */
+div.product li div.product-info a {
+	text-decoration: none;
+	color: #FF0067;
+}
+
+/* Màu chữ "SIZE" */
+div.product li div.product-info div.product-size {
+	color: #868686;
+}
+
+/* Thiết kế khung giá tiền */
+div.product li div.product-info div.product-price {
+	background-color: #FF0000;
+	padding: 5px;
+	color: white;
+}
+
+/* Hiệu ứng khung sản phẩm */
+div.product li div.product-item:hover {
+	transform: scale(1.05);
+	overflow: hidden;
+	transition: all 0.3s ease-in-out;
+}
+	
