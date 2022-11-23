@@ -1,472 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/style.css">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/assets/css/style.css">
 	<script src="https://kit.fontawesome.com/1381aa78a9.js" crossorigin="anonymous"></script>
-    <title>SneakerShop</title>
+	<title>SneakerShop</title>
+	<link rel="icon" type="image/x-icon" href="/assets/img/GioiThieu/logo.png">
 </head>
-<body class = "reset">
+
+<body class="reset">
 	<!--	 Font chữ		 -->
 	<style>
-	@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700&display=swap');
 	</style>
 	<!--	 End---Font chữ---		 -->
-    <div id="warper">
-        <div id="sign_up">
-            <div class="form">
-                <button class = "exit reset top_left">X</button>
-                <form action="do_an.html" method="get" id = "sign_up_form" name = "sign_up">
-                    
-                    <label for="email" class = "label_form">Email</label>
-                    <input type = "email" id = "email" name = "email" class = "reset input_form" required placeholder="vidu@gmail">
+	<div id="warper">
+		<div id="sign_up">
+			<div class="form">
+				<button class="exit reset top_left">X</button>
+				<form action="do_an.html" method="get" id="sign_up_form" name="sign_up">
 
-                    <label for= "sdt" class = "label_form">Số điện thoại</label>
-                    <input type = "tel" pattern="[0-9]{10}" id = "sdt" name = "sdt" class = "reset input_form" required placeholder="0123456789">
+					<label for="email" class="label_form">Email</label>
+					<input type="email" id="email" name="email" class="reset input_form" required
+						placeholder="vidu@gmail">
 
-                    <label for="password_1" class = "label_form">Mật khẩu</label>
-                    <div class="see_hide_pass">
-                        <input type = "password" id = "password_1" name = "password_1" class = "reset input_form password" required placeholder="Mật khẩu dễ nhớ">
-                        <button type = "button" class = "reset place"></button>
-                        <i class="reset slash"></i>
-                    </div>
+					<label for="sdt" class="label_form">Số điện thoại</label>
+					<input type="tel" pattern="[0-9]{10}" id="sdt" name="sdt" class="reset input_form" required
+						placeholder="0123456789">
 
-                    <label for = "password_2" class = "label_form">Nhập lại mật khẩu</label>
-                    <div class="see_hide_pass">
-                        <input type = "password" id = "password_2" name = "password_2" class = "reset input_form password" required placeholder="Lập lại mật khẩu">
-                        <button type = "button" class = "reset place"></button>
-                        <i class="reset slash"></i>
-                    </div>
-                    <button type = "button" class = "exit big reset">Thoát</button>    
-                    <button type = "submit" class = "OK reset" >OK</button>      
-                </form>  
-            </div>
-        </div>
-        <!-- 5  -->
-        <div id="sign_in">
-            <div class="form">
-                <button class="exit reset top_left">X</button>
-                <form action="do_an.html" id="sign_in_form">
-                    <label for= "sdt" class = "label_form">Số điện thoại hay gmail</label>
-                    <input type = "text" name = "input" class = "reset input_form" required placeholder="0123456789 hay vidu@gmail.com">
-                    <label for="password_3" class = "label_form">Mật khẩu</label>
-                    <div class="see_hide_pass">
-                        <input type = "password" id = "password_3" name = "password_3" class = "reset input_form password" required placeholder="Mật khẩu dễ nhớ">
-                        <button type = "button" class = "reset place"></button>
-                        <i class="reset slash"></i>
-                    </div>
-                    <button type = "button" class = "exit big reset">Thoát</button>    
-                    <button type = "submit" class = "OK reset" >OK</button>
-                </form>
-            </div>
-        </div>
+					<label for="password_1" class="label_form">Mật khẩu</label>
+					<div class="see_hide_pass">
+						<input type="password" id="password_1" name="password_1" class="reset input_form password"
+							required placeholder="Mật khẩu dễ nhớ">
+						<button type="button" class="reset place"></button>
+						<i class="reset slash"></i>
+					</div>
 
-        <div id="header">
-            <div id="top_menu">
-                <button class = "menu reset" id = "Dang_ky">Đăng ký</button>
-                <button class = "menu reset" id = "Dang_nhap">Đăng nhập</button>
-                <button class = "menu reset">Hotline</button> 
-                <button class = "menu reset">Giỏ hàng</button>
-                <!-- <div class = "reset" id = "search_bar">
-                    <input type="text" class = "reset" id = "textbox">
-                    <input type="submit" class = "reset" id = "search_icon">
-                </div> -->
-
-                <div style = "clear: both;"></div>
-            </div>
-            <div id="main_menu">
-                <p class = "reset logo">Cái logo</p><!-- Có thể thay đổi -->
-                <!-- để các navigation ở đây  -->
-
-            </div>
-        </div>
-        <!-- nội dung trang mạng nằm ở đây -->
-
-
-
-        <div class = "container">
-          <!--	 Tab menu		 -->
-		<nav>
-			<div class="tab-menu">
-				<div class="tab-item active">
-					<div><a href="#" id="Trangchu" onclick="hienThi(this);">Trang chủ</a></div>
-				</div>
-				<div class="tab-item">
-					<div><a href="#Adi" id="Adidas" onclick="hienThi(this);">Adidas</a></div>
-				</div>
-				<div class="tab-item">
-					<div><a href="#Nik" id="Nike" onclick="hienThi(this);">Nike</a></div>
-				</div>
-				<div class="tab-item">
-					<div><a href="#Pum" id="Puma" onclick="hienThi(this);">Puma</a></div>
-				</div>
-				<div class="tab-item">
-					<div><a href="#Con" id="Converse" onclick="hienThi(this);">Converse</a></div>
-				</div>
-				<div class="tab-item">
-					<div><a href="#Van" id="Vans" onclick="hienThi(this);">Vans</a></div>
-				</div>
-				<div class="tab-item">
-					<div><a href="#LH" id="Lienhe" onclick="hienThi(this);">Liên hệ</a></div>
-				</div>
-				<li><input type="search" placeholder="Search..."><i class="fa-solid fa-magnifying-glass"></i></li>
+					<label for="password_2" class="label_form">Nhập lại mật khẩu</label>
+					<div class="see_hide_pass">
+						<input type="password" id="password_2" name="password_2" class="reset input_form password"
+							required placeholder="Lập lại mật khẩu">
+						<button type="button" class="reset place"></button>
+						<i class="reset slash"></i>
+					</div>
+					<button type="button" class="exit big reset">Thoát</button>
+					<button type="submit" class="OK reset">OK</button>
+				</form>
 			</div>
-		</nav>
-	<!--	 End---Tab menu---End		 -->
-		
-	<!--	 Nội dung		 -->
-	<div class="all-content">
-		
-	<!--	 Trang chủ		 -->
-		<div class="content active">
-				<div class="slider">
-	<!--	 Banner		 -->
-					<div class="slide active">
-						<img src="/assets/img/Slider/Nike.png" alt="">
+		</div>
+		<!-- 5  -->
+		<div id="sign_in">
+			<div class="form">
+				<button class="exit reset top_left">X</button>
+				<form action="do_an.html" id="sign_in_form">
+					<label for="sdt" class="label_form">Số điện thoại hay gmail</label>
+					<input type="text" name="input" class="reset input_form" required
+						placeholder="0123456789 hay vidu@gmail.com">
+					<label for="password_3" class="label_form">Mật khẩu</label>
+					<div class="see_hide_pass">
+						<input type="password" id="password_3" name="password_3" class="reset input_form password"
+							required placeholder="Mật khẩu dễ nhớ">
+						<button type="button" class="reset place"></button>
+						<i class="reset slash"></i>
 					</div>
-					<div class="slide">
-						<img src="/assets/img/Slider/Adidas.png" alt="">
+					<button type="button" class="exit big reset">Thoát</button>
+					<button type="submit" class="OK reset">OK</button>
+				</form>
+			</div>
+		</div>
+
+		<div id="header">
+			<div id="top_menu">
+				<button class="menu reset" id="Dang_ky">Đăng ký</button>
+				<button class="menu reset" id="Dang_nhap">Đăng nhập</button>
+				<button class="menu reset">Hotline</button>
+				<button class="menu reset">Giỏ hàng</button>
+
+
+				<div style="clear: both;"></div>
+			</div>
+			<div id="main_menu">
+				<p class="reset logo">Cái logo</p><!-- Có thể thay đổi -->
+				<!-- để các navigation ở đây  -->
+
+			</div>
+		</div>
+		<!-- nội dung trang mạng nằm ở đây -->
+
+
+
+		<div class="container">
+			<!--	 Tab menu		 -->
+			<nav>
+				<div class="tab-menu">
+					<div class="tab-item active">
+						<div><a href="#" id="Trangchu" onclick="hienThi(this);">Trang chủ</a></div>
 					</div>
-	<!--	 End---Banner---End		 -->
-	<!--	 Phím trái phải		 -->
-					<div class="left-right">
-						<i class="fa-solid fa-chevron-left prev"></i>
-						<i class="fa-solid fa-chevron-right next"></i>
+					<div class="tab-item">
+						<div><a href="#Adi" id="Adidas" onclick="hienThi(this);">Adidas</a></div>
 					</div>
-	<!--	 End---Phím trái phải---End		 -->
-	<!--	 Vị trí trang banner		 -->
-					<div class="slide-mark">
-						<div class="slide-icon active"></div>
-						<div class="slide-icon"></div>
+					<div class="tab-item">
+						<div><a href="#Nik" id="Nike" onclick="hienThi(this);">Nike</a></div>
 					</div>
-	<!--	End--- Vị trí trang banner---End		 -->
+					<div class="tab-item">
+						<div><a href="#Pum" id="Puma" onclick="hienThi(this);">Puma</a></div>
+					</div>
+					<div class="tab-item">
+						<div><a href="#Con" id="Converse" onclick="hienThi(this);">Converse</a></div>
+					</div>
+					<div class="tab-item">
+						<div><a href="#Van" id="Vans" onclick="hienThi(this);">Vans</a></div>
+					</div>
+					<div class="tab-item">
+						<div><a href="#LH" id="Lienhe" onclick="hienThi(this);">Liên hệ</a></div>
+					</div>
+					<li><input type="search" placeholder="Search..."><i class="fa-solid fa-magnifying-glass"></i></li>
 				</div>
-				<div class="information">
-						<li>
-						<div class="info">
-							<i class="fa-solid fa-money-bill"></i>
-							<h1>Thanh toán</h1>
-							<p>Linh hoạt với nhiều cách thức giao dịch khác nhau.
-							</p>
+			</nav>
+			<!--	 End---Tab menu---End		 -->
+
+			<!--	 Nội dung		 -->
+			<div class="all-content">
+
+				<!--	 Trang chủ		 -->
+				<div class="content active">
+					<div class="slider">
+						<!--	 Banner		 -->
+						<div class="slide active">
+							<img src="/assets/img/Slider/Nike.png" alt="">
 						</div>
+						<div class="slide">
+							<img src="/assets/img/Slider/Adidas.png" alt="">
+						</div>
+						<!--	 End---Banner---End		 -->
+						<!--	 Phím trái phải		 -->
+						<div class="left-right">
+							<i class="fa-solid fa-chevron-left prev"></i>
+							<i class="fa-solid fa-chevron-right next"></i>
+						</div>
+						<!--	 End---Phím trái phải---End		 -->
+						<!--	 Vị trí trang banner		 -->
+						<div class="slide-mark">
+							<div class="slide-icon active"></div>
+							<div class="slide-icon"></div>
+						</div>
+						<!--	End--- Vị trí trang banner---End		 -->
+					</div>
+					<div class="information">
+						<li>
+							<div class="info">
+								<i class="fa-solid fa-money-bill"></i>
+								<h1>Thanh toán</h1>
+								<p>Linh hoạt với nhiều cách thức giao dịch khác nhau.
+								</p>
+							</div>
 						</li>
 						<li>
-						<div class="info">
-							<i class="fa-solid fa-truck-fast"></i>
-							<h1>Giao hàng</h1>
-							<p>Đóng gói kĩ càng, bảo quản tốt, giao hàng tận nơi với thời gian nhanh nhất có thể.
-							</p>
-						</div>
+							<div class="info">
+								<i class="fa-solid fa-truck-fast"></i>
+								<h1>Giao hàng</h1>
+								<p>Đóng gói kĩ càng, bảo quản tốt, giao hàng tận nơi với thời gian nhanh nhất có thể.
+								</p>
+							</div>
 						</li>
 						<li>
-						<div class="info">
-							<i class="fa-solid fa-hand-holding-hand"></i>
-							<h1>Bảo hành</h1>
-							<p>Đổi hàng, trả hàng khi nhận được hàng không mong muốn.
-							</p>
-						</div>
+							<div class="info">
+								<i class="fa-solid fa-hand-holding-hand"></i>
+								<h1>Bảo hành</h1>
+								<p>Đổi hàng, trả hàng khi nhận được hàng không mong muốn.
+								</p>
+							</div>
 						</li>
 					</div>
-		<div class="information">
-			<h2 class = "gioiThieu">BÁN GIÀY THỂ THAO SNEAKER CHÍNH HÃNG TẠI TPHCM - SneakerShop GIỚI THIỆU</h2>
-            <p class = "gioiThieu">  Nỗi sợ vì mua phải giày kém chất lượng, giày fake, từ nay không còn lo lắng nữa vì đã có #SneakerShop.VN: hàng chính hãng nhập trực tiếp từ US, fullbox, nguyên tem.</p>
-            <p class = "gioiThieu"><img class = "gioiThieu-logo" src="/assets/img/GioiThieu/logo.png" alt=""></p>
-			<h2 class = "gioiThieu">SneakerShop</h2>
-			<p>✓ 15 Ngày Đổi Hàng ✓ Giao Hàng Miễn Phí ✓ Thanh Toán Khi Nhận Hàng ✓ Bảo Hành Hàng Chính Hãng</p>
-            <p class = "gioiThieu">Đến với "SneakerShop.VN” quý khách hàng sẽ có những sản phẩm ưng ý nhất, chất lượng phục vụ tốt và giá thành tốt nhất, cùng những “ Chương Trình Khuyến Mãi Đặc Biệt”.</p>
-            <p class = "gioiThieu">Tìm được cửa hàng giày khiến mình an tâm rất khó luôn đó mọi người ơi. Hổng nói nổi vui như nào khi gặp được SneakerShop luôn á, 
-            Sản phẩm chất lượng mà các dịch vụ đi kèm hấp dẫn nữa. Dân mê giày làm sao cưỡng lại KINGSHOES đây!</p>
-            <img class = "gioiThieu" src="/assets/img/GioiThieu/1.jpg" alt="">
-            <p class = "gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
-            <img class = "gioiThieu" src="/assets/img/GioiThieu/2.Jpg" alt="">
-            <h2 class = "gioiThieu">  SneakerShop CHUẨN GIÀY REAL - DEAL SIÊU KHỦNG</h2>
-            <p class = "gioiThieu">  Cửa Hàng KING SHOES là một trong những nơi sưu tầm có khối lượng giày hiếm siêu khủng. Có những mẫu giày cực kì hype được giới sưu tầm săn lùng
-            , thậm chí bạn sẽ bắt gặp nhiều mẫu lạ mới mà hiếm shop nào có. Có những mẫu chỉ có độc nhất 1 đôi.
-            Ngoài ra những mẫu đang rất HOT trên thị trường sneaker về liên tục nên các bạn cứ yên tâm không sợ hết hàng.</p>
-           <img class = "gioiThieu" src="/assets/img/GioiThieu/3.Jpg" alt="">
-           <p class = "gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
-           <img class = "gioiThieu" src="/assets/img/GioiThieu/4.Jpg" alt="">
-           <p class = "gioiThieu">  Cửa Hàng Bán Giày Sneaker Adidas, Jordan Chính Hãng tại tp.HCM 100% Authentic nhập trực tiếp từ US, UK, JAPAN @ SneakerShop.VN nhiệm vụ mang hàng chính hãng đến tay người tiêu dùng Việt Nam !!! 192/2 Nguyễn Thái Bình, Phường 12, Quận Tân Bình, Thành phố Hồ Chí Minh. </p>
-		</div>
-	<!--		Code slider			-->
-		<script type="text/javascript">
-			const right = document.querySelector(".next");
-			const left = document.querySelector(".prev");
-			const slides = document.querySelectorAll(".slide");
-			const slideIcons = document.querySelectorAll(".slide-icon");
-			const numberOfSlides = slides.length;
-			var slideNumber = 0;
-			
-			//			Next			//
-			right.addEventListener("click", () => {
-				
-				slides.forEach((slide) => {
-					slide.classList.remove("active");
-				});
-				slideIcons.forEach((slideIcon) => {
-					slideIcon.classList.remove("active");
-				});
-				
-				slideNumber++;
-				
-				if(slideNumber > (numberOfSlides - 1)) {
-					slideNumber = 0;
-				}
-				slides[slideNumber].classList.add("active");
-				slideIcons[slideNumber].classList.add("active");
-			});
-			
-			//			Previous			//
-			left.addEventListener("click", () => {
-				
-				slides.forEach((slide) => {
-					slide.classList.remove("active");
-				});
-				slideIcons.forEach((slideIcon) => {
-					slideIcon.classList.remove("active");
-				});
-				
-				slideNumber--;
-				
-				if(slideNumber < 0) {
-        			slideNumber = numberOfSlides - 1;
-      			}
-				
-				slides[slideNumber].classList.add("active");
-				slideIcons[slideNumber].classList.add("active");
-			});
-		</script>
-	<!--		End---Code slider---			-->
-		</div>
-	<!--	 End-----Trang chủ-----End	 -->
-		
-	<!--	 Adidas		 -->
-		<div class="content" id="container">
-			<!--	 Sản phẩm		 -->
-			<div class="product">
-				
-			<!-- 	Sản phẩm 1 		-->
-				<li>
-					<div class="product-item">
-					<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt="" class="product-img">
-					<div class="product-info" align="center">
-						<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-						<div class="product-size">SIZE: 36</div>
-						<br>
-						<div class="product-price">Giá: 5.200.000 VNĐ</div>
+					<div class="information">
+						<h2 class="gioiThieu">BÁN GIÀY THỂ THAO SNEAKER CHÍNH HÃNG TẠI TPHCM - SneakerShop GIỚI THIỆU
+						</h2>
+						<p class="gioiThieu"> Nỗi sợ vì mua phải giày kém chất lượng, giày fake, từ nay không còn lo
+							lắng nữa vì đã có #SneakerShop.VN: hàng chính hãng nhập trực tiếp từ US, fullbox, nguyên
+							tem.</p>
+						<p class="gioiThieu"><img class="gioiThieu-logo" src="/assets/img/GioiThieu/logo.png" alt="">
+						</p>
+						<h2 class="gioiThieu">SneakerShop</h2>
+						<p>✓ 15 Ngày Đổi Hàng ✓ Giao Hàng Miễn Phí ✓ Thanh Toán Khi Nhận Hàng ✓ Bảo Hành Hàng Chính Hãng
+						</p>
+						<p class="gioiThieu">Đến với "SneakerShop.VN” quý khách hàng sẽ có những sản phẩm ưng ý nhất,
+							chất lượng phục vụ tốt và giá thành tốt nhất, cùng những “ Chương Trình Khuyến Mãi Đặc
+							Biệt”.</p>
+						<p class="gioiThieu">Tìm được cửa hàng giày khiến mình an tâm rất khó luôn đó mọi người ơi. Hổng
+							nói nổi vui như nào khi gặp được SneakerShop luôn á,
+							Sản phẩm chất lượng mà các dịch vụ đi kèm hấp dẫn nữa. Dân mê giày làm sao cưỡng lại
+							KINGSHOES đây!</p>
+						<img class="gioiThieu" src="/assets/img/GioiThieu/1.jpg" alt="">
+						<p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
+						<img class="gioiThieu" src="/assets/img/GioiThieu/2.Jpg" alt="">
+						<h2 class="gioiThieu"> SneakerShop CHUẨN GIÀY REAL - DEAL SIÊU KHỦNG</h2>
+						<p class="gioiThieu"> Cửa Hàng KING SHOES là một trong những nơi sưu tầm có khối lượng giày hiếm
+							siêu khủng. Có những mẫu giày cực kì hype được giới sưu tầm săn lùng
+							, thậm chí bạn sẽ bắt gặp nhiều mẫu lạ mới mà hiếm shop nào có. Có những mẫu chỉ có độc nhất
+							1 đôi.
+							Ngoài ra những mẫu đang rất HOT trên thị trường sneaker về liên tục nên các bạn cứ yên tâm
+							không sợ hết hàng.</p>
+						<img class="gioiThieu" src="/assets/img/GioiThieu/3.Jpg" alt="">
+						<p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
+						<img class="gioiThieu" src="/assets/img/GioiThieu/4.Jpg" alt="">
+						<p class="gioiThieu"> Cửa Hàng Bán Giày Sneaker Adidas, Jordan Chính Hãng tại tp.HCM 100%
+							Authentic nhập trực tiếp từ US, UK, JAPAN @ SneakerShop.VN nhiệm vụ mang hàng chính hãng đến
+							tay người tiêu dùng Việt Nam !!! 192/2 Nguyễn Thái Bình, Phường 12, Quận Tân Bình, Thành phố
+							Hồ Chí Minh. </p>
 					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 1---End		 -->
-				
-			<!-- 	Sản phẩm 2		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name" >Adidas Ultraboost GX5928 Women</a>
-						<div class="product-size">SIZE: 37</div>
-						<br>
-						<div class="product-price">Giá: 5.200.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 2---End		 -->
-				
-			<!-- 	Sản phẩm 3		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name" >Adidas Ultraboost GX5928 Women</a>
-						<div class="product-size">SIZE: 38</div>
-						<br>
-						<div class="product-price">Giá: 5.200.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 3---End		 -->
-				
-			<!-- 	Sản phẩm 4		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name" >Adidas Ultraboost GX5928 Women</a>
-						<div class="product-size">SIZE: 39</div>
-						<br>
-						<div class="product-price">Giá: 5.200.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 4---End		 -->
-				
-			<!--	 Sản phẩm 5		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name">Adidas Ultraboost FZ2558 Men</a>
-						<div class="product-size">SIZE: 38</div>
-						<br>
-						<div class="product-price">Giá: 5.000.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 5---End		 -->
-				
-			<!--	 Sản phẩm 6		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name">Unisex Adidas Ultraboost GY4173</a>
-						<div class="product-size">SIZE: 38</div>
-						<br>
-						<div class="product-price">Giá: 4.900.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 6---End		 -->
-			</div>
-			<!--	 End---Sản phẩm---End		 -->
-		</div>
-		<!--	 End---Adidas---End		 -->
-		
-		<!--	 Nike		 -->
-		<div class="content">
-			<!--	 Sản phẩm		 -->
-			<div class="product">
-				
-			<!-- 	Sản phẩm 1 		-->
-				<li>
-					<div class="product-item">
-					<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt="" class="product-img">
-					<div class="product-info" align="center">
-						<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-						<div class="product-size">SIZE: 36</div>
-						<br>
-						<div class="product-price">Giá: 5.200.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 1---End		 -->
-				
-			<!-- 	Sản phẩm 2		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name" >Adidas Ultraboost GX5928 Women</a>
-						<div class="product-size">SIZE: 37</div>
-						<br>
-						<div class="product-price">Giá: 5.200.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 2---End		 -->
-				
-			<!-- 	Sản phẩm 3		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name" >Adidas Ultraboost GX5928 Women</a>
-						<div class="product-size">SIZE: 38</div>
-						<br>
-						<div class="product-price">Giá: 5.200.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 3---End		 -->
-				
-			<!-- 	Sản phẩm 4		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name" >Adidas Ultraboost GX5928 Women</a>
-						<div class="product-size">SIZE: 39</div>
-						<br>
-						<div class="product-price">Giá: 5.200.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 4---End		 -->
-				
-			<!--	 Sản phẩm 5		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name">Adidas Ultraboost FZ2558 Men</a>
-						<div class="product-size">SIZE: 38</div>
-						<br>
-						<div class="product-price">Giá: 5.000.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 5---End		 -->
-				
-			<!--	 Sản phẩm 6		 -->
-				<li>
-					<div class="product-item">
-					<div>
-						<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt="" class="product-img">
-					</div>
-					<div class="product-info" align="center">
-						<a href="" class="product-name">Unisex Adidas Ultraboost GY4173</a>
-						<div class="product-size">SIZE: 38</div>
-						<br>
-						<div class="product-price">Giá: 4.900.000 VNĐ</div>
-					</div>
-					</div>
-				</li>
-			<!--	 End---Sản phẩm 6---End		 -->
-			</div>
-			<!--	 End---Sản phẩm---End		 -->
-		</div>
-		<!--	 End---Nike---End		 -->
 
+				</div>
+				<!--	 End-----Trang chủ-----End	 -->
+
+				<!--	 Adidas		 -->
+				<div class="content" id="container">
+					<!--	 Sản phẩm		 -->
+					<div class="product">
+
+						<!-- 	Sản phẩm 1 		-->
+						<li>
+							<div class="product-item">
+								<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
+									class="product-img">
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
+									<div class="product-size">SIZE: 36</div>
+									<br>
+									<div class="product-price">Giá: 5.200.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 1---End		 -->
+
+						<!-- 	Sản phẩm 2		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
+									<div class="product-size">SIZE: 37</div>
+									<br>
+									<div class="product-price">Giá: 5.200.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 2---End		 -->
+
+						<!-- 	Sản phẩm 3		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
+									<div class="product-size">SIZE: 38</div>
+									<br>
+									<div class="product-price">Giá: 5.200.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 3---End		 -->
+
+						<!-- 	Sản phẩm 4		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
+									<div class="product-size">SIZE: 39</div>
+									<br>
+									<div class="product-price">Giá: 5.200.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 4---End		 -->
+
+						<!--	 Sản phẩm 5		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost FZ2558 Men</a>
+									<div class="product-size">SIZE: 38</div>
+									<br>
+									<div class="product-price">Giá: 5.000.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 5---End		 -->
+
+						<!--	 Sản phẩm 6		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Unisex Adidas Ultraboost GY4173</a>
+									<div class="product-size">SIZE: 38</div>
+									<br>
+									<div class="product-price">Giá: 4.900.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 6---End		 -->
+					</div>
+					<!--	 End---Sản phẩm---End		 -->
+				</div>
+				<!--	 End---Adidas---End		 -->
+
+				<!--	 Nike		 -->
+				<div class="content">
+					<!--	 Sản phẩm		 -->
+					<div class="product">
+
+						<!-- 	Sản phẩm 1 		-->
+						<li>
+							<div class="product-item">
+								<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
+									class="product-img">
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
+									<div class="product-size">SIZE: 36</div>
+									<br>
+									<div class="product-price">Giá: 5.200.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 1---End		 -->
+
+						<!-- 	Sản phẩm 2		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
+									<div class="product-size">SIZE: 37</div>
+									<br>
+									<div class="product-price">Giá: 5.200.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 2---End		 -->
+
+						<!-- 	Sản phẩm 3		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
+									<div class="product-size">SIZE: 38</div>
+									<br>
+									<div class="product-price">Giá: 5.200.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 3---End		 -->
+
+						<!-- 	Sản phẩm 4		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
+									<div class="product-size">SIZE: 39</div>
+									<br>
+									<div class="product-price">Giá: 5.200.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 4---End		 -->
+
+						<!--	 Sản phẩm 5		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Adidas Ultraboost FZ2558 Men</a>
+									<div class="product-size">SIZE: 38</div>
+									<br>
+									<div class="product-price">Giá: 5.000.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 5---End		 -->
+
+						<!--	 Sản phẩm 6		 -->
+						<li>
+							<div class="product-item">
+								<div>
+									<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt=""
+										class="product-img">
+								</div>
+								<div class="product-info" align="center">
+									<a href="" class="product-name">Unisex Adidas Ultraboost GY4173</a>
+									<div class="product-size">SIZE: 38</div>
+									<br>
+									<div class="product-price">Giá: 4.900.000 VNĐ</div>
+								</div>
+							</div>
+						</li>
+						<!--	 End---Sản phẩm 6---End		 -->
+					</div>
+					<!--	 End---Sản phẩm---End		 -->
+				</div>
+				<!--	 End---Nike---End		 -->
+
+			</div>
+			<!--	 End---Nội dung---End		 -->
 		</div>
-		<!--	 End---Nội dung---End		 -->
+
+
+
+
+
+
+		<!-- <div id="footer" style="border: red solid 2px;">
+
+			<p class="reset logo">Cái logo</p>
+			<hr style="border: none;">
+
+
+			<p style="color: white; font-size:20px;"> Tôi không biết nên để gì ở đây?</p>
+		</div> -->
+		<div id="footer">
+            <div id="top-footer">
+                <img src="/assets/img//GioiThieu/logo.png">
+                <div id="contact-info">
+                    <h3>Thông Tin Liên Hệ</h3>
+                    <p>SneakerShop.VN Trang Thông Tin Chính Thức</p>
+                    <p>Địa Chỉ: 192/2 Nguyễn Thái Bình, Phường 12, <br>
+                        Quận Tân Bình, Thành Phố Hồ Chí Minh</p>
+                    <p>Email: <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox">tn6609092@gmail.com</a></p>
+                    <p>Hotline Bán Hàng: 0909.300.746 - 0909.45.0001</p>
+                    <p>Hotline CSKH: 0902.368.001</p>
+                    <i class="fab fa-facebook"></i>
+                    <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+
+                </div>
+                <div id="more">
+                    <div id="support">
+                        <h3>Hỗ Trợ Khách Hàng</h3>
+                        <p><a href="#">Chăm sóc khách hàng</a></p>
+                        <p><a href="#">Chăm sóc khách hàng</a></p>
+                        <p><a href="#">Chăm sóc khách hàng</a></p>
+
+                    </div>
+                    <div id="policy">
+                        <h3>Chính Sách</h3>
+                        <p><a href="#">Chế độ bảo hành</a></p>
+                        <p><a href="#">Chính sách đổi hàng</a></p>
+                        <p><a href="#">Chính sách giao nhận</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bot-footer">
+                <hr>
+                <p>© All rights reserved. Thiết kế website
+                    <img src="/assets/img//GioiThieu/logo.png">
+                    <a href="#">SneakerShop</a>
+                </p>
+            </div>
+        </div>
+		<!--	 Javascript		 -->
+		<script src="/assets/js/user.js"></script>
+		<script src="/assets/js/main.js"></script>
 	</div>
-	
-
-        </div>
-
-
-
-        <div id="footer" style = "border: red solid 2px;">
-            <!-- có thể thay đổi-->
-            <p class = "reset logo">Cái logo</p>
-            <hr style="border: none;" >
-            <!-- có thể thây đổi -->
-            
-            <p style = "color: white; font-size:20px;"> Tôi không biết nên để gì ở đây?</p>
-        </div>
-	<!--	 Javascript		 -->
-	<script src="/assets/js/user.js"></script>
-	<script src="/assets/js/main.js"></script>
 </body>
+
 </html>
