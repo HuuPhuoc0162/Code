@@ -20,107 +20,171 @@
 	<div id="warper">
 		<div id="sign_up">
 			<div class="form">
-				<button class="exit reset top_left">X</button>
-				<form action="do_an.html" method="get" id="sign_up_form" name="sign_up">
+				<button class="exit reset top_left" onclick="dongDangKy()">X</button>
+				<form id="sign_up_form" name="sign_up">
 
-					<label for="email" class="label_form">Email</label>
-					<input type="email" id="email" name="email" class="reset input_form" required
-						placeholder="vidu@gmail">
-
-					<label for="sdt" class="label_form">Số điện thoại</label>
-					<input type="tel" pattern="[0-9]{10}" id="sdt" name="sdt" class="reset input_form" required
-						placeholder="0123456789">
-
-					<label for="password_1" class="label_form">Mật khẩu</label>
-					<div class="see_hide_pass">
-						<input type="password" id="password_1" name="password_1" class="reset input_form password"
-							required placeholder="Mật khẩu dễ nhớ">
-						<button type="button" class="reset place"></button>
-						<i class="reset slash"></i>
+					<div class="form-input">
+						<label for="hoten" class="label_form">Họ tên</label>
+						<input type="text" id="hoten" name="Họ tên" class="reset input_form" required
+							placeholder="....">
+						<div class="error-message"></div>
 					</div>
 
-					<label for="password_2" class="label_form">Nhập lại mật khẩu</label>
-					<div class="see_hide_pass">
-						<input type="password" id="password_2" name="password_2" class="reset input_form password"
-							required placeholder="Lập lại mật khẩu">
-						<button type="button" class="reset place"></button>
-						<i class="reset slash"></i>
+					<div class="form-input">
+						<label for="email" class="label_form">Email</label>
+						<input type="email" id="email" name="Email" class="reset input_form" required
+							placeholder="vidu@gmail">
+						<div class="error-message"></div>
 					</div>
-					<button type="button" class="exit big reset">Thoát</button>
-					<button type="submit" class="OK reset">OK</button>
+
+					<div class="form-input">
+						<label for="sdt" class="label_form">Số điện thoại</label>
+						<input type="tel" pattern="[0-9]{10}" id="sdt" name="Số điện thoại" class="reset input_form"
+							required placeholder="0123456789">
+						<div class="error-message"></div>
+					</div>
+
+					<div class="form-input">
+						<label for="password_1" class="label_form">Mật khẩu</label>
+						<div class="see_hide_pass">
+							<input type="password" id="password_1" name="Mật khẩu" class="reset input_form password"
+								required placeholder="Mật khẩu dễ nhớ">
+							<button type="button" class="reset place"></button>
+							<i class="reset slash"></i>
+						</div>
+						<div class="error-message"></div>
+					</div>
+
+					<div class="form-input">
+						<label for="password_2" class="label_form">Nhập lại mật khẩu</label>
+						<div class="see_hide_pass">
+							<input type="password" id="password_2" name="Mật khẩu" class="reset input_form password"
+								required placeholder="Lập lại mật khẩu">
+							<button type="button" class="reset place"></button>
+							<i class="reset slash"></i>
+						</div>
+						<div class="error-message"></div>
+					</div>
+					<div class="btn">
+						<button type="button" class="exit big reset" onclick="dongDangKy()">Thoát</button>
+						<button type="button" class="OK reset" onclick="dangKy();">OK</button>
+					</div>
+
 				</form>
 			</div>
 		</div>
 		<!-- 5  -->
 		<div id="sign_in">
 			<div class="form">
-				<button class="exit reset top_left">X</button>
-				<form action="do_an.html" id="sign_in_form">
-					<label for="sdt" class="label_form">Số điện thoại hay gmail</label>
-					<input type="text" name="input" class="reset input_form" required
-						placeholder="0123456789 hay vidu@gmail.com">
-					<label for="password_3" class="label_form">Mật khẩu</label>
-					<div class="see_hide_pass">
-						<input type="password" id="password_3" name="password_3" class="reset input_form password"
-							required placeholder="Mật khẩu dễ nhớ">
-						<button type="button" class="reset place"></button>
-						<i class="reset slash"></i>
+				<button class="exit reset top_left" onclick="dongDangNhap()">X</button>
+				<form id="sign_in_form">
+					<div class="form-input">
+						<label for="sdt" class="label_form">Số điện thoại hay gmail</label>
+						<input type="text" name="input" class="reset input_form" required
+							placeholder="0123456789 hay vidu@gmail.com" id="taiKhoan">
 					</div>
-					<button type="button" class="exit big reset">Thoát</button>
-					<button type="submit" class="OK reset">OK</button>
+					<div class="form-input">
+						<label for="password_3" class="label_form">Mật khẩu</label>
+						<div class="see_hide_pass">
+							<input type="password" id="password_3" name="password_3" class="reset input_form password"
+								required placeholder="Mật khẩu dễ nhớ">
+							<button type="button" class="reset place"></button>
+							<i class="reset slash"></i>
+						</div>
+						<div class="error-message"></div>
+					</div>
+					<div class="btn">
+						<button type="button" class="exit big reset" onclick="dongDangNhap()">Thoát</button>
+						<button type="button" class="OK reset" onclick="dangNhap()">OK</button>
+					</div>
 				</form>
 			</div>
 		</div>
 
 		<div id="header">
-			<div id="top_menu">
-				<button class="menu reset" id="Dang_ky">Đăng ký</button>
-				<button class="menu reset" id="Dang_nhap">Đăng nhập</button>
-				<button class="menu reset">Hotline</button>
-				<button class="menu reset">Giỏ hàng</button>
-
-
-				<div style="clear: both;"></div>
+			<div id="logo">
+				<img src="/assets/img/GioiThieu/logo.png"></img>
+				<div id="tilte">
+					<div style="font-size: 30px;font-weight: 700;color: #fff;">Sneaker Shop</div>
+					<div style="font-size: 14px;color: #fff">You're King In Your Way.!!!</div>
+				</div>
 			</div>
 			<div id="main_menu">
-				<p class="reset logo">Cái logo</p><!-- Có thể thay đổi -->
-				<!-- để các navigation ở đây  -->
+				<div id="order">
+					<i class="far fa-bell"></i>
+					<a href="#" onclick="showOrder();">Đơn Hàng</a>
+					<div id="main-order">
+							<table id="order-table">
+								<thead>
+									<th>STT</th>
+									<th>Mã Đơn Hàng</th>
+									<th>Sản Phẩm</th>
+									<th>Thành Tiền</th>
+									<th>Trạng Thái</th>
+									<th>Action</th>
+								</thead>
+								<tbody id="order-body">
+	
+									
+								</tbody>
+							</table>
+						</div>
+				</div>
 
+				<div id="user" onclick="showInfo();">
+
+				</div>
+
+				<div id="Dang_ky" onclick="moDangKy()">
+					<i class="fas fa-sign-in-alt"></i>
+					<a href="#">Đăng ký</a>
+				</div>
+				<div id="Dang_nhap" onclick="moDangNhap()">
+					<i class="fas fa-sign-in-alt"></i>
+					<a href="#">Đăng nhập</a>
+				</div>
+				<div id="hotline">
+					<i class="fas fa-phone"></i>
+					<span>Hotline <a href="#">0909300746</a></span>
+				</div>
 			</div>
 		</div>
+
 		<!-- nội dung trang mạng nằm ở đây -->
 
 
 
+					<!--	 Tab menu		 -->
+					<nav>
+						<div class="tab-menu">
+							<div class="tab-item active">
+								<div><a href="#" id="Trangchu" onclick="hienThi(this);">Trang chủ</a></div>
+							</div>
+							<div class="tab-item">
+								<div><a href="#Adi" id="Adidas" onclick="hienThi(this);">Adidas</a></div>
+							</div>
+							<div class="tab-item">
+								<div><a href="#Nik" id="Nike" onclick="hienThi(this);">Nike</a></div>
+							</div>
+							<div class="tab-item">
+								<div><a href="#Pum" id="Puma" onclick="hienThi(this);">Puma</a></div>
+							</div>
+							<div class="tab-item">
+								<div><a href="#Con" id="Converse" onclick="hienThi(this);">Converse</a></div>
+							</div>
+							<div class="tab-item">
+								<div><a href="#Van" id="Vans" onclick="hienThi(this);">Vans</a></div>
+							</div>
+							<div class="tab-item">
+								<div><a href="#LH" id="Lienhe" onclick="hienThi(this);">Liên hệ</a></div>
+							</div>
+							<li><input type="search" placeholder="Search..."><i class="fa-solid fa-magnifying-glass"></i></li>
+						</div>
+					</nav>
+					<!--	 End---Tab menu---End		 -->
+		
+
 		<div class="container">
-			<!--	 Tab menu		 -->
-			<nav>
-				<div class="tab-menu">
-					<div class="tab-item active">
-						<div><a href="#" id="Trangchu" onclick="hienThi(this);">Trang chủ</a></div>
-					</div>
-					<div class="tab-item">
-						<div><a href="#Adi" id="Adidas" onclick="hienThi(this);">Adidas</a></div>
-					</div>
-					<div class="tab-item">
-						<div><a href="#Nik" id="Nike" onclick="hienThi(this);">Nike</a></div>
-					</div>
-					<div class="tab-item">
-						<div><a href="#Pum" id="Puma" onclick="hienThi(this);">Puma</a></div>
-					</div>
-					<div class="tab-item">
-						<div><a href="#Con" id="Converse" onclick="hienThi(this);">Converse</a></div>
-					</div>
-					<div class="tab-item">
-						<div><a href="#Van" id="Vans" onclick="hienThi(this);">Vans</a></div>
-					</div>
-					<div class="tab-item">
-						<div><a href="#LH" id="Lienhe" onclick="hienThi(this);">Liên hệ</a></div>
-					</div>
-					<li><input type="search" placeholder="Search..."><i class="fa-solid fa-magnifying-glass"></i></li>
-				</div>
-			</nav>
-			<!--	 End---Tab menu---End		 -->
 
 			<!--	 Nội dung		 -->
 			<div class="all-content">
@@ -181,9 +245,7 @@
 						<p class="gioiThieu"> Nỗi sợ vì mua phải giày kém chất lượng, giày fake, từ nay không còn lo
 							lắng nữa vì đã có #SneakerShop.VN: hàng chính hãng nhập trực tiếp từ US, fullbox, nguyên
 							tem.</p>
-						<p class="gioiThieu"><img class="gioiThieu-logo" src="/assets/img/GioiThieu/logo.png" alt="">
 						</p>
-						<h2 class="gioiThieu">SneakerShop</h2>
 						<p>✓ 15 Ngày Đổi Hàng ✓ Giao Hàng Miễn Phí ✓ Thanh Toán Khi Nhận Hàng ✓ Bảo Hành Hàng Chính Hãng
 						</p>
 						<p class="gioiThieu">Đến với "SneakerShop.VN” quý khách hàng sẽ có những sản phẩm ưng ý nhất,
@@ -451,51 +513,52 @@
 			<p style="color: white; font-size:20px;"> Tôi không biết nên để gì ở đây?</p>
 		</div> -->
 		<div id="footer">
-            <div id="top-footer">
-                <img src="/assets/img//GioiThieu/logo.png">
-                <div id="contact-info">
-                    <h3>Thông Tin Liên Hệ</h3>
-                    <p>SneakerShop.VN Trang Thông Tin Chính Thức</p>
-                    <p>Địa Chỉ: 192/2 Nguyễn Thái Bình, Phường 12, <br>
-                        Quận Tân Bình, Thành Phố Hồ Chí Minh</p>
-                    <p>Email: <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox">tn6609092@gmail.com</a></p>
-                    <p>Hotline Bán Hàng: 0909.300.746 - 0909.45.0001</p>
-                    <p>Hotline CSKH: 0902.368.001</p>
-                    <i class="fab fa-facebook"></i>
-                    <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.facebook.com/"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+			<div id="top-footer">
+				<img src="/assets/img//GioiThieu/logo.png">
+				<div id="contact-info">
+					<h3>Thông Tin Liên Hệ</h3>
+					<p>SneakerShop.VN Trang Thông Tin Chính Thức</p>
+					<p>Địa Chỉ: 192/2 Nguyễn Thái Bình, Phường 12, <br>
+						Quận Tân Bình, Thành Phố Hồ Chí Minh</p>
+					<p>Email: <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox">tn6609092@gmail.com</a></p>
+					<p>Hotline Bán Hàng: 0909.300.746 - 0909.45.0001</p>
+					<p>Hotline CSKH: 0902.368.001</p>
+					<i class="fab fa-facebook"></i>
+					<a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+					<a href="https://www.facebook.com/"><i class="fab fa-instagram"></i></a>
+					<a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
 
-                </div>
-                <div id="more">
-                    <div id="support">
-                        <h3>Hỗ Trợ Khách Hàng</h3>
-                        <p><a href="#">Chăm sóc khách hàng</a></p>
-                        <p><a href="#">Chăm sóc khách hàng</a></p>
-                        <p><a href="#">Chăm sóc khách hàng</a></p>
+				</div>
+				<div id="more">
+					<div id="support">
+						<h3>Hỗ Trợ Khách Hàng</h3>
+						<p><a href="#">Chăm sóc khách hàng</a></p>
+						<p><a href="#">Chăm sóc khách hàng</a></p>
+						<p><a href="#">Chăm sóc khách hàng</a></p>
 
-                    </div>
-                    <div id="policy">
-                        <h3>Chính Sách</h3>
-                        <p><a href="#">Chế độ bảo hành</a></p>
-                        <p><a href="#">Chính sách đổi hàng</a></p>
-                        <p><a href="#">Chính sách giao nhận</a></p>
-                    </div>
-                </div>
-            </div>
+					</div>
+					<div id="policy">
+						<h3>Chính Sách</h3>
+						<p><a href="#">Chế độ bảo hành</a></p>
+						<p><a href="#">Chính sách đổi hàng</a></p>
+						<p><a href="#">Chính sách giao nhận</a></p>
+					</div>
+				</div>
+			</div>
 
-            <div id="bot-footer">
-                <hr>
-                <p>© All rights reserved. Thiết kế website
-                    <img src="/assets/img//GioiThieu/logo.png">
-                    <a href="#">SneakerShop</a>
-                </p>
-            </div>
-        </div>
-		<!--	 Javascript		 -->
-		<script src="/assets/js/user.js"></script>
-		<script src="/assets/js/main.js"></script>
+			<div id="bot-footer">
+				<hr>
+				<p>© All rights reserved. Thiết kế website
+					<img src="/assets/img//GioiThieu/logo.png">
+					<a href="#">SneakerShop</a>
+				</p>
+			</div>
+		</div>
+
 	</div>
+	<!--	 Javascript		 -->
+	<script src="/assets/js/user.js"></script>
+	<script src="/assets/js/main.js"></script>
 </body>
 
 </html>

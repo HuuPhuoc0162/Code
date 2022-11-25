@@ -15,13 +15,12 @@
 
 	padding: 20px 20px;
 	margin: 5% 30%;
-
 	color: white;
 	background-color: rgb(46, 46, 46);
-
 }
 
-.label_form {
+.label_form,
+.error-message {
 	grid-column: 1 / 3;
 
 	padding-left: 5%;
@@ -83,6 +82,13 @@
 	font-size: 20px;
 	font-family: sans-serif;
 	background-color: black;
+
+}
+
+
+#sign_up_form .form-input,
+#sign_up_form .btn,
+#sign_in_form .btn {
 	display: grid;
 	grid-template-columns: 50% 50%;
 }
@@ -123,7 +129,7 @@ div.see_hide_pass {
 	background-size: 34px 34px;
 }
 
-#sign_in_form {
+#sign_in_form .form-input {
 	display: grid;
 	font-size: 20px;
 	font-family: sans-serif;
@@ -142,34 +148,99 @@ div.see_hide_pass {
 
 /* Có thể không cần tới */
 
-#top_menu {
-	background: black;
-	font-size: 25px;
+#header {
+	display: flex;
+	align-items: center;
+	background-color: #000;
+	height: 100px;
+	padding: 20px;
 }
 
-.menu {
-	float: left;
-
-	color: white;
-	background: transparent;
-	border: none;
-	font-size: inherit;
-
-	margin: 10px 20px;
+#header #logo {
+	width: 40%;
 }
 
-button.menu:hover {
-	color: yellow;
+#header #logo img{
+    border-radius: 50%;
+    width: 30%;
+    float: left;
+}
+#header #logo #tilte {
+    height: 100%;
+	margin-top: 60px;
+}
+
+#header #main_menu {
+	font-size: 20px;
+	flex: 1;
+	height: 100%;
+	display: flex;
+	color: #fff;
+	align-items: flex-start;
+	justify-content: flex-end;
+}
+
+#header #main_menu > * {
+	margin: 10px;
+}
+
+#header #main_menu a {
+	text-decoration: none;
+	color: #fff;
+}
+
+#main_menu #hotline a:hover,
+#main_menu #user a:hover,
+#main_menu #order a:hover,
+#main_menu #Dang_ky a:hover,
+#main_menu #Dang_nhap a:hover,
+#main_menu #Dang_xuat a:hover {
+	color: red;
+}
+
+#main_menu #order,
+#main_menu #main-order,
+#main_menu #user,
+#main_menu #user #infomation{
+	display: none;
+}
+#main_menu #user,
+#main_menu #order {
+	position: relative;
+}
+#main_menu #user #infomation {
+	position: absolute;
+	top: 25px;
+	right: 0;
+	background-color: #fff;
+	box-shadow: 0 0 10px;
+	color: #000;
+	font-size: 15px;
+	min-width: 200px;
+	padding: 10px;
 }
 
 
-#main_menu {
-	background: linear-gradient(grey, white);
+#main_menu #order  #main-order {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    display: none;
+    background-color: #fff;
+    box-shadow: 0 0 10px;
+    min-width: 700px;
+	color: #000;
 }
 
+#main-order #order-table {
+    text-align: center;
+    padding: 10px;
+}
 
-
-
+#main-order #order-table th,
+#main-order #order-table td {
+    border: 1px solid #ccc;
+}
 
 
 
