@@ -161,36 +161,151 @@
 								<div><a href="#" id="Trangchu" onclick="hienThi(this);">Trang chủ</a></div>
 							</div>
 							<div class="tab-item">
-								<div><a href="#Adi" id="Adidas" onclick="hienThi(this);">Adidas</a></div>
+								<div><a href="#Adidas" id="Adidas" onclick="hienThi(this);">Adidas</a></div>
 							</div>
 							<div class="tab-item">
-								<div><a href="#Nik" id="Nike" onclick="hienThi(this);">Nike</a></div>
+								<div><a href="#Nike" id="Nike" onclick="hienThi(this);">Nike</a></div>
 							</div>
 							<div class="tab-item">
-								<div><a href="#Pum" id="Puma" onclick="hienThi(this);">Puma</a></div>
+								<div><a href="#Puma" id="Puma" onclick="hienThi(this);">Puma</a></div>
 							</div>
 							<div class="tab-item">
-								<div><a href="#Con" id="Converse" onclick="hienThi(this);">Converse</a></div>
+								<div><a href="#Converse" id="Converse" onclick="hienThi(this);">Converse</a></div>
 							</div>
 							<div class="tab-item">
-								<div><a href="#Van" id="Vans" onclick="hienThi(this);">Vans</a></div>
+								<div><a href="#Vans" id="Vans" onclick="hienThi(this);">Vans</a></div>
 							</div>
 							<div class="tab-item">
 								<div><a href="#LH" id="Lienhe" onclick="hienThi(this);">Liên hệ</a></div>
 							</div>
 							<li><input type="search" placeholder="Search..."><i class="fa-solid fa-magnifying-glass"></i></li>
+							<div id="shop" class="tab-item">
+								<i class="shop fas fa-shopping-cart" onclick="showShop();">
+									<div id="quantity">0</div>
+									<div id="showShop">
+										<table>
+											<thead>
+												<th>STT</th>
+												<th>Hình</th>
+												<th>Tên Sản Phẩm</th>
+												<th>Đơn Giá</th>
+												<th>Số Lượng</th>
+												<th>Thành Tiền</th>
+												<th>Chỉnh Sửa</th>
+											</thead>
+											<tbody id="showShopTable">
+			
+											</tbody>
+											<tfoot>
+												<tr><th colspan="7" >Tổng Tiền:<span id="tongTien"> 0đ</span></th></tr>
+												<tr><th colspan="7"><button onclick="moDonHang();">Mua Hết!!!</button></th></tr>
+											</tfoot>
+											
+										</table>
+									</div>
+								</i>
+							</div>
 						</div>
 					</nav>
 					<!--	 End---Tab menu---End		 -->
 		
+		<!-- Chi tiết sản phẩm -->
+		<div id="chiTietSP" onclick="dongChiTietSP();">
+            <div id="main-chiTiet">
+                <i class="fas fa-times close" onclick="dongChiTietSP();"></i>
+                <h1>Chi Tiết Sản Phẩm</h1>
+                <div id="center">
+                    <img src="/assets/img/Adidas/Adidas Pureboost Jet Women GW9146.jpg" alt="" class="anhSP">
+                    <div id="chiTiet">
+                        <div id="title">
+                            <div id="favourite">Yêu Thích</div>
+                            <h3 id="name" class="tenSP">Giày Adidas Hàng hiệu</h3>
+                        </div>
+                        <div id="sub-title">
+                            <div id="rate">
+                                <p id="rating">4.6</p>
+                                <i class="fas fa-star star"></i> <i class="fas fa-star star"></i> 
+                                <i class="fas fa-star star"></i> <i class="fas fa-star star"></i> 
+                                <i class="fas fa-star-half-alt star"></i>
+                            </div>
+
+                            <div id="border">
+                                <p id="danhGia">2,1k</p>
+                                <span class="sub">Đánh Giá</span>
+                            </div>
+                            <div id="buy">
+                                <p id="daBan">7,5k</p>
+                                <span class="sub">Đã Bán</span>
+                            </div>
+                            
+                        </div>
+						<div id="detail">
+							<h4>Mô tả</h4>
+							<p class="moTa">Được gọi vui một cách thân thuộc là “giày Vans đen“, thực chất đây là một trong những phiên bản đầu tiên và cổ điển nhất của VANS
+								trong bộ sưu tập VANS OLD SKOOL ra đời năm 1977. Tới nay đôi giày chỉ với phối màu đen trắng này vẫn nằm trong top “Best Seller” của
+								VANS trên toàn thế giới, với kiểu dáng cổ điển cùng “sọc Jazz” huyền thoại hợp thời trang khiến đôi VANS này thật sự trở thành mẫu giày classic
+								bất bại, là fan hâm mộ của VANS nói chung và những skaters nói riêng đều nên có một đôi trong tủ giày. Được mệnh danh là phiên bản mang “càng cũ càng đẹp”
+								và nhiều phiên bản custom bậc nhất của nhà VANS.</p>
+						</div>
+                        <div id="Gia" class="giaSP">
+                            1300000đ
+                        </div>
+                        <div id="bot">
+                            <div id="left">
+                                <div id="mauSac">
+                                    <p>Màu Sắc</p>
+                                </div>
+                                <div id="size">
+                                    <p>Size</p>
+                                </div>
+                                <div id="SoLuongSanPham">
+                                    <p>Số lượng</p>
+                                </div>
+                            </div>
+
+                            <div id="right">
+                                <ul id="mauSac">
+                                    <li class="color-item active" id="trang">
+
+                                    </li>
+                                    <li class="color-item" id="den">
+
+                                    </li>
+									<li class="color-item" id="do">
+
+                                    </li>
+                                </ul>
+                                <select id="size">
+                                    <option value="35">35</option>
+									<option value="36">36</option>
+									<option value="37">37</option>
+									<option value="38">38</option>
+									<option value="39">39</option>
+									<option value="40">40</option>
+                                </select>
+                                <div id="SoLuongSanPham">
+                                    <input type="number" style="display: inline-block;"> 
+									<p>(Số lượng còn lại:  <span class="slSP">6</span>)</p>
+                                </div>
+
+                            </div>
+                        </div>
+						<div class="btn">
+							<button id="btn-1"><i class="fas fa-cart-arrow-down"></i><span>Thêm Vào Giỏ</span></button>
+							<button id="btn-2">Mua Ngay</button>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 		<div class="container">
 
 			<!--	 Nội dung		 -->
 			<div class="all-content">
-
 				<!--	 Trang chủ		 -->
-				<div class="content active">
+				<div class="content">
 					<div class="slider">
 						<!--	 Banner		 -->
 						<div class="slide active">
@@ -275,228 +390,7 @@
 					</div>
 
 				</div>
-				<!--	 End-----Trang chủ-----End	 -->
-
-				<!--	 Adidas		 -->
-				<div class="content" id="container">
-					<!--	 Sản phẩm		 -->
-					<div class="product">
-
-						<!-- 	Sản phẩm 1 		-->
-						<li>
-							<div class="product-item">
-								<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
-									class="product-img">
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-									<div class="product-size">SIZE: 36</div>
-									<br>
-									<div class="product-price">Giá: 5.200.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 1---End		 -->
-
-						<!-- 	Sản phẩm 2		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-									<div class="product-size">SIZE: 37</div>
-									<br>
-									<div class="product-price">Giá: 5.200.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 2---End		 -->
-
-						<!-- 	Sản phẩm 3		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-									<div class="product-size">SIZE: 38</div>
-									<br>
-									<div class="product-price">Giá: 5.200.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 3---End		 -->
-
-						<!-- 	Sản phẩm 4		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-									<div class="product-size">SIZE: 39</div>
-									<br>
-									<div class="product-price">Giá: 5.200.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 4---End		 -->
-
-						<!--	 Sản phẩm 5		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost FZ2558 Men</a>
-									<div class="product-size">SIZE: 38</div>
-									<br>
-									<div class="product-price">Giá: 5.000.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 5---End		 -->
-
-						<!--	 Sản phẩm 6		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Unisex Adidas Ultraboost GY4173</a>
-									<div class="product-size">SIZE: 38</div>
-									<br>
-									<div class="product-price">Giá: 4.900.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 6---End		 -->
-					</div>
-					<!--	 End---Sản phẩm---End		 -->
-				</div>
-				<!--	 End---Adidas---End		 -->
-
-				<!--	 Nike		 -->
-				<div class="content">
-					<!--	 Sản phẩm		 -->
-					<div class="product">
-
-						<!-- 	Sản phẩm 1 		-->
-						<li>
-							<div class="product-item">
-								<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
-									class="product-img">
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-									<div class="product-size">SIZE: 36</div>
-									<br>
-									<div class="product-price">Giá: 5.200.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 1---End		 -->
-
-						<!-- 	Sản phẩm 2		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-									<div class="product-size">SIZE: 37</div>
-									<br>
-									<div class="product-price">Giá: 5.200.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 2---End		 -->
-
-						<!-- 	Sản phẩm 3		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-									<div class="product-size">SIZE: 38</div>
-									<br>
-									<div class="product-price">Giá: 5.200.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 3---End		 -->
-
-						<!-- 	Sản phẩm 4		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost GX5928 Women</a>
-									<div class="product-size">SIZE: 39</div>
-									<br>
-									<div class="product-price">Giá: 5.200.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 4---End		 -->
-
-						<!--	 Sản phẩm 5		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Adidas Ultraboost FZ2558 Men</a>
-									<div class="product-size">SIZE: 38</div>
-									<br>
-									<div class="product-price">Giá: 5.000.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 5---End		 -->
-
-						<!--	 Sản phẩm 6		 -->
-						<li>
-							<div class="product-item">
-								<div>
-									<img src="/assets/img/Adidas/Adidas Ultraboost FZ2558 Men.png" alt=""
-										class="product-img">
-								</div>
-								<div class="product-info" align="center">
-									<a href="" class="product-name">Unisex Adidas Ultraboost GY4173</a>
-									<div class="product-size">SIZE: 38</div>
-									<br>
-									<div class="product-price">Giá: 4.900.000 VNĐ</div>
-								</div>
-							</div>
-						</li>
-						<!--	 End---Sản phẩm 6---End		 -->
-					</div>
-					<!--	 End---Sản phẩm---End		 -->
-				</div>
-				<!--	 End---Nike---End		 -->
-
 			</div>
-			<!--	 End---Nội dung---End		 -->
 		</div>
 
 
