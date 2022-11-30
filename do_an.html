@@ -200,7 +200,7 @@
                                     </tr>
                                     <tr>
                                         <th colspan="9">
-                                            <button onclick="moDonHang();">Mua Hết!!!</button>
+                                            <button onclick="moDonHang(0);">Mua Hết!!!</button>
                                             <button onclick="huyGioHang();">Hủy Hết!!!</button>
 
                                         </th>
@@ -223,7 +223,7 @@
                 </div>
                 <div id="bot-donhang">
                     <button onclick="dongDonHang();">Hủy</button>
-                    <button onclick="muaHang();">Xác Nhận</button>
+                    <button onclick="muaHang(this);">Xác Nhận</button>
                 </div>
             </div>
         </div>
@@ -303,7 +303,7 @@
                         </div>
                         <div class="btn">
                             <button id="btn-1" onclick="addProduct();"><i class="fas fa-cart-arrow-down"></i><span>Thêm Vào Giỏ</span></button>
-                            <button id="btn-2" onclick="moDonHang();">Mua Ngay</button>
+                            <button id="btn-2" onclick="moDonHang(1)">Mua Ngay</button>
                         </div>
                     </div>
                 </div>

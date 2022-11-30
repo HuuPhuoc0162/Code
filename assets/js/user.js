@@ -314,6 +314,7 @@ function dangNhap() {
                 style: "currency",
                 currency: "VND",
             }).format(tongtien); // Format VNĐ;
+        inDonHang();
     }
     // tài khoản đặc biệt (admin) ==> dẫn tới trang admin
     else if (taikhoan === adminTk && matkhau === adminMk) {
@@ -1116,6 +1117,7 @@ function addProduct(button) {
 
 
 
+
         alert("Thêm vào giỏ hàng thành công!");
         dongChiTietSP();
     }
@@ -1222,34 +1224,92 @@ function huyGioHang() {
     localStorage.setItem("listGioHang", JSON.stringify(listGioHang));
 }
 
-function moDonHang() {
-    document.getElementById("showShop").style.display = "none";
-    document.getElementById("donHang").style.display = "block";
-    document.getElementById("donHang").style.zIndex = 200;
-    var hoten = document.getElementById("show-hoten").innerText;
-    var sdt = document.querySelector(".show-sdt").innerText;
-    var s = `<p id = "hoten-mua"> Họ Tên: <span>${hoten }</span></p>
-            <p id = "sdt-mua"> Số Điện Thoại: <span>${sdt}</span> </p>
-            <p id = "title"> Sản Phẩm Chọn Mua </p> 
-            <ul id = "sanpham-mua" >
-            
-            </ul>
-            <p id = "tongtien-mua"> </p>`;
-    document.getElementById("mid-donhang").innerHTML = s;
-    var a = document.getElementById("showShopTable").children;
-    var s = "";
-    for (var i = 0; i < a.length; i++) {
-        var ten = a[i].querySelector(".cotTen").innerText;
-        var mau = a[i].querySelector(".mauSac").innerText;
-        var size = a[i].querySelector(".Size").innerText
-        var soLuong = a[i].querySelector(".soLuong").innerText;
-        s += `<li><span class ="tensp-mua"> ${ten}-${mau}-${size} </span><span class="slsp-mua">${soLuong}</span ></li>`
+function moDonHang(mode) {
+    if (mode === 0) { // mở đơn hàng trên giỏ hàng
+        if (document.getElementById("showShopTable").childElementCount === 0) { // không có sản phẩm trong giỏ => không mua 
+            alert("Không có sản phẩm trong giỏ hàng");
+            return;
+        } else {
+            document.getElementById("showShop").style.display = "none";
+            document.getElementById("donHang").style.display = "block";
+            document.getElementById("donHang").style.zIndex = 200;
+            var hoten = document.getElementById("show-hoten").innerText;
+            var sdt = document.querySelector(".show-sdt").innerText;
+            var s = `<p id = "hoten-mua"> Họ Tên: <span>${hoten }</span></p>
+                    <p id = "sdt-mua"> Số Điện Thoại: <span>${sdt}</span> </p>
+                    <p id = "title"> Sản Phẩm Chọn Mua </p> 
+                    <ul id = "sanpham-mua" >
+                    
+                    </ul>
+                    <p id = "tongtien-mua"> </p>`;
+            document.getElementById("mid-donhang").innerHTML = s;
+            var a = document.getElementById("showShopTable").children;
+            var s = "";
+            for (var i = 0; i < a.length; i++) {
+                var ten = a[i].querySelector(".cotTen").innerText;
+                var mau = a[i].querySelector(".mauSac").innerText;
+                var size = a[i].querySelector(".Size").innerText
+                var soLuong = a[i].querySelector(".soLuong").innerText;
+                s += `<li><span class ="tensp-mua"> ${ten}-${mau}-${size} </span><span class="slsp-mua">${soLuong}</span ></li>`
+
+            }
+            document.getElementById("sanpham-mua").innerHTML = s;
+            document.getElementById("tongtien-mua").innerHTML = "Tổng tiền: " +
+                document.getElementById("tongTienVND").innerText;
+        }
+
+    } else { // mở đơn hàng khi mua ngay sản phẩm
+        if (document.getElementById("user").childElementCount !== 0) {
+            if (!ktSoLuong()) {
+                document.getElementById("bot").querySelector(".error-message").innerText = "Số lượng không hợp lệ!";
+                document.getElementById("bot").querySelector(".error-message").style.color = "red";
+                return;
+            } else {
+                document.getElementById("bot").querySelector(".error-message").innerText = "";
+                document.getElementById("bot").querySelector(".error-message").style.color = "white";
+            }
+            document.getElementById("donHang").style.display = "block";
+            document.getElementById("donHang").style.zIndex = 1000;
+            var hoten = document.getElementById("show-hoten").innerText;
+            var sdt = document.querySelector(".show-sdt").innerText;
+            var s = `<p id = "hoten-mua"> Họ Tên: <span>${hoten }</span></p>
+                    <p id = "sdt-mua"> Số Điện Thoại: <span>${sdt}</span> </p>
+                    <p id = "title"> Sản Phẩm Chọn Mua </p> 
+                    <ul id = "sanpham-mua" >
+                    
+                    </ul>
+                    <p id = "tongtien-mua"> </p>`;
+            document.getElementById("mid-donhang").innerHTML = s;
+            s = "";
+            var ten = document.querySelector(".tenSP").innerText;
+            var mau = document.getElementById("right").querySelector("ul").querySelectorAll("li");
+            var mauSac;
+            for (const a of mau) {
+                if (a.className === "color-item active") {
+                    mauSac = a.querySelector("span").innerText;
+                }
+            }
+            var size = document.querySelector(".select").value;
+            var soLuong = ktSoLuong();
+            var gia = parseInt(document.querySelector(".price").innerText);
+            var tong = gia * soLuong;
+            s = `<li class="muaNgay"><span class ="tensp-mua"> ${ten}-${mauSac}-${size} </span><span class="slsp-mua">${soLuong}</span ></li>`
+            document.getElementById("sanpham-mua").innerHTML = s;
+            document.getElementById("tongtien-mua").innerHTML = "Tổng tiền: " +
+                new Intl.NumberFormat("VietNam-VN", {
+                    style: "currency",
+                    currency: "VND",
+                }).format(tong);
+        } else {
+            alert("Cần đăng nhập trước khi thêm giỏ hàng");
+            dongChiTietSP();
+            moDangNhap();
+        }
 
     }
-    document.getElementById("sanpham-mua").innerHTML = s;
-    document.getElementById("tongtien-mua").innerHTML = "Tổng tiền: " +
-        document.getElementById("tongTienVND").innerText;
 }
+
+
 
 var donhangContainer = document.getElementById("main-donhang");
 donhangContainer.addEventListener('click', function(event) {
@@ -1261,37 +1321,177 @@ function dongDonHang() {
 
 }
 
-function muaHang() {
-    alert("Đơn hàng của bạn đã được gửi đến admin. Vui lòng chờ Xử lý!");
-    dongDonHang();
-    // Xóa giỏ hàng
-    var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
-    var email = document.querySelector(".show-email").innerText;
-    var hoten = document.getElementById("show-hoten").innerText;
-    var gioHang = [];
-    for (var a of listGioHang) {
-        if (a.email === email) {
-            gioHang = a.giohang;
-            a.giohang = [];
+function muaHang(button) {
+    // --------------------------------------------------CHUNG-----------------------------------------------------------------
+
+
+    var mode = 0;
+    var e = button.parentElement.parentElement;
+    var arr = e.querySelector("ul").querySelectorAll("li");
+    for (const a of arr) {
+        if (a.className === "muaNgay") {
+            mode = 1;
         }
     }
-    localStorage.setItem("listGioHang", JSON.stringify(listGioHang));
 
-    document.getElementById("showShopTable").innerHTML = "";
-    document.getElementById("showShop").style.display = "none";
-    document.getElementById("tongTien").innerText = "0đ";
-    document.getElementById("tongTienVND").innerText = "0đ";
-
-    document.getElementById("quantity").innerText = 0;
-
-    console.log(document.getElementById("order-body").childElementCount);
     if (document.getElementById("order-body").childElementCount === 0) {
         var so = 0;
     } else {
-        var h = document.getElementById("order-body").lastElementChild.querySelector(".madh").innerText;
-        var m = h.indexOf("-");
-        var so = parseInt(h.slice(m + 1)) + 1;
+        var mang = document.getElementById("order-body").querySelectorAll(".madh");
+        var max = 0;
+        var h, m, s;
+        for (a of mang) {
+            h = a.innerText;;
+            m = h.indexOf("-");
+            s = parseInt(h.slice(m + 1));
+            if (s > max) {
+                max = s;
+            }
+        }
+        var so = max + 1;
     }
+    // check tài khoản
+    var email = document.querySelector(".show-email").innerText;
+    var hoten = document.getElementById("show-hoten").innerText;
+
+
+    // ----------------------------------------------------------------------------------------------------------------------
+    if (mode === 0) { // mua hàng khi thêm vào giỏ hàng
+        // kiểm tra số lượng sản phẩm của giỏ hàng với đơn hàng có sẳn
+        var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
+        var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
+        var sanPham = JSON.parse(localStorage.getItem("sanPham"));
+        var check = false;
+        var donhang;
+        var giohang;
+        for (const a of listDonHang) {
+            if (a.email === email) {
+                donhang = a.donhang;
+            }
+        }
+        for (const a of listGioHang) {
+            if (a.email === email) {
+                giohang = a.giohang;
+            }
+        }
+
+        var soluong;
+        for (const a of giohang) { // so sánh từng sản phẩm trong giỏ với các sản phẩm trong đơn hàng
+            var tong = a.quantity;
+            for (const b of donhang) {
+                for (const c of b.giohang) {
+                    if (a.nameProduct === c.nameProduct) {
+                        tong += c.quantity;
+                    }
+                }
+            }
+            for (const d of sanPham) {
+                for (const e of d) {
+                    if (e.name === a.nameProduct) {
+                        soluong = e.quantity;
+                    }
+                }
+            }
+            if (tong > soluong) {
+                alert("Shop không có đủ số lượng bạn yêu cầu! Vui lòng kiểm tra lại");
+                check = true;
+                dongDonHang();
+                return;
+            }
+        }
+        // Xóa giỏ hàng
+        var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
+
+        var gioHang = [];
+        for (var a of listGioHang) {
+            if (a.email === email) {
+                gioHang = a.giohang;
+                a.giohang = [];
+            }
+        }
+        localStorage.setItem("listGioHang", JSON.stringify(listGioHang));
+
+        document.getElementById("showShopTable").innerHTML = "";
+        document.getElementById("showShop").style.display = "none";
+        document.getElementById("tongTien").innerText = "0đ";
+        document.getElementById("tongTienVND").innerText = "0đ";
+        document.getElementById("quantity").innerText = 0;
+        if (!check) {
+            alert("Đơn hàng của bạn đã được gửi đến admin. Vui lòng chờ Xử lý!");
+            dongDonHang();
+        }
+
+
+
+
+    } else { // mua ngay
+        console.log("mua ngay");
+        var gioHang = [];
+        var img = document.getElementById("center").querySelector("img").src;
+        var nameProduct = document.querySelector(".tenSP").innerText;
+        var quantity = ktSoLuong();
+        var price = parseInt(document.getElementById("chiTiet").querySelector(".price").innerText);
+        var mau = document.getElementById("right").querySelector("ul").querySelectorAll("li");
+        var color;
+        for (const a of mau) {
+            if (a.className === "color-item active") {
+                color = a.querySelector("span").innerText;
+            }
+        }
+        var size = document.getElementById("chiTiet").querySelector(".select").value;
+        var money = quantity * price;
+        // kiểm tra số lượng sản phẩm trong đơn hàng 
+        var array = document.querySelectorAll(".listsp");
+        console.log("mang", array);
+        var s1;
+        var ten;
+        var soLuong;
+        var slTong = 0;
+
+        for (const a of array) {
+            s1 = a.querySelector(".ten").innerText;
+            ten = s1.split("-")[0];
+            console.log(ten);
+            console.log("name", nameProduct);
+            soLuong = parseInt(a.querySelector(".sl").innerText);
+            console.log(soLuong);
+            if (ten === nameProduct) {
+                console.log("tìm thấy");
+                slTong += soLuong;
+            }
+        }
+        console.log("sl", slTong);
+        var sanPham = JSON.parse(localStorage.getItem("sanPham"));
+        var soLuongSanPham;
+        for (const hang of sanPham) {
+            for (const sanpham of hang) {
+                if (sanpham.name === nameProduct) {
+                    soLuongSanPham = sanpham.quantity;
+                }
+            }
+        }
+        console.log("sl sản phẩm ", soLuongSanPham);
+        if (slTong + quantity > soLuongSanPham) {
+            alert("Shop không có đủ số lượng bạn yêu cầu! Vui lòng kiểm tra lại");
+            dongDonHang();
+            return;
+        } else {
+            gioHang.push({
+                img: img,
+                nameProduct: nameProduct,
+                quantity: quantity,
+                price: price,
+                color: color,
+                size: size,
+                money: money,
+            });
+            alert("Đơn hàng của bạn đã được gửi đến admin. Vui lòng chờ Xử lý!");
+            dongDonHang();
+        }
+
+    }
+
+
     // Thêm vào listDonHang
     var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
     for (var a of listDonHang) {
@@ -1303,7 +1503,9 @@ function muaHang() {
             })
         }
     }
+
     localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
+    inDonHang();
 }
 
 function inDonHang() {
@@ -1320,11 +1522,10 @@ function inDonHang() {
     var tong = 0;
     var tongVND = 0;
     var stt = 0;
-    console.log(arr);
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arr[i].giohang.length; j++) {
             s += `<span class="ten">${arr[i].giohang[j].nameProduct}-${arr[i].giohang[j].color}-${arr[i].giohang[j].size}</span>
-            <span class="sl">(${arr[i].giohang[j].quantity})</span><br>`;
+            <span class="sl">   ${arr[i].giohang[j].quantity}</span><br>`;
             tong += parseInt(arr[i].giohang[j].money);
         }
 
@@ -1394,4 +1595,5 @@ function huyDonHang(button) {
         }
     }
     localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
+    inDonHang();
 }
