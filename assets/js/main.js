@@ -10,6 +10,7 @@ function giay(productId, brand, img, name, size, color, price, quantity, detail)
     this.price = price;
     this.quantity = quantity;
     this.detail = detail;
+    // this.rating = rating;
 }
 
 var Adidas = [

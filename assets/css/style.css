@@ -66,11 +66,21 @@
 }
 
 #sign_up {
-    position: absolute;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 100;
+}
+
+#sign-up .form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #sign_up_form {
@@ -129,11 +139,21 @@ div.see_hide_pass {
 }
 
 #sign_in {
-    position: absolute;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 100;
+}
+
+#sign_in .form {
+    position: absolute;
+    top: 20%;
+    left: 100px;
+    transform: translateY(-50%);
 }
 
 
@@ -223,6 +243,8 @@ div.see_hide_pass {
     box-shadow: 0 0 10px;
     min-width: 700px;
     color: #000;
+    max-height: 400px;
+    overflow: scroll;
 }
 
 #main-order #order-table {
@@ -393,10 +415,10 @@ div.see_hide_pass {
     max-height: 400px;
     min-width: 800px;
     display: none;
-    overflow: scroll;
     z-index: 1;
     color: #000;
     font-size: 20px;
+    overflow: scroll;
 }
 
 #shop i #showShop table {
@@ -591,6 +613,15 @@ div.information {
     list-style: none;
     justify-content: center;
     margin: 0 10px;
+}
+
+div.information-main {
+    margin-top: 50px;
+}
+
+div.information-main .information {
+    margin: 0 300px;
+    background-color: #fff;
 }
 
 

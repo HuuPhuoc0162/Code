@@ -1,5 +1,5 @@
 //Tài Khoản Admin---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-var adminTk = "Admin";
+var adminTk = "admin";
 var adminMk = "1111";
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -19,11 +19,11 @@ let form_1 = document.getElementById("sign_up").style.zIndex,
     form_2 = document.getElementById("sign_in").style.zIndex;
 
 function moDangKy() {
-    document.getElementById("sign_up").style.zIndex = 1;
+    document.getElementById("sign_up").style.display = "block";
 }
 
 function dongDangKy() {
-    document.getElementById("sign_up").style.zIndex = -1;
+    document.getElementById("sign_up").style.display = "none";
     for (let i = 0; i < password_input.length; i++) {
         if (password_input[i].type === "text") {
             password_input[i].type = "password";
@@ -38,11 +38,11 @@ function dongDangKy() {
 }
 
 function moDangNhap() {
-    document.getElementById("sign_in").style.zIndex = 1;
+    document.getElementById("sign_in").style.display = "block";
 }
 
 function dongDangNhap() {
-    document.getElementById("sign_in").style.zIndex = -1;
+    document.getElementById("sign_in").style.display = "none";
     var formElement = document.getElementById("sign_in");
     var inputElement = formElement.querySelectorAll(".input_form");
     for (let index = 0; index < inputElement.length; index++) {
@@ -260,9 +260,9 @@ function dangNhap() {
                 <a href="#">${hoten}</a>
                 <div id="infomation">
                     <p>Họ tên: <span id="show-hoten">${hoten}</span></p>
-                    <p>Số điện thoại: <span id="show-sdt">${sdt}</span></p>
-                    <p>Email: <span id="show-taikhoan">${email}</span></p>
-                    <p>Mật Khẩu: <span id="show-matkhau">${matkhau}</span></p>
+                    <p>Số điện thoại: <span class="show-sdt show-taikhoan">${sdt}</span></p>
+                    <p>Email: <span class="show-taikhoan show-email">${email}</span></p>
+                    <p style="display:none">Mật Khẩu: <span id="show-matkhau">${matkhau}</span></p>
                 </div>`;
 
         // show Đơn hàng đã đặt
@@ -271,20 +271,32 @@ function dangNhap() {
         var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
         var stt = 0;
         var s = "";
+        var priceVND;
+        var thanhTienVND;
         var tongtien = 0;
         for (const a of listGioHang) {
             if (a.matkhau === matkhau) {
                 for (const b of a.giohang) {
-                    s += `            
+                    priceVND = new Intl.NumberFormat("VietNam-VN", {
+                        style: "currency",
+                        currency: "VND",
+                    }).format(b.price);
+                    thanhTienVND = new Intl.NumberFormat("VietNam-VN", {
+                        style: "currency",
+                        currency: "VND",
+                    }).format(b.money);
+                    s += `
                         <tr class="sanPham">
                             <td class="stt">${++stt}</td>
                             <td><img class="hinh" src=${b.img}></td>
                             <td class="cotTen">${b.nameProduct}</td>
+                            <td class="soLuong">${b.quantity}</td>
                             <td class="mauSac">${b.color}</td>
                             <td class="Size">${b.size}</td>
-                            <td class="soLuong">${b.quantity}</td>
-                            <td class="donGia">${b.price}đ</td>
-                            <td class="thanhTien">${b.money}đ</td>
+                            <td class="donGiaVND">${priceVND}</td>
+                            <td class="donGia" style="display:none">${b.price}</td>
+                            <td class="thanhTienVND">${thanhTienVND}</td>
+                            <td class="thanhTien" style="display:none">${b.money}</td>
                             <td>
                                 <button onclick="deleteProduct(this);">Delete</button>
                             </td>
@@ -296,7 +308,18 @@ function dangNhap() {
         }
         console.log(stt);
         document.getElementById("quantity").innerText = stt;
-        document.getElementById("tongTien").innerText = `${tongtien}đ`;
+        document.getElementById("tongTien").innerText = tongtien;
+        document.getElementById("tongTienVND").innerText =
+            new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format(tongtien); // Format VNĐ;
+    }
+    // tài khoản đặc biệt (admin) ==> dẫn tới trang admin
+    else if (taikhoan === adminTk && matkhau === adminMk) {
+        alert("Đăng nhập thành công");
+        dongDangNhap();
+        window.location.href = "http://127.0.0.1:5500/admin.html";
     }
     // tài khoản chưa tồn tại
     else {
@@ -310,10 +333,6 @@ function dangNhap() {
             "red";
     }
 
-    // tài khoản đặc biệt (admin) ==> dẫn tới trang admin
-    if (taikhoan === adminTk && matkhau === adminMk) {
-        window.location.href = "http://127.0.0.1:5500/admin.html";
-    }
 }
 
 var click = false;
@@ -328,18 +347,7 @@ function showInfo() {
     }
 }
 
-click = false;
 
-function showOrder() {
-    if (!click) {
-        document.getElementById("main-order").style.display = "block";
-        click = true;
-        inDonHang();
-    } else {
-        document.getElementById("main-order").style.display = "none";
-        click = false;
-    }
-}
 
 function dangXuat() {
     document.getElementById("user").innerHTML = "";
@@ -352,14 +360,14 @@ function dangXuat() {
         <a href="#">Đăng nhập</a>
         </div>`;
 
-    // document.getElementById("quantity").innerText = 0;
-    // document.getElementById("tongTien").innerHTML = `0đ`;
-    // var display = document.getElementById("showShop").style.display;
-    // if (display === "block") {
-    //     document.getElementById("showShop").style.display = "none";
-    //     console.log(document.getElementById("showShop").style.display);
-    // }
-    // document.getElementById("order").style.display = "none";
+    document.getElementById("quantity").innerText = 0;
+    document.getElementById("tongTien").innerHTML = `0đ`;
+    var display = document.getElementById("showShop").style.display;
+    if (display === "block") {
+        document.getElementById("showShop").style.display = "none";
+        console.log(document.getElementById("showShop").style.display);
+    }
+    document.getElementById("order").style.display = "none";
 }
 
 // 		Code slider
@@ -486,41 +494,44 @@ function hienThi(obJ) {
 							</div>
 						</li>
 					</div>
-					<div class="information">
-						<h2 class="gioiThieu">BÁN GIÀY THỂ THAO SNEAKER CHÍNH HÃNG TẠI TPHCM - SneakerShop GIỚI THIỆU
-						</h2>
-						<p class="gioiThieu"> Nỗi sợ vì mua phải giày kém chất lượng, giày fake, từ nay không còn lo
-							lắng nữa vì đã có #SneakerShop.VN: hàng chính hãng nhập trực tiếp từ US, fullbox, nguyên
-							tem.</p>
-						</p>
-						<p>✓ 15 Ngày Đổi Hàng ✓ Giao Hàng Miễn Phí ✓ Thanh Toán Khi Nhận Hàng ✓ Bảo Hành Hàng Chính Hãng
-						</p>
-						<p class="gioiThieu">Đến với "SneakerShop.VN” quý khách hàng sẽ có những sản phẩm ưng ý nhất,
-							chất lượng phục vụ tốt và giá thành tốt nhất, cùng những “ Chương Trình Khuyến Mãi Đặc
-							Biệt”.</p>
-						<p class="gioiThieu">Tìm được cửa hàng giày khiến mình an tâm rất khó luôn đó mọi người ơi. Hổng
-							nói nổi vui như nào khi gặp được SneakerShop luôn á,
-							Sản phẩm chất lượng mà các dịch vụ đi kèm hấp dẫn nữa. Dân mê giày làm sao cưỡng lại
-							KINGSHOES đây!</p>
-						<img class="gioiThieu" src="/assets/img/GioiThieu/1.jpg" alt="">
-						<p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
-						<img class="gioiThieu" src="/assets/img/GioiThieu/2.Jpg" alt="">
-						<h2 class="gioiThieu"> SneakerShop CHUẨN GIÀY REAL - DEAL SIÊU KHỦNG</h2>
-						<p class="gioiThieu"> Cửa Hàng KING SHOES là một trong những nơi sưu tầm có khối lượng giày hiếm
-							siêu khủng. Có những mẫu giày cực kì hype được giới sưu tầm săn lùng
-							, thậm chí bạn sẽ bắt gặp nhiều mẫu lạ mới mà hiếm shop nào có. Có những mẫu chỉ có độc nhất
-							1 đôi.
-							Ngoài ra những mẫu đang rất HOT trên thị trường sneaker về liên tục nên các bạn cứ yên tâm
-							không sợ hết hàng.</p>
-						<img class="gioiThieu" src="/assets/img/GioiThieu/3.Jpg" alt="">
-						<p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
-						<img class="gioiThieu" src="/assets/img/GioiThieu/4.Jpg" alt="">
-						<p class="gioiThieu"> Cửa Hàng Bán Giày Sneaker Adidas, Jordan Chính Hãng tại tp.HCM 100%
-							Authentic nhập trực tiếp từ US, UK, JAPAN @ SneakerShop.VN nhiệm vụ mang hàng chính hãng đến
-							tay người tiêu dùng Việt Nam !!! 192/2 Nguyễn Thái Bình, Phường 12, Quận Tân Bình, Thành phố
-							Hồ Chí Minh. </p>
-					</div>
+                    <div class="information-main">
+                        <div class="information">
+                            <h2 class="gioiThieu">BÁN GIÀY THỂ THAO SNEAKER CHÍNH HÃNG TẠI TPHCM - SneakerShop GIỚI THIỆU
+                            </h2>
+                            <p class="gioiThieu"> Nỗi sợ vì mua phải giày kém chất lượng, giày fake, từ nay không còn lo
+                                lắng nữa vì đã có #SneakerShop.VN: hàng chính hãng nhập trực tiếp từ US, fullbox, nguyên
+                                tem.</p>
+                            </p>
+                            <p>✓ 15 Ngày Đổi Hàng ✓ Giao Hàng Miễn Phí ✓ Thanh Toán Khi Nhận Hàng ✓ Bảo Hành Hàng Chính Hãng
+                            </p>
+                            <span class="gioiThieu">Đến với "SneakerShop.VN” quý khách hàng sẽ có những sản phẩm ưng ý nhất,
+                                chất lượng phục vụ tốt và giá thành tốt nhất, cùng những “ Chương Trình Khuyến Mãi Đặc
+                                Biệt”.</p>
+                            <p class="gioiThieu">Tìm được cửa hàng giày khiến mình an tâm rất khó luôn đó mọi người ơi. Hổng
+                                nói nổi vui như nào khi gặp được SneakerShop luôn á,
+                                Sản phẩm chất lượng mà các dịch vụ đi kèm hấp dẫn nữa. Dân mê giày làm sao cưỡng lại
+                                KINGSHOES đây!</p>
+                            <img class="gioiThieu" src="/assets/img/GioiThieu/1.jpg" alt="">
+                            <p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
+                            <img class="gioiThieu" src="/assets/img/GioiThieu/2.Jpg" alt="">
+                            <h2 class="gioiThieu"> SneakerShop CHUẨN GIÀY REAL - DEAL SIÊU KHỦNG</h2>
+                            <p class="gioiThieu"> Cửa Hàng KING SHOES là một trong những nơi sưu tầm có khối lượng giày hiếm
+                                siêu khủng. Có những mẫu giày cực kì hype được giới sưu tầm săn lùng
+                                , thậm chí bạn sẽ bắt gặp nhiều mẫu lạ mới mà hiếm shop nào có. Có những mẫu chỉ có độc nhất
+                                1 đôi.
+                                Ngoài ra những mẫu đang rất HOT trên thị trường sneaker về liên tục nên các bạn cứ yên tâm
+                                không sợ hết hàng.</p>
+                            <img class="gioiThieu" src="/assets/img/GioiThieu/3.Jpg" alt="">
+                            <p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
+                            <img class="gioiThieu" src="/assets/img/GioiThieu/4.Jpg" alt="">
+                            <p class="gioiThieu"> Cửa Hàng Bán Giày Sneaker Adidas, Jordan Chính Hãng tại tp.HCM 100%
+                                Authentic nhập trực tiếp từ US, UK, JAPAN @ SneakerShop.VN nhiệm vụ mang hàng chính hãng đến
+                                tay người tiêu dùng Việt Nam !!! 192/2 Nguyễn Thái Bình, Phường 12, Quận Tân Bình, Thành phố
+                                Hồ Chí Minh. </p>
+                        </div>
                     </div>
+                    </div>
+
 				</div>`;
                 document.querySelector(".container").innerHTML = s;
                 break;
@@ -790,8 +801,8 @@ function chiTietSP(arr) {
     document.getElementById("chiTietSP").querySelector(".anhSP").src = anhSP;
     document.getElementById("chiTietSP").querySelector(".tenSP").innerText = tenSP;
     document.getElementById("chiTietSP").querySelector(".giaSP").innerText = giaSP;
+    document.getElementById("chiTietSP").querySelector(".price").innerText = arr.price;
     document.getElementById("chiTietSP").querySelector(".slSP").innerText = slSP;
-    console.log(document.querySelector(".slSP").parentElement.parentElement.querySelector("input"));
     document.querySelector(".slSP").parentElement.parentElement.querySelector("input").max = slSP;
     document.getElementById("chiTietSP").querySelector(".moTa").innerText = detail;
     var s = "";
@@ -803,25 +814,25 @@ function chiTietSP(arr) {
     s = "";
     for (let index = 0; index < mau.length; index++) {
         if (mau[index] === "Trắng") {
-            s += `<li class="color-item" id="trang" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="trang" onclick="chonMau(this)"><span style="display:none">Trắng</span></li>`;
         } else if (mau[index] === "Đen") {
-            s += `<li class="color-item" id="den" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="den" onclick="chonMau(this)"><span style="display:none">Đen</span></li>`;
         } else if (mau[index] === "Xanh Dương") {
-            s += `<li class="color-item" id="xanhDuong" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="xanhDuong" onclick="chonMau(this)"><span style="display:none">Xanh Dương</span></li>`;
         } else if (mau[index] === "Đỏ") {
-            s += `<li class="color-item" id="do" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="do" onclick="chonMau(this)"><span style="display:none">Đỏ</span></li>`;
         } else if (mau[index] === "Xám") {
-            s += `<li class="color-item" id="xam" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="xam" onclick="chonMau(this)"><span style="display:none">Xám</span></li>`;
         } else if (mau[index] === "Xanh Lá") {
-            s += `<li class="color-item" id="xanhLa" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="xanhLa" onclick="chonMau(this)"><span style="display:none">Xanh Lá</span></li>`;
         } else if (mau[index] === "Xanh Lam") {
-            s += `<li class="color-item" id="xanhLam" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="xanhLam" onclick="chonMau(this)"><span style="display:none">Xanh Lam</span></li>`;
         } else if (mau[index] === "Cam") {
-            s += `<li class="color-item" id="cam" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="cam" onclick="chonMau(this)"><span style="display:none">Cam</span></li>`;
         } else if (mau[index] === "Hồng") {
-            s += `<li class="color-item" id="hong" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="hong" onclick="chonMau(this)"><span style="display:none">Hồng</span></li>`;
         } else if (mau[index] === "Vàng") {
-            s += `<li class="color-item" id="vang" onclick="chonMau(this)"></li>`;
+            s += `<li class="color-item" id="vang" onclick="chonMau(this)"><span style="display:none">Vàng</span></li>`;
         }
     }
     document.getElementById("right").querySelector("ul").innerHTML = s;
@@ -841,7 +852,13 @@ function chonMau(li) {
 }
 
 function ktSoLuong() {
-
+    var check = parseInt(document.querySelector(".slSP").parentElement.parentElement.querySelector("input").value);
+    var max = parseInt(document.querySelector(".slSP").innerText);
+    console.log(check, max);
+    if (check >= 1 && check <= max) {
+        return check;
+    }
+    return false;
 }
 
 
@@ -913,7 +930,7 @@ var click = false;
 function showShop() {
     // kiểm tra đã đăng nhập chưa (muốn xem/thểm giỏ hàng thì cần phải đăng nhập)
     // Nếu đã đăng nhập
-    if (document.getElementById("user").innerText != "") {
+    if (document.getElementById("user").childElementCount !== 0) {
         if (click === false) {
             document.getElementById("showShop").style.display = "block";
             click = true;
@@ -931,7 +948,7 @@ function showShop() {
     // Chưa thì bắt đăng nhập
     else {
         alert("Cần đăng nhập trước khi xem giỏ hàng");
-        showDangNhap();
+        moDangNhap();
     }
 }
 
@@ -941,7 +958,7 @@ function ThemGioHang(gioHang, check) {
     var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
     var num;
     for (var i = 0; i < listGioHang.length; i++) {
-        if (listGioHang[i].taikhoan === document.getElementById("show-taikhoan").innerText) {
+        if (listGioHang[i].email === document.querySelector(".show-email").innerText) {
             if (check) { // sản phẩm đã tồn tại trong giỏ ==> xử lý tăng số lượng, thành tiền
                 num = i;
                 break;
@@ -954,7 +971,7 @@ function ThemGioHang(gioHang, check) {
     if (check) {
         for (var i = 0; i < listGioHang[num].giohang.length; i++) {
             if (listGioHang[num].giohang[i].img === gioHang.img) { // so sánh đường dẫn hình (duy nhất) để không xảy ra lỗi ngoài ý muốn
-                listGioHang[num].giohang[i].quantity += 1;
+                listGioHang[num].giohang[i].quantity += ktSoLuong();
                 listGioHang[num].giohang[i].money = listGioHang[num].giohang[i].quantity * listGioHang[num].giohang[i].price;
             }
 
@@ -968,52 +985,104 @@ function addProduct(button) {
     // kiểm tra đã đăng nhập chưa (thêm sản phẩm vào giỏ hàng cần phải đăngn nhập)
 
     // đã đăng nhập
-    if (document.getElementById("user").innerText != "") {
-        if (document.getElementById("showShopTable").innerText === "") {
+    if (document.getElementById("user").childElementCount !== 0) {
+
+        if (!ktSoLuong()) {
+            document.getElementById("bot").querySelector(".error-message").innerText = "Số lượng không hợp lệ!";
+            document.getElementById("bot").querySelector(".error-message").style.color = "red";
+            return;
+        } else {
+            document.getElementById("bot").querySelector(".error-message").innerText = "";
+            document.getElementById("bot").querySelector(".error-message").style.color = "white";
+        }
+
+
+        if (document.getElementById("showShopTable").childElementCount === 0) {
             var stt = 0;
         } else {
             console.log("không rỗng");
             var stt = parseInt(document.getElementById("showShopTable").lastElementChild.querySelector(".stt").innerText);
         }
-        var img = button.parentElement.parentElement.querySelector(".img").getAttribute("src");
-        var name = button.parentElement.parentElement.querySelector(".name").innerText;
-        var quantity = parseInt(button.parentElement.querySelector(".quantity").innerText);
-        var price = button.parentElement.parentElement.querySelector(".price").innerText;
+        console.log("stt", stt);
+        var img = document.getElementById("center").querySelector(".anhSP").src;
+        var name = document.querySelector(".tenSP").innerText;
+        console.log(name);
+        var quantity = ktSoLuong();
+        var price = parseInt(document.querySelector(".price").innerText);
+        var priceVND = document.getElementById("chiTietSP").querySelector(".giaSP").innerText;
+        var mau = document.getElementById("right").querySelector("ul").querySelectorAll("li");
+        var mauSac;
+        for (const a of mau) {
+            if (a.className === "color-item active") {
+                mauSac = a.querySelector("span").innerText;
+            }
+        }
+        var size = document.querySelector(".select").value;
         var thanhTien;
+
         // Kiểm tra sản phẩm đã có trong giỏ hàng chưa 
         var check = false;
-        var allTen = document.getElementById("showShopTable").querySelectorAll(".cotTen");
-        for (var ten of allTen) {
-            if (ten.innerText === name) { // nếu đã có ==> tăng số lượng, tăng thành tiền 
-                check = true;
-                var a = parseInt(ten.parentElement.querySelector(".soLuong").innerText);
-                // Kiểm tra số lượng của 1 sản phẩm trong giỏ hàng không được đặt quá số lượng của shop
-                if (a >= quantity) {
-                    console.log("quá ");
-                    return;
-                } else {
-                    console.log("chưa quá");
-                    ten.parentElement.querySelector(".soLuong").innerText = a + 1;
-                    thanhTien = (a + 1) * price;
-                    console.log("Thành Tiền", thanhTien);
-                    ten.parentElement.querySelector(".thanhTien").innerText = thanhTien + "đ";
+        var list = document.getElementById("showShopTable").querySelectorAll(".sanPham");
+        var sanPham = JSON.parse(localStorage.getItem("sanPham"));
+        var soLuongSanPham;
+        for (const hang of sanPham) {
+            for (const sanpham of hang) {
+                if (sanpham.name === name) {
+                    soLuongSanPham = sanpham.quantity;
                 }
-                // -------------------------------------------------------------------------------------
+            }
+        }
+        var tongSL = 0;
+        for (var a of list) {
+            if (a.querySelector(".cotTen").innerText === name) { // nếu đã có ==> tăng số lượng, tăng thành tiền 
+                tongSL += parseInt(a.querySelector(".soLuong").innerText);
+            }
+        }
+        if (quantity + tongSL > soLuongSanPham) {
+            alert("Shop không có đủ số lượng bạn yêu cầu! Vui lòng kiểm tra lại");
+            return;
+        }
+        for (var a of list) {
+            if (a.querySelector(".cotTen").innerText === name && a.querySelector(".mauSac").innerText === mauSac &&
+                a.querySelector(".Size").innerText == size) { // nếu đã có ==> tăng số lượng, tăng thành tiền 
+                console.log("hahah");
+                check = true;
+                var b = parseInt(a.querySelector(".soLuong").innerText);
+                a.querySelector(".soLuong").innerText = b + quantity;
+                thanhTien = (b + quantity) * price;
+                a.querySelector(".thanhTien").innerText = thanhTien;
+                a.querySelector(".thanhTienVND").innerText = new Intl.NumberFormat("VietNam-VN", {
+                    style: "currency",
+                    currency: "VND",
+                }).format(thanhTien);
             }
         }
 
 
         // nếu chưa ==> thêm vào giỏ hàng
         if (!check) {
+            thanhTien = quantity * price;
+            var thanhTienVND = new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format(thanhTien);
+
+
+
+            console.log("thành tiền", thanhTien);
             document.getElementById("quantity").innerText = stt + 1;
             document.getElementById("showShopTable").innerHTML += `
             <tr class="sanPham">
                 <td class="stt">${stt+1}</td>
                 <td><img class="hinh" src=${img}></td>
                 <td class="cotTen">${name}</td>
-                <td class="donGia">${price}đ</td>
-                <td class="soLuong">1</td>
-                <td class="thanhTien">${price}đ</td>
+                <td class="soLuong">${quantity}</td>
+                <td class="mauSac">${mauSac}</td>
+                <td class="Size">${size}</td>
+                <td class="donGiaVND">${priceVND}</td>
+                <td class="donGia" style="display:none">${price}</td>
+                <td class="thanhTienVND">${thanhTienVND}</td>
+                <td class="thanhTien" style="display:none">${thanhTien}</td>
                 <td>
                     <button onclick="deleteProduct(this);">Delete</button>
                 </td>
@@ -1028,33 +1097,47 @@ function addProduct(button) {
             tongTien += parseInt(tien.innerText);
         }
         document.getElementById("tongTien").innerText = `${tongTien}đ`;
-
-
+        var tongTienVND = new Intl.NumberFormat("VietNam-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(tongTien);
+        document.getElementById("tongTienVND").innerText = tongTienVND;
         // cập nhật lại giỏ hàng của khách trong localStorage
         var gioHang = {
             img: img,
             nameProduct: name,
+            color: mauSac,
+            size: size,
+            quantity: quantity,
             price: price,
-            quantity: 1,
-            money: price,
+            money: thanhTien,
         }
         ThemGioHang(gioHang, check);
+
+
+
+        alert("Thêm vào giỏ hàng thành công!");
+        dongChiTietSP();
     }
     // chưa đăng nhập ==> bắt đăng nhập
     else {
         alert("Cần đăng nhập trước khi thêm giỏ hàng");
-        showDangNhap();
+        dongChiTietSP();
+        moDangNhap();
     }
 }
 
 
-
-function XoaGioHang(hinhgioHang) {
+function XoaGioHang(ten, mau, size) {
+    console.log(ten, size, mau);
+    console.log(document.querySelector(".show-email").innerText);
     var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
     for (var i = 0; i < listGioHang.length; i++) {
-        if (listGioHang[i].taikhoan === document.getElementById("show-taikhoan").innerText) {
+        if (listGioHang[i].email === document.querySelector(".show-email").innerText) {
+            console.log("34");
             for (var j = 0; j < listGioHang[i].giohang.length; j++) {
-                if (listGioHang[i].giohang[j].img == hinhgioHang) {
+                if (listGioHang[i].giohang[j].nameProduct === ten && listGioHang[i].giohang[j].color === mau && listGioHang[i].giohang[j].size == size) {
+                    console.log("hhaa");
                     if (listGioHang[i].giohang[j].quantity == 1) {
                         listGioHang[i].giohang.splice(j, 1);
                     } else {
@@ -1096,47 +1179,76 @@ function deleteProduct(button) {
     else {
         button.parentElement.parentElement.querySelector(".soLuong").innerText = soLuong - 1;
     }
-    var thanhTien = parseInt(button.parentElement.parentElement.querySelector(".donGia").innerText) * parseInt(button.parentElement.parentElement.querySelector(".soLuong").innerText);
-    console.log(thanhTien);
-    button.parentElement.parentElement.querySelector(".thanhTien").innerText = `${thanhTien}đ`;
+    var thanhTien = parseInt(button.parentElement.parentElement.querySelector(".donGia").innerText) *
+        parseInt(button.parentElement.parentElement.querySelector(".soLuong").innerText);
+    var thanhTienVND = new Intl.NumberFormat("VietNam-VN", {
+        style: "currency",
+        currency: "VND",
+    }).format(thanhTien);
+    button.parentElement.parentElement.querySelector(".thanhTien").innerText = thanhTien;
+    button.parentElement.parentElement.querySelector(".thanhTienVND").innerText = thanhTienVND;
+
     var tong = parseInt(document.getElementById("tongTien").innerText) - parseInt(button.parentElement.parentElement.querySelector(".donGia").innerText);
-    console.log(tong);
-    document.getElementById("tongTien").innerText = `${tong}đ`;
+    var tongVND = new Intl.NumberFormat("VietNam-VN", {
+        style: "currency",
+        currency: "VND",
+    }).format(tong);
+    document.getElementById("tongTien").innerText = tong;
+    document.getElementById("tongTienVND").innerText = tongVND;
 
     // Cập nhật lại giỏ hàng của khách trên localStorage
-    var hinh = button.parentElement.parentElement.querySelector(".hinh").getAttribute("src");
-    XoaGioHang(hinh);
+    var ten = button.parentElement.parentElement.querySelector(".cotTen").innerText;
+    var mau = button.parentElement.parentElement.querySelector(".mauSac").innerText;
+    var size = parseInt(button.parentElement.parentElement.querySelector(".Size").innerText);
+    XoaGioHang(ten, mau, size);
 
 
 }
 
 
-function moDonHang() {
-    document.getElementById("donHang").style.display = "block";
-    var hoten = document.getElementById("show-hoten").innerText;
-    var sdt = document.getElementById("show-sdt").innerText;
-    var s = `
-        <p id="hoten-mua">Họ Tên: <span >${hoten}</span></p>
-        <p id="sdt-mua">Số Điện Thoại: <span >${sdt}</span> </p>
-        <p id="title">Sản Phẩm Chọn Mua</p>
-        <ul id="sanpham-mua">
+function huyGioHang() {
+    alert("Đã hủy hết sản phẩm trong giỏ hàng!");
+    document.getElementById("showShopTable").innerHTML = "";
+    var email = document.getElementById("user").querySelector(".show-email").innerText;
+    var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
+    for (const a of listGioHang) {
+        if (a.email === email) {
+            a.giohang = [];
+        }
+    }
+    document.getElementById("quantity").innerText = "0";
+    document.getElementById("tongTien").innerText = "0đ";
+    document.getElementById("tongTienVND").innerText = "0đ";
+    localStorage.setItem("listGioHang", JSON.stringify(listGioHang));
+}
 
-        </ul>
-        <p id="tongtien-mua"></p>
-    `;
+function moDonHang() {
+    document.getElementById("showShop").style.display = "none";
+    document.getElementById("donHang").style.display = "block";
+    document.getElementById("donHang").style.zIndex = 200;
+    var hoten = document.getElementById("show-hoten").innerText;
+    var sdt = document.querySelector(".show-sdt").innerText;
+    var s = `<p id = "hoten-mua"> Họ Tên: <span>${hoten }</span></p>
+            <p id = "sdt-mua"> Số Điện Thoại: <span>${sdt}</span> </p>
+            <p id = "title"> Sản Phẩm Chọn Mua </p> 
+            <ul id = "sanpham-mua" >
+            
+            </ul>
+            <p id = "tongtien-mua"> </p>`;
     document.getElementById("mid-donhang").innerHTML = s;
     var a = document.getElementById("showShopTable").children;
     var s = "";
-    var thanhTien = 0;
     for (var i = 0; i < a.length; i++) {
         var ten = a[i].querySelector(".cotTen").innerText;
+        var mau = a[i].querySelector(".mauSac").innerText;
+        var size = a[i].querySelector(".Size").innerText
         var soLuong = a[i].querySelector(".soLuong").innerText;
-        thanhTien += parseInt(a[i].querySelector(".thanhTien").innerText);
-        s += `<li><span class="tensp-mua">${ten}</span><span class="slsp-mua">${soLuong}</span></li>`
+        s += `<li><span class ="tensp-mua"> ${ten}-${mau}-${size} </span><span class="slsp-mua">${soLuong}</span ></li>`
 
     }
     document.getElementById("sanpham-mua").innerHTML = s;
-    document.getElementById("tongtien-mua").innerHTML = `Tổng Tiền: ${thanhTien}đ`;
+    document.getElementById("tongtien-mua").innerHTML = "Tổng tiền: " +
+        document.getElementById("tongTienVND").innerText;
 }
 
 var donhangContainer = document.getElementById("main-donhang");
@@ -1146,6 +1258,7 @@ donhangContainer.addEventListener('click', function(event) {
 
 function dongDonHang() {
     document.getElementById("donHang").style.display = "none";
+
 }
 
 function muaHang() {
@@ -1153,10 +1266,11 @@ function muaHang() {
     dongDonHang();
     // Xóa giỏ hàng
     var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
-    var taikhoan = document.getElementById("show-taikhoan").innerText;
+    var email = document.querySelector(".show-email").innerText;
+    var hoten = document.getElementById("show-hoten").innerText;
     var gioHang = [];
     for (var a of listGioHang) {
-        if (a.taikhoan === taikhoan) {
+        if (a.email === email) {
             gioHang = a.giohang;
             a.giohang = [];
         }
@@ -1166,6 +1280,8 @@ function muaHang() {
     document.getElementById("showShopTable").innerHTML = "";
     document.getElementById("showShop").style.display = "none";
     document.getElementById("tongTien").innerText = "0đ";
+    document.getElementById("tongTienVND").innerText = "0đ";
+
     document.getElementById("quantity").innerText = 0;
 
     console.log(document.getElementById("order-body").childElementCount);
@@ -1179,9 +1295,9 @@ function muaHang() {
     // Thêm vào listDonHang
     var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
     for (var a of listDonHang) {
-        if (a.taikhoan === taikhoan) {
+        if (a.email === email) {
             a.donhang.push({
-                madh: `${taikhoan}-${so}`,
+                madh: `${hoten}-${so}`,
                 duocDuyet: false,
                 giohang: gioHang,
             })
@@ -1192,21 +1308,23 @@ function muaHang() {
 
 function inDonHang() {
     document.getElementById("order-body").innerHTML = "";
-    var taikhoan = document.getElementById("show-taikhoan").innerText;
+    var email = document.getElementById("user").querySelector(".show-email").innerText;
     var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
     var arr = [];
     for (var a of listDonHang) {
-        if (a.taikhoan === taikhoan) {
+        if (a.email === email) {
             arr = a.donhang;
         }
     }
     var s = "";
     var tong = 0;
+    var tongVND = 0;
     var stt = 0;
     console.log(arr);
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arr[i].giohang.length; j++) {
-            s += `<span class="ten">${arr[i].giohang[j].nameProduct}</span> <span class="sl">(${arr[i].giohang[j].quantity})</span><br>`;
+            s += `<span class="ten">${arr[i].giohang[j].nameProduct}-${arr[i].giohang[j].color}-${arr[i].giohang[j].size}</span>
+            <span class="sl">(${arr[i].giohang[j].quantity})</span><br>`;
             tong += parseInt(arr[i].giohang[j].money);
         }
 
@@ -1218,7 +1336,10 @@ function inDonHang() {
             var xuLy = "Chưa Xử Lý";
             var btn = `<button onclick="huyDonHang(this);">Hủy đơn hàng</button>`;
         }
-
+        tongVND = new Intl.NumberFormat("VietNam-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(tong);
         document.getElementById("order-body").innerHTML += `
             <tr>
                 <td class="sott">${++stt}</td>
@@ -1226,7 +1347,7 @@ function inDonHang() {
                 <td class="listsp">
                     ${s}
                 </td>
-                <td id="tongtien">${tong}đ</td>
+                <td id="tongtien">${tongVND}</td>
                 <td>${xuLy}</td>
                 <td>${btn}</td>
             </tr>`
@@ -1250,13 +1371,13 @@ function showOrder() {
 
 
 function huyDonHang(button) {
-    var taikhoan = document.getElementById("show-taikhoan").innerText;
+    var email = document.querySelector(".show-email").innerText;
     var madh = button.parentElement.parentElement.querySelector(".madh").innerText;
     console.log("madh", madh);
     var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
     var arr = [];
     for (var a of listDonHang) {
-        if (a.taikhoan === taikhoan) {
+        if (a.email === email) {
             arr = a.donhang;
         }
     }
@@ -1268,7 +1389,7 @@ function huyDonHang(button) {
         }
     }
     for (var a of listDonHang) {
-        if (a.taikhoan === taikhoan) {
+        if (a.email === email) {
             a.donhang = arr;
         }
     }
