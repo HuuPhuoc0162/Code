@@ -12,7 +12,8 @@ function giay(productId, brand, img, name, size, color, price, quantity, detail)
     this.detail = detail;
     // this.rating = rating;
 }
-
+var colorArray = ['Trắng', 'Đen', 'Đỏ', 'Xanh Dương', 'Xanh Lam', 'Xanh Lá', 'Hồng', 'Cam', 'Vàng', 'Xám'];
+var sizeArray = [35, 36, 37, 38, 39, 40, 41, 42, 43];
 var Adidas = [
     new giay("A01", "Adidas", "/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png", "Adidas Ultraboost GX5928 Women", [35, 36, 37, 38, 39], ['Trắng', 'Đen', 'Đỏ'], 5200000, 10,
         `Giày Adidas Ultraboost 22 W Gx5928 có độ bền và độ dẻo cao, nhẹ, khả năng chịu lực tốt nhờ chất liệu vải dệt.

@@ -12,7 +12,7 @@ function hienThiTrangAdmin(obj) {
             }
         case "quanlysanpham":
             {
-                quanlysanpam();
+                quanlysanpham();
                 break;
             }
         case "quanlydonhang":
@@ -33,13 +33,7 @@ function hienThiTrangAdmin(obj) {
 
 
 function trangChuUser() {
-    window.location.href = "http://127.0.0.1:5500/user.html";
-    document.getElementById("sign-in").outerHTML = `
-<div id="sign-in" onclick="dangXuat();">
-<i class="fas fa-sign-in-alt"></i>
-<a href="#">Đăng Xuất</a>
-</div>`
-    document.getElementById("user").innerHTML = `<i class="fas fa-cog"></i><a href="#">Admin</a>`
+    window.location.href = "http://127.0.0.1:5500/do_an.html";
 }
 
 function quanlyuser() {
@@ -49,7 +43,7 @@ function quanlyuser() {
         <th>STT</th>
         <th>Họ Tên</th>
         <th>Số điện thoại</th>
-        <th>Tài Khoản</th>
+        <th>Email</th>
         <th>Mật Khẩu</th>
     </thead>
     <tbody id="table-body">
@@ -66,20 +60,89 @@ function quanlyuser() {
     var s = "";
     for (var i = 0; i < listTaiKhoan.length; i++) {
         s += `
-    <tr>
+    <tr onclick = "thongTinKhachHang(this);">
         <td>${i+1}</td>
-        <td>${listTaiKhoan[i].hoten}</td>
-        <td>${listTaiKhoan[i].sdt}</td>
-        <td>${listTaiKhoan[i].taikhoan}</td>
-        <td>${listTaiKhoan[i].matkhau}</td>
+        <td class="hoten">${listTaiKhoan[i].hoten}</td>
+        <td class="sdt">${listTaiKhoan[i].sdt}</td>
+        <td class="email">${listTaiKhoan[i].email}</td>
+        <td class="matkhau">${listTaiKhoan[i].matkhau}</td>
     </tr>`
     }
     document.getElementById("table-body").innerHTML = s;
     document.getElementById("tongTaiKhoan").innerHTML = `<th colspan="5"><spanp>Tổng Tài Khoản: </spanp>${listTaiKhoan.length}</th>`
 }
 
+function thongTinKhachHang(tr) {
+    document.getElementById("thongTinKhachHang").style.display = "block";
+    var hoten = tr.querySelector(".hoten").innerText;
+    var sdt = tr.querySelector(".sdt").innerText;
+    var email = tr.querySelector(".email").innerText;
+    var matkhau = tr.querySelector(".matkhau").innerText;
+    document.getElementById("table-info").querySelector("tbody").innerHTML =
+        `
+        <tr>
+            <td>${hoten}</td>
+            <td>${sdt}</td>
+            <td>${email}</td>
+            <td>${matkhau}</td>
+        </tr>
+        `
 
-function quanlysanpam() {
+
+
+    var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
+    var donHang = [];
+    for (const a of listDonHang) {
+        if (a.name === hoten) {
+            donHang = a.donhang;
+        }
+    }
+    var s = "";
+    var tong = 0;
+    var tongVND;
+    var stt = 0;
+    for (const a of donHang) {
+        if (a.duocDuyet === true) {
+            for (const b of a.giohang) {
+                s += `<span class="Ten">${b.nameProduct}</span>-
+                <span class="Mau">(${b.color})</span>-
+                <span class="Size">(${b.size})</span>-
+                <span class="SoLuong">(${b.quantity})</span><br>`;
+                tong += parseInt(b.money);
+            }
+            tongVND = new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format(tong);
+            document.getElementById("table-donhang").querySelector("tbody").innerHTML +=
+                `<tr>
+                    <td>${++stt}</td>
+                    <td class="maDonHang">${a.madh}</td>
+                    <td class="SanPham">
+                        ${s}
+                    </td>
+                    <td class="ThanhTien">${tongVND}</td>
+                </tr> `;
+            s = "";
+            tong = 0;
+        }
+    }
+}
+
+function dongThongTin() {
+    document.getElementById("thongTinKhachHang").style.display = "none";
+    document.getElementById("table-info").querySelector("tbody").innerHTML = "";
+    document.getElementById("table-donhang").querySelector("tbody").innerHTML = "";
+
+}
+
+var thongtinContainer = document.getElementById("main-thongtin");
+thongtinContainer.addEventListener('click', function(event) {
+    event.stopPropagation();
+})
+
+
+function quanlysanpham() {
     var s = `
     <div class = "content">
         <table id="quanlysanpham">
@@ -88,6 +151,8 @@ function quanlysanpam() {
                 <th>Tên Hãng</th>
                 <th>Tên Sản Phẩm</th>
                 <th>Mã Sản Phẩm</th>
+                <th>Màu Sản Phẩm</th>
+                <th>Size Sản Phẩm</th>
                 <th>Hình Sản Phẩm</th>
                 <th>Số Lượng</th>
                 <th>Giá</th>
@@ -98,25 +163,25 @@ function quanlysanpam() {
             </tbody>
 
             <tr id="themSp" onclick="addsp()">
-                <th colspan="8">Thêm Sản Phẩm <i class="fas fa-plus"></i></th>
+                <th colspan="10">Thêm Sản Phẩm <i class="fas fa-plus"></i></th>
             </tr>
             <tfoot>
                 <tr id="tongSanPham">
 
                 </tr>
-                <tr id="tongNike">
-
-                </tr>
                 <tr id="tongAdidas">
 
                 </tr>
-                <tr id="tongJordan">
+                <tr id="tongNike">
 
                 </tr>
-                <tr id="tongMen">
+                <tr id="tongPuma">
 
                 </tr>
-                <tr id="tongBitis">
+                <tr id="tongConverse">
+
+                </tr>
+                <tr id="tongVans">
 
                 </tr>
             </tfoot>
@@ -128,12 +193,16 @@ function quanlysanpam() {
         tong = 0,
         nike = 0,
         adidas = 0,
-        jordan = 0,
-        men = 0,
-        bitis = 0;
+        puma = 0,
+        converse = 0,
+        vans = 0;
     var arr = JSON.parse(localStorage.getItem("sanPham"));
     for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].length; j++) {
+            var giaVND = new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format(arr[i][j].price);
             s += `
         <tr>
             <td>${++stt}</td>
@@ -141,8 +210,12 @@ function quanlysanpam() {
             <td class="name">${arr[i][j].name}</td>
             <td class="productID">${arr[i][j].productId}</td>
             <td class="img"><img src="${arr[i][j].img}" alt=""></td>
+            <td class="color">${arr[i][j].color}</td>
+            <td class="size">${arr[i][j].size}</td>
             <td class="quantity">${arr[i][j].quantity}</td>
-            <td class="price">${arr[i][j].price}đ</td>
+            <td class="price" style="display:none;">${arr[i][j].price}</td>
+            <td class="priceVND">${giaVND}</td>
+            <td class="MoTaSP" style="display:none;">${arr[i][j].detail}</td>
             <td class="action">
                 <button onclick="editsp(this);">Edit</button>
                 <button onclick="deletesp(this);">Delete</button>
@@ -153,28 +226,28 @@ function quanlysanpam() {
                 nike += arr[i][j].quantity;
             } else if (arr[i][j].brand === "Adidas") {
                 adidas += arr[i][j].quantity;
-            } else if (arr[i][j].brand === "Jordan") {
-                jordan += arr[i][j].quantity;
-            } else if (arr[i][j].brand === "Men") {
-                men += arr[i][j].quantity;
+            } else if (arr[i][j].brand === "Puma") {
+                puma += arr[i][j].quantity;
+            } else if (arr[i][j].brand === "Converse") {
+                converse += arr[i][j].quantity;
             } else {
-                bitis += arr[i][j].quantity;
+                vans += arr[i][j].quantity;
             }
 
         }
     }
     document.getElementById("table-body").innerHTML = s;
-    document.getElementById("tongSanPham").innerHTML = `<th colspan="8"><spanp>Tổng Sản Phẩm: </spanp>${tong}</th>`;
-    document.getElementById("tongNike").innerHTML = `<th colspan="8"><spanp>Tổng Giày Nike: </spanp>${nike}</th>`;
-    document.getElementById("tongAdidas").innerHTML = `<th colspan="8"><spanp>Tổng Giày Adidas: </spanp>${adidas}</th>`;
-    document.getElementById("tongJordan").innerHTML = `<th colspan="8"><spanp>Tổng Giày Jordan: </spanp>${jordan}</th>`;
-    document.getElementById("tongMen").innerHTML = `<th colspan="8"><spanp>Tổng Giày Nam: </spanp>${men}</th>`;
-    document.getElementById("tongBitis").innerHTML = `<th colspan="8"><spanp>Tổng Giày Bitis: </spanp>${bitis}</th>`;
+    document.getElementById("tongSanPham").innerHTML = `<th colspan="10"><spanp>Tổng Sản Phẩm: </spanp>${tong}</th>`;
+    document.getElementById("tongNike").innerHTML = `<th colspan="10"><spanp>Tổng Giày Nike: </spanp>${nike}</th>`;
+    document.getElementById("tongAdidas").innerHTML = `<th colspan="10"><spanp>Tổng Giày Adidas: </spanp>${adidas}</th>`;
+    document.getElementById("tongPuma").innerHTML = `<th colspan="10"><spanp>Tổng Giày Puma: </spanp>${puma}</th>`;
+    document.getElementById("tongConverse").innerHTML = `<th colspan="10"><spanp>Tổng Giày Converse: </spanp>${converse}</th>`;
+    document.getElementById("tongVans").innerHTML = `<th colspan="10"><spanp>Tổng Giày Vans: </spanp>${vans}</th>`;
 }
 
 
-var brand;
-var productID;
+var brand; // brand ban đầu của sản phẩm cần chỉnh sửa
+var productID; // Id ban đầu của sản phẩm cần chỉnh sửa
 
 function editsp(button) {
     document.getElementById("editSP").style.display = "block";
@@ -184,14 +257,15 @@ function editsp(button) {
     var img = button.parentElement.parentElement.querySelector(".img").querySelector("img").getAttribute("src");
     var quantity = button.parentElement.parentElement.querySelector(".quantity").innerHTML;
     var price = button.parentElement.parentElement.querySelector(".price").innerHTML;
-
+    var mau = button.parentElement.parentElement.querySelector(".color").innerHTML;
+    var size = button.parentElement.parentElement.querySelector(".size").innerHTML;
+    var detail = button.parentElement.parentElement.querySelector(".MoTaSP").innerHTML;
 
     var edit = document.getElementById("form-edit");
     var arr = edit.querySelector(".hangsp").children;
     for (var option of arr) {
         if (option.value === brand) {
             option.setAttribute("selected", "selected");
-            edit.querySelector(".hangsp").firstElementChild.innerText = "Nike";
         } else {
             if (option.getAttribute("selected")) {
                 option.removeAttribute("selected");
@@ -199,30 +273,172 @@ function editsp(button) {
         }
     }
 
-    edit.querySelector(".hangsp").firstElementChild.innerHTML = brand;
+    // edit.querySelector(".hangsp").firstElementChild.innerHTML = brand;
     edit.querySelector(".tensp").value = name;
     edit.querySelector(".idsp").value = productID;
     edit.querySelector(".hinhsp").setAttribute("src", img);
     edit.querySelector(".slsp").value = quantity;
     edit.querySelector(".giasp").value = price;
+    edit.querySelector(".motasp").value = detail;
+
+    var s = `
+    <li class="color-item" onclick="chonMau(this);" id="trang"><span style="display:none">Trắng</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="do"><span style="display:none">Đỏ</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="den"><span style="display:none">Đen</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="xanhDuong"><span style="display:none">Xanh Dương</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="xanhLam"><span style="display:none">Xanh Lam</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="xanhLa"><span style="display:none">Xanh Lá</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="hong"><span style="display:none">Hồng</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="cam"><span style="display:none">Cam</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="vang"><span style="display:none">Vàng</span></li>
+    <li class="color-item" onclick="chonMau(this);" id="xam"><span style="display:none">Xám</span></li>
+    `;
+    document.getElementById("InmauSac").innerHTML = s;
+    var max = document.getElementById("InmauSac").querySelectorAll("li");
+    var arrMau = mau.split(",");
+    for (let a of arrMau) {
+        for (b of max) {
+            if (a === b.querySelector("span").innerText) {
+                b.classList.add("active");
+            }
+        }
+
+    }
+
+
+    s = `
+        <li class="size-item" onclick="chonSize(this);">35</li>
+        <li class="size-item" onclick="chonSize(this);">36</li>
+        <li class="size-item" onclick="chonSize(this);">37</li>
+        <li class="size-item" onclick="chonSize(this);">38</li>
+        <li class="size-item" onclick="chonSize(this);">39</li>
+        <li class="size-item" onclick="chonSize(this);">40</li>
+        <li class="size-item" onclick="chonSize(this);">41</li>
+        <li class="size-item" onclick="chonSize(this);">42</li>
+        <li class="size-item" onclick="chonSize(this);">43</li>
+    `;
+    document.getElementById("Insize").innerHTML = s;
+    max = document.getElementById("Insize").querySelectorAll("li");
+    var arrSize = size.split(",");
+    for (let a of arrSize) {
+        for (b of max) {
+            if (a === b.innerText) {
+                b.classList.add("active");
+            }
+        }
+
+    }
+}
+
+function chonMau(li) {
+    if (li.classList.contains("active")) {
+        li.classList.remove("active");
+    } else {
+        li.classList.add("active");
+    }
+}
+
+function chonSize(li) {
+    if (li.classList.contains("active")) {
+        li.classList.remove("active");
+    } else {
+        li.classList.add("active");
+    }
 }
 
 function closeEdit() {
     document.getElementById("editSP").style.display = "none";
+    var mang = document.getElementById("form-edit").querySelectorAll(".error-message");
+    for (let a of mang) {
+        a.innerText = "";
+        a.style.color = "white";
+    }
 }
 
+
+function ktSoLuong() {
+    var check = parseInt(document.getElementById("form-edit").querySelector(".slsp").value);
+    if (check >= 1) {
+        return check;
+    }
+    return false;
+}
+
+
+
+function ktGia() {
+    var check = parseInt(document.getElementById("form-edit").querySelector(".giasp").value);
+    if (check >= 1000) {
+        return check;
+    }
+    return false;
+}
+
+
 function thietlapEdit() {
-    // Kiểm tra trùng thông tin với các sản phẩm trước
     var hang = document.getElementById("form-edit").querySelector(".hangsp").value;
     var tensp = document.getElementById("form-edit").querySelector(".tensp").value;
     var masp = document.getElementById("form-edit").querySelector(".idsp").value;
     var hinhsp = document.getElementById("form-edit").querySelector(".hinhsp").getAttribute("src");
-    var slsp = document.getElementById("form-edit").querySelector(".slsp").value;
-    var giasp = document.getElementById("form-edit").querySelector(".giasp").value;
+    var slsp = ktSoLuong();
+    var giasp = ktGia();
+    var motasp = document.getElementById("form-edit").querySelector(".motasp").value;
+    var mausp = document.getElementById("InmauSac").querySelectorAll("li");
+    var sizesp = document.getElementById("Insize").querySelectorAll("li");
+    var color = [];
+    var size = [];
+    for (const a of mausp) {
+        if (a.classList.contains("active")) {
+            color.push(a.querySelector("span").innerText);
+        }
+    }
+    for (const a of sizesp) {
+        if (a.classList.contains("active")) {
+            size.push(parseInt(a.innerText));
+        }
+    }
+    // Kiểm tra để trống thông tin
+    var mang = document.getElementById("form-edit").querySelectorAll(".check");
+    for (let a of mang) {
+        if (a.classList.contains("tensp") && tensp === "") {
+            a.parentElement.querySelector(".error-message").innerText = "Vui lòng nhập tên sản phẩm!";
+            a.parentElement.querySelector(".error-message").style.color = "red";
+            return;
+        } else if (a.classList.contains("idsp") && masp === "") {
+            a.parentElement.querySelector(".error-message").innerText = "Vui lòng nhập ID sản phẩm!";
+            a.parentElement.querySelector(".error-message").style.color = "red";
+            return;
+        } else if (a.classList.contains("slsp") && slsp === false) {
+            a.parentElement.querySelector(".error-message").innerText = "Vui lòng nhập Đúng số lượng sản phẩm!";
+            a.parentElement.querySelector(".error-message").style.color = "red";
+            return;
+        } else if (a.classList.contains("giasp") && giasp === false) {
+            a.parentElement.querySelector(".error-message").innerText = "Vui lòng nhập Đúng giá sản phẩm!";
+            a.parentElement.querySelector(".error-message").style.color = "red";
+            return;
+        } else if (a.classList.contains("color") && color.length === 0) {
+            a.parentElement.querySelector(".error-message").innerText = "Vui lòng chọn màu sản phẩm!";
+            a.parentElement.querySelector(".error-message").style.color = "red";
+            return;
+        } else if (a.classList.contains("size") && size.length === 0) {
+            a.parentElement.querySelector(".error-message").innerText = "Vui lòng chọn size sản phẩm!";
+            a.parentElement.querySelector(".error-message").style.color = "red";
+            return;
+
+        } else if (a.classList.contains("motasp") && motasp === "") {
+            a.parentElement.querySelector(".error-message").innerText = "Vui lòng nhập mô tả sản phẩm!";
+            a.parentElement.querySelector(".error-message").style.color = "red";
+            return;
+        } else {
+            a.parentElement.querySelector(".error-message").innerText = "";
+            a.parentElement.querySelector(".error-message").style.color = "white";
+        }
+    }
+    // Kiểm tra trùng thông tin với các sản phẩm trước (trùng tên,mã)
     var arr = JSON.parse(localStorage.getItem("sanPham"));
     for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].length; j++) {
-            if (arr[i][j].productId != productID) {
+            if (arr[i][j].productId != productID) { // không kiểm tra với chính nó
                 if (arr[i][j].name === tensp) {
                     document.querySelector(".idsp").parentElement.querySelector(".error-message").innerHTML = "";
                     document.querySelector(".hinhsp").parentElement.querySelector(".error-message").innerHTML = "";
@@ -238,13 +454,6 @@ function thietlapEdit() {
                     document.querySelector(".idsp").parentElement.querySelector(".error-message").style.color = "red";
                     return false;
 
-                } else if (arr[i][j].img === hinhsp) {
-                    document.querySelector(".idsp").parentElement.querySelector(".error-message").innerHTML = "";
-                    document.querySelector(".tensp").parentElement.querySelector(".error-message").innerHTML = "";
-
-                    document.querySelector(".hinhsp").parentElement.querySelector(".error-message").innerHTML = "Hình sản phẩm đã tồn tại";
-                    document.querySelector(".hinhsp").parentElement.querySelector(".error-message").style.color = "red";
-                    return false;
                 } else {
                     document.querySelector(".idsp").parentElement.querySelector(".error-message").innerHTML = "";
                     document.querySelector(".tensp").parentElement.querySelector(".error-message").innerHTML = "";
@@ -259,14 +468,14 @@ function thietlapEdit() {
     var checkTen = document.querySelector(".tensp").parentElement.querySelector(".error-message").innerText;
     var checkHinh = document.querySelector(".hinhsp").parentElement.querySelector(".error-message").innerText;
     console.log(checkId, checkTen, checkHinh);
-    var Nike = JSON.parse(localStorage.getItem("nike"));
-    var Adidas = JSON.parse(localStorage.getItem("adidas"));
-    var Jordan = JSON.parse(localStorage.getItem("jordan"));
-    var Men = JSON.parse(localStorage.getItem("men"));
-    var Bitis = JSON.parse(localStorage.getItem("bitis"));
+    var Nike = JSON.parse(localStorage.getItem("Nike"));
+    var Adidas = JSON.parse(localStorage.getItem("Adidas"));
+    var Puma = JSON.parse(localStorage.getItem("Puma"));
+    var Converse = JSON.parse(localStorage.getItem("Converse"));
+    var Vans = JSON.parse(localStorage.getItem("Vans"));
     var sanpham = JSON.parse(localStorage.getItem("sanPham"));
-    if (checkId === "" && checkTen === "" && checkHinh === "") {
-        if (document.querySelector(".hangsp").value === brand) {
+    if (checkId === "" && checkTen === "" && checkHinh === "") { // không bị trùng => chỉnh sửa 
+        if (document.querySelector(".hangsp").value === brand) { // Trường hợp không sửa lại brand
             if (brand === "Nike") {
                 Nike.forEach(function(value, index) {
                     if (value.productId === productID) {
@@ -275,21 +484,13 @@ function thietlapEdit() {
                         value.img = hinhsp;
                         value.quantity = parseInt(slsp);
                         value.price = parseInt(giasp);
+                        value.detail = motasp;
+                        value.color = color;
+                        value.size = size;
                     }
                 });
-                localStorage.setItem("nike", JSON.stringify(Nike));
+                localStorage.setItem("Nike", JSON.stringify(Nike));
 
-
-                sanpham[0].forEach(function(value, index) {
-                    if (value.productId === productID) {
-                        value.productId = masp;
-                        value.name = tensp;
-                        value.img = hinhsp;
-                        value.quantity = parseInt(slsp);
-                        value.price = parseInt(giasp);
-                    }
-                });
-                localStorage.setItem("sanPham", JSON.stringify(sanpham));
             } else if (brand === "Adidas") {
                 Adidas.forEach(function(value, index) {
                     if (value.productId === productID) {
@@ -298,89 +499,62 @@ function thietlapEdit() {
                         value.img = hinhsp;
                         value.quantity = parseInt(slsp);
                         value.price = parseInt(giasp);
+                        value.detail = motasp;
+                        value.color = color;
+                        value.size = size;
                     }
                 });
-                localStorage.setItem("nike", JSON.stringify(Adidas));
+                localStorage.setItem("Adidas", JSON.stringify(Adidas));
 
-                sanpham[1].forEach(function(value, index) {
+            } else if (brand === "Puma") {
+                Puma.forEach(function(value, index) {
                     if (value.productId === productID) {
                         value.productId = masp;
                         value.name = tensp;
                         value.img = hinhsp;
                         value.quantity = parseInt(slsp);
                         value.price = parseInt(giasp);
+                        value.detail = motasp;
+                        value.color = color;
+                        value.size = size;
                     }
                 });
-                localStorage.setItem("sanPham", JSON.stringify(sanpham));
-            } else if (brand === "Jordan") {
-                Jordan.forEach(function(value, index) {
-                    if (value.productId === productID) {
-                        value.productId = masp;
-                        value.name = tensp;
-                        value.img = hinhsp;
-                        value.quantity = parseInt(slsp);
-                        value.price = parseInt(giasp);
-                    }
-                });
-                localStorage.setItem("nike", JSON.stringify(Jordan));
+                localStorage.setItem("Puma", JSON.stringify(Puma));
 
-                sanpham[2].forEach(function(value, index) {
+            } else if (brand === "Converse") {
+                Converse.forEach(function(value, index) {
                     if (value.productId === productID) {
                         value.productId = masp;
                         value.name = tensp;
                         value.img = hinhsp;
                         value.quantity = parseInt(slsp);
                         value.price = parseInt(giasp);
+                        value.detail = motasp;
+                        value.color = color;
+                        value.size = size;
                     }
                 });
-                localStorage.setItem("sanPham", JSON.stringify(sanpham));
-            } else if (brand === "Men") {
-                Men.forEach(function(value, index) {
-                    if (value.productId === productID) {
-                        value.productId = masp;
-                        value.name = tensp;
-                        value.img = hinhsp;
-                        value.quantity = parseInt(slsp);
-                        value.price = parseInt(giasp);
-                    }
-                });
-                localStorage.setItem("nike", JSON.stringify(Men));
+                localStorage.setItem("Converse", JSON.stringify(Converse));
 
-                sanpham[3].forEach(function(value, index) {
+            } else if (brand === "Vans") {
+                Vans.forEach(function(value, index) {
                     if (value.productId === productID) {
                         value.productId = masp;
                         value.name = tensp;
                         value.img = hinhsp;
                         value.quantity = parseInt(slsp);
                         value.price = parseInt(giasp);
+                        value.detail = motasp;
+                        value.color = color;
+                        value.size = size;
                     }
                 });
-                localStorage.setItem("sanPham", JSON.stringify(sanpham));
-            } else if (brand === "Bitis") {
-                Bitis.forEach(function(value, index) {
-                    if (value.productId === productID) {
-                        value.productId = masp;
-                        value.name = tensp;
-                        value.img = hinhsp;
-                        value.quantity = parseInt(slsp);
-                        value.price = parseInt(giasp);
-                    }
-                });
-                localStorage.setItem("nike", JSON.stringify(Bitis));
+                localStorage.setItem("Vans", JSON.stringify(Vans));
 
-                sanpham[4].forEach(function(value, index) {
-                    if (value.productId === productID) {
-                        value.productId = masp;
-                        value.name = tensp;
-                        value.img = hinhsp;
-                        value.quantity = parseInt(slsp);
-                        value.price = parseInt(giasp);
-                    }
-                });
-                localStorage.setItem("sanPham", JSON.stringify(sanpham));
             }
 
-        } else {
+        } else { // Trường hợp sửa lại brand ==> Bỏ sản phẩm ở brand cũ, thêm sản phẩm ở brand mới
+            // Bỏ sản phẩm ở brand cũ: biến brand là brand cũ, biến hãng là brand mới set lại
             if (brand === "Nike") {
                 for (var i = 0; i < Nike.length; i++) {
                     if (Nike[i].productId == productID) {
@@ -396,33 +570,33 @@ function thietlapEdit() {
                     }
                 }
 
-            } else if (brand === "Jordan") {
-                for (var i = 0; i < Jordan.length; i++) {
-                    if (Jordan[i].productId === productID) {
-                        Jordan.splice(i, 1);
+            } else if (brand === "Puma") {
+                for (var i = 0; i < Puma.length; i++) {
+                    if (Puma[i].productId === productID) {
+                        Puma.splice(i, 1);
                         break;
                     }
                 }
 
-            } else if (brand === "Men") {
-                for (var i = 0; i < Men.length; i++) {
-                    if (Men[i].productId === productID) {
-                        Men.splice(i, 1);
+            } else if (brand === "Converse") {
+                for (var i = 0; i < Converse.length; i++) {
+                    if (Converse[i].productId === productID) {
+                        Converse.splice(i, 1);
                         break;
                     }
                 }
 
             } else {
-                for (var i = 0; i < Bitis.length; i++) {
-                    if (Bitis[i].productId === productID) {
-                        Bitis.splice(i, 1);
+                for (var i = 0; i < Vans.length; i++) {
+                    if (Vans[i].productId === productID) {
+                        Vans.splice(i, 1);
                         break;
                     }
                 }
 
             }
 
-
+            // Thêm sản phẩm ở brand mới
             if (hang === "Nike") {
                 Nike.push({
                     productId: masp,
@@ -431,6 +605,9 @@ function thietlapEdit() {
                     name: tensp,
                     price: parseInt(giasp),
                     quantity: parseInt(slsp),
+                    detail: motasp,
+                    color: color,
+                    size: size,
                 })
                 console.log(Nike);
             } else if (hang === "Adidas") {
@@ -441,50 +618,62 @@ function thietlapEdit() {
                     name: tensp,
                     price: parseInt(giasp),
                     quantity: parseInt(slsp),
+                    detail: motasp,
+                    color: color,
+                    size: size,
                 })
                 console.log(Adidas);
-            } else if (hang === "Jordan") {
-                Jordan.push({
+            } else if (hang === "Puma") {
+                Puma.push({
                     productId: masp,
                     brand: hang,
                     img: hinhsp,
                     name: tensp,
                     price: parseInt(giasp),
                     quantity: parseInt(slsp),
+                    detail: motasp,
+                    color: color,
+                    size: size,
                 })
-                console.log(Jordan);
-            } else if (hang === "Men") {
-                Men.push({
+                console.log(Puma);
+            } else if (hang === "Converse") {
+                Converse.push({
                     productId: masp,
                     brand: hang,
                     img: hinhsp,
                     name: tensp,
                     price: parseInt(giasp),
                     quantity: parseInt(slsp),
+                    detail: motasp,
+                    color: color,
+                    size: size,
                 })
-                console.log(Men);
+                console.log(Converse);
             } else {
-                Bitis.push({
+                Vans.push({
                     productId: masp,
                     brand: hang,
                     img: hinhsp,
                     name: tensp,
                     price: parseInt(giasp),
                     quantity: parseInt(slsp),
+                    detail: motasp,
+                    color: color,
+                    size: size,
                 })
-                console.log(Bitis);
+                console.log(Vans);
             }
-
-            sanpham = [Nike, Adidas, Jordan, Men, Bitis];
-            localStorage.setItem("nike", JSON.stringify(Nike));
-            localStorage.setItem("adidas", JSON.stringify(Adidas));
-            localStorage.setItem("jordan", JSON.stringify(Jordan));
-            localStorage.setItem("men", JSON.stringify(Men));
-            localStorage.setItem("bitis", JSON.stringify(Bitis));
-            localStorage.setItem("sanPham", JSON.stringify(sanpham));
         }
+        sanpham = [Adidas, Nike, Puma, Converse, Vans];
+        localStorage.setItem("Nike", JSON.stringify(Nike));
+        localStorage.setItem("Adidas", JSON.stringify(Adidas));
+        localStorage.setItem("Puma", JSON.stringify(Puma));
+        localStorage.setItem("Converse", JSON.stringify(Converse));
+        localStorage.setItem("Vans", JSON.stringify(Vans));
+        localStorage.setItem("sanPham", JSON.stringify(sanpham));
         alert("Thiết Lập Thành Công!");
         closeEdit();
+        quanlysanpham(); // vừa chỉnh sửa xong load lại trang sản phẩm để cập nhật sản phẩm vừa chỉnh sửa
     }
 }
 
@@ -547,24 +736,24 @@ function thietlapDelete() {
     var max = parseInt(document.getElementById("chon").lastElementChild.innerText);
     var brand = document.getElementById("thongtin").querySelector(".hang").innerText;
     var productId = document.getElementById("thongtin").querySelector(".ma").innerText;
-    console.log(soluong, max, brand, productId);
+
     var sanPham = JSON.parse(localStorage.getItem("sanPham"));
-    var Nike = JSON.parse(localStorage.getItem("nike"));
-    var Adidas = JSON.parse(localStorage.getItem("adidas"));
-    var Jordan = JSON.parse(localStorage.getItem("jordan"));
-    var Men = JSON.parse(localStorage.getItem("men"));
-    var Bitis = JSON.parse(localStorage.getItem("bitis"));
+    var Nike = JSON.parse(localStorage.getItem("Nike"));
+    var Adidas = JSON.parse(localStorage.getItem("Adidas"));
+    var Puma = JSON.parse(localStorage.getItem("Puma"));
+    var Converse = JSON.parse(localStorage.getItem("Converse"));
+    var Vans = JSON.parse(localStorage.getItem("Vans"));
 
     if (brand === "Nike") {
-        var mang = JSON.parse(localStorage.getItem("nike"));
+        var mang = JSON.parse(localStorage.getItem("Nike"));
     } else if (brand === "Adidas") {
-        var mang = JSON.parse(localStorage.getItem("adidas"));
-    } else if (brand === "Jordan") {
-        var mang = JSON.parse(localStorage.getItem("jordan"));
-    } else if (brand === "Men") {
-        var mang = JSON.parse(localStorage.getItem("men"));
+        var mang = JSON.parse(localStorage.getItem("Adidas"));
+    } else if (brand === "Puma") {
+        var mang = JSON.parse(localStorage.getItem("Puma"));
+    } else if (brand === "Converse") {
+        var mang = JSON.parse(localStorage.getItem("Converse"));
     } else {
-        var mang = JSON.parse(localStorage.getItem("bitis"));
+        var mang = JSON.parse(localStorage.getItem("Vans"));
     }
 
     console.log(mang);
@@ -585,26 +774,27 @@ function thietlapDelete() {
     }
 
 
-    if (brand === "Nike") {
-        sanPham = [mang, Adidas, Jordan, Men, Bitis];
-        localStorage.setItem("nike", JSON.stringify(mang));
-    } else if (brand === "Adidas") {
-        sanPham = [Nike, mang, Jordan, Men, Bitis];
-        localStorage.setItem("adidas", JSON.stringify(mang));
-    } else if (brand === "Jordan") {
-        sanPham = [Nike, Adidas, mang, Men, Bitis];
-        localStorage.setItem("jordan", JSON.stringify(mang));
-    } else if (brand === "Men") {
-        sanPham = [Nike, Adidas, Jordan, mang, Bitis];
-        localStorage.setItem("men", JSON.stringify(mang));
+    if (brand === "Adidas") {
+        sanPham = [mang, Nike, Puma, Converse, Vans];
+        localStorage.setItem("Adidas", JSON.stringify(mang));
+    } else if (brand === "Nike") {
+        sanPham = [Adidas, mang, Puma, Converse, Vans];
+        localStorage.setItem("Nike", JSON.stringify(mang));
+    } else if (brand === "Puma") {
+        sanPham = [Adidas, Nike, mang, Converse, Vans];
+        localStorage.setItem("Puma", JSON.stringify(mang));
+    } else if (brand === "Converse") {
+        sanPham = [Adidas, Nike, Puma, mang, Vans];
+        localStorage.setItem("Converse", JSON.stringify(mang));
     } else {
-        sanPham = [Nike, Adidas, Jordan, Men, mang];
-        localStorage.setItem("bitis", JSON.stringify(mang));
+        sanPham = [Adidas, Nike, Puma, Converse, mang];
+        localStorage.setItem("Vans", JSON.stringify(mang));
     }
-
+    console.log(sanPham);
     localStorage.setItem("sanPham", JSON.stringify(sanPham));
     alert("Xóa thành công!");
     closeDelete();
+    quanlysanpham(); // vừa chỉnh sửa xong load lại trang sản phẩm để cập nhật sản phẩm vừa chỉnh sửa
 }
 
 
@@ -620,8 +810,19 @@ function closeAdd() {
     document.getElementById("form-add").querySelector(".hinhsp").style.display = "none";
     document.getElementById("form-add").querySelector(".slsp").value = "";
     document.getElementById("form-add").querySelector(".giasp").value = "";
-
-
+    document.getElementById("form-add").querySelector(".motasp").value = "";
+    var color = document.getElementById("form-add").querySelector(".color").querySelectorAll("li");
+    var size = document.getElementById("form-add").querySelector(".size").querySelectorAll("li");
+    for (const a of color) {
+        if (a.classList.contains("active")) {
+            a.classList.remove("active");
+        }
+    }
+    for (const a of size) {
+        if (a.classList.contains("active")) {
+            a.classList.remove("active");
+        }
+    }
 }
 
 
@@ -643,17 +844,95 @@ function doiHinh1(event) {
     fileReader.readAsDataURL(file);
 }
 
+function ktSoLuong2() {
+    var check = parseInt(document.getElementById("form-add").querySelector(".slsp").value);
+    if (check >= 1) {
+        return check;
+    }
+    return false;
+}
+
+
+
+function ktGia2() {
+    var check = parseInt(document.getElementById("form-add").querySelector(".giasp").value);
+    if (check >= 1000) {
+        return check;
+    }
+    return false;
+}
 
 function thietlapAdd() {
-    // Kiểm tra trùng thông tin với các sản phẩm trước
     var hang = document.getElementById("form-add").querySelector(".hangsp").value;
     var tensp = document.getElementById("form-add").querySelector(".tensp").value;
     var masp = document.getElementById("form-add").querySelector(".idsp").value;
     var hinhsp = document.getElementById("form-add").querySelector(".hinhsp").getAttribute("src");
-    var slsp = document.getElementById("form-add").querySelector(".slsp").value;
-    var giasp = document.getElementById("form-add").querySelector(".giasp").value;
+    var slsp = ktSoLuong2();
+    var giasp = ktGia2();
+    var motasp = document.getElementById("form-add").querySelector(".motasp").value;
+    var mausp = document.getElementById("mausp").querySelectorAll("li");
+    var sizesp = document.getElementById("sizesp").querySelectorAll("li");
+    var color = [];
+    var size = [];
+    for (const a of mausp) {
+        if (a.classList.contains("active")) {
+            color.push(a.querySelector("span").innerText);
+        }
+    }
+    for (const a of sizesp) {
+        if (a.classList.contains("active")) {
+            size.push(parseInt(a.innerText));
+        }
+    }
+
+    // Kiểm tra để trống thông tin
+    var mang = document.getElementById("form-add").querySelectorAll(".check");
+    for (let a of mang) {
+        if (a.classList.contains("tensp") && tensp === "") {
+            a.parentElement.querySelector(".error").innerText = "Vui lòng nhập tên sản phẩm!";
+            a.parentElement.querySelector(".error").style.color = "red";
+            return;
+        } else if (a.classList.contains("idsp") && masp === "") {
+            a.parentElement.querySelector(".error").innerText = "Vui lòng nhập ID sản phẩm!";
+            a.parentElement.querySelector(".error").style.color = "red";
+            return;
+        } else if (a.classList.contains("hinhsp") && hinhsp === "") {
+            a.parentElement.querySelector(".error").innerText = "Vui lòng nhập ID sản phẩm!";
+            a.parentElement.querySelector(".error").style.color = "red";
+            return;
+        } else if (a.classList.contains("slsp") && slsp === false) {
+            a.parentElement.querySelector(".error").innerText = "Vui lòng nhập Đúng số lượng sản phẩm!";
+            a.parentElement.querySelector(".error").style.color = "red";
+            return;
+        } else if (a.classList.contains("giasp") && giasp === false) {
+            a.parentElement.querySelector(".error").innerText = "Vui lòng nhập Đúng giá sản phẩm!";
+            a.parentElement.querySelector(".error").style.color = "red";
+            return;
+        } else if (a.classList.contains("color") && color.length === 0) {
+            a.parentElement.querySelector(".error").innerText = "Vui lòng chọn màu sản phẩm!";
+            a.parentElement.querySelector(".error").style.color = "red";
+            return;
+        } else if (a.classList.contains("size") && size.length === 0) {
+            a.parentElement.querySelector(".error").innerText = "Vui lòng chọn size sản phẩm!";
+            a.parentElement.querySelector(".error").style.color = "red";
+            return;
+
+        } else if (a.classList.contains("motasp") && motasp === "") {
+            a.parentElement.querySelector(".error").innerText = "Vui lòng nhập mô tả sản phẩm!";
+            a.parentElement.querySelector(".error").style.color = "red";
+            return;
+        } else {
+            a.parentElement.querySelector(".error").innerText = "";
+            a.parentElement.querySelector(".error").style.color = "white";
+        }
+    }
+
+
+
+
+
+    //Kiểm tra trùng thông tin với các sản phẩm trước
     var arr = JSON.parse(localStorage.getItem("sanPham"));
-    console.log("hình", hinhsp);
     for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].length; j++) {
             if (arr[i][j].name === tensp) {
@@ -675,23 +954,26 @@ function thietlapAdd() {
     }
     var checkId = document.getElementById("form-add").querySelector(".idsp").parentElement.querySelector(".error").innerText;
     var checkTen = document.getElementById("form-add").querySelector(".tensp").parentElement.querySelector(".error").innerText;
-    var Nike = JSON.parse(localStorage.getItem("nike"));
-    var Adidas = JSON.parse(localStorage.getItem("adidas"));
-    var Jordan = JSON.parse(localStorage.getItem("jordan"));
-    var Men = JSON.parse(localStorage.getItem("men"));
-    var Bitis = JSON.parse(localStorage.getItem("bitis"));
+    var Nike = JSON.parse(localStorage.getItem("Nike"));
+    var Adidas = JSON.parse(localStorage.getItem("Adidas"));
+    var Puma = JSON.parse(localStorage.getItem("Puma"));
+    var Converse = JSON.parse(localStorage.getItem("Converse"));
+    var Vans = JSON.parse(localStorage.getItem("Vans"));
     var sanpham = JSON.parse(localStorage.getItem("sanPham"));
 
-    if (checkId === "" && checkTen === "" && slsp !== "" && giasp !== "" && tensp !== "" && masp !== "" && hinhsp !== "") {
+    if (checkId === "" && checkTen === "") {
         if (hang === "Nike") {
             Nike.push({
                 productId: masp,
                 brand: hang,
                 img: hinhsp,
                 name: tensp,
-                price: parseInt(giasp),
-                quantity: parseInt(slsp),
-            })
+                price: giasp,
+                quantity: slsp,
+                detail: motasp,
+                color: color,
+                size: size,
+            });
             console.log(Nike);
         } else if (hang === "Adidas") {
             Adidas.push({
@@ -699,53 +981,66 @@ function thietlapAdd() {
                 brand: hang,
                 img: hinhsp,
                 name: tensp,
-                price: parseInt(giasp),
-                quantity: parseInt(slsp),
-            })
+                price: giasp,
+                quantity: slsp,
+                detail: motasp,
+                color: color,
+                size: size,
+            });
             console.log(Adidas);
-        } else if (hang === "Jordan") {
-            Jordan.push({
+        } else if (hang === "Puma") {
+            Puma.push({
                 productId: masp,
                 brand: hang,
                 img: hinhsp,
                 name: tensp,
-                price: parseInt(giasp),
-                quantity: parseInt(slsp),
-            })
-            console.log(Jordan);
-        } else if (hang === "Men") {
-            Men.push({
+                price: giasp,
+                quantity: slsp,
+                detail: motasp,
+                color: color,
+                size: size,
+            });
+            console.log(Puma);
+        } else if (hang === "Converse") {
+            Converse.push({
                 productId: masp,
                 brand: hang,
                 img: hinhsp,
                 name: tensp,
-                price: parseInt(giasp),
-                quantity: parseInt(slsp),
-            })
-            console.log(Men);
+                price: giasp,
+                quantity: slsp,
+                detail: motasp,
+                color: color,
+                size: size,
+            });
+            console.log(Converse);
         } else {
-            Bitis.push({
+            Vans.push({
                 productId: masp,
                 brand: hang,
                 img: hinhsp,
                 name: tensp,
-                price: parseInt(giasp),
-                quantity: parseInt(slsp),
-            })
-            console.log(Bitis);
+                price: giasp,
+                quantity: slsp,
+                detail: motasp,
+                color: color,
+                size: size,
+            });
+            console.log(Vans);
         }
 
-        sanpham = [Nike, Adidas, Jordan, Men, Bitis];
-        localStorage.setItem("nike", JSON.stringify(Nike));
-        localStorage.setItem("adidas", JSON.stringify(Adidas));
-        localStorage.setItem("jordan", JSON.stringify(Jordan));
-        localStorage.setItem("men", JSON.stringify(Men));
-        localStorage.setItem("bitis", JSON.stringify(Bitis));
+        sanpham = [Adidas, Nike, Puma, Converse, Vans];
+        localStorage.setItem("Nike", JSON.stringify(Nike));
+        localStorage.setItem("Adidas", JSON.stringify(Adidas));
+        localStorage.setItem("Puma", JSON.stringify(Puma));
+        localStorage.setItem("Converse", JSON.stringify(Converse));
+        localStorage.setItem("Vans", JSON.stringify(Vans));
         localStorage.setItem("sanPham", JSON.stringify(sanpham));
 
 
         alert("Thiết Lập Thành Công!");
         closeAdd();
+        quanlysanpham(); // vừa chỉnh sửa xong load lại trang sản phẩm để cập nhật sản phẩm vừa chỉnh sửa
     }
 }
 
@@ -770,7 +1065,7 @@ function quanlydonhang() {
             <tbody id="table-chuaXuLy">
 
             </tbody>
-        
+
             <tfoot>
                 <tr>
                     <td colspan="7">
@@ -811,11 +1106,14 @@ function quanlydonhang() {
     var sttdaXuLy = 0;
     var tong = 0;
     for (var a of listDonHang) {
-        if (a.donhang.length !== 0) {
+        if (a.donhang.length !== 0) { // có đơn hàng mới hiện
             for (var i = 0; i < a.donhang.length; i++) {
                 if (a.donhang[i].duocDuyet === false) { // Chưa được duyệt ==> In trong table-chuaXuLy
                     for (var j = 0; j < a.donhang[i].giohang.length; j++) {
-                        s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span> <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
+                        s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span>-
+                        <span class="Mau">(${a.donhang[i].giohang[j].color})</span>-
+                        <span class="Size">(${a.donhang[i].giohang[j].size})</span>-
+                        <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
                         tong += parseInt(a.donhang[i].giohang[j].money);
                     }
                     string = `
@@ -837,7 +1135,10 @@ function quanlydonhang() {
                     tong = 0;
                 } else { // Được duyệt rồi ==> In trong table-daXuLy
                     for (var j = 0; j < a.donhang[i].giohang.length; j++) {
-                        s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span> <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
+                        s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span>-
+                        <span class="Mau">(${a.donhang[i].giohang[j].color})</span>-
+                        <span class="Size">(${a.donhang[i].giohang[j].size})</span>-
+                        <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
                         tong += parseInt(a.donhang[i].giohang[j].money);
                     }
                     string = `
@@ -862,8 +1163,8 @@ function quanlydonhang() {
 
 
 /** Khi bấm duyệt
- * đưa vào localStorage listDonHang-daXuLy, in ra trong table listDonHang daXuLy
- * xóa số đi số lượng sản phẩm trên localStorage: nike/adidas/jordan/men/bitis , sanPham
+ * chuyển thuộc tính duocDuyet của đơn hàng =>true => in ra trong table listDonHang daXuLy
+ * xóa số đi số lượng sản phẩm trên localStorage: Nike/Adidas/Puma/Converse/Vans , sanPham
  * inner vào Đơn hàng của trang người dùng đó thành đã xử lý
  */
 function duyetDonHang(button) {
@@ -890,47 +1191,47 @@ function duyetDonHang(button) {
 
 
     // Xóa đi số lượng sản phẩm hiện có
-    var nike = JSON.parse(localStorage.getItem("nike"));
-    var adidas = JSON.parse(localStorage.getItem("adidas"));
-    var jordan = JSON.parse(localStorage.getItem("jordan"));
-    var men = JSON.parse(localStorage.getItem("men"));
-    var bitis = JSON.parse(localStorage.getItem("bitis"));
+    var Nike = JSON.parse(localStorage.getItem("Nike"));
+    var Adidas = JSON.parse(localStorage.getItem("Adidas"));
+    var Puma = JSON.parse(localStorage.getItem("Puma"));
+    var Converse = JSON.parse(localStorage.getItem("Converse"));
+    var Vans = JSON.parse(localStorage.getItem("Vans"));
     var sanPham = JSON.parse(localStorage.getItem("sanPham"));
 
-    for (var a of listSanPham) {
+    for (var a of listSanPham) { // so sánh từng sản phẩm trong giỏ hàng của đơn hàng đã duyệt để trừ với số sản phẩm tương ứng có trong csdl
         for (var i = 0; i < sanPham.length; i++) {
             for (var j = 0; j < sanPham[i].length; j++) {
                 if (a.nameProduct === sanPham[i][j].name) {
-                    if (a.quantity === sanPham[i][j].quantity) {
+                    if (a.quantity === sanPham[i][j].quantity) { // mua hết số lượng sản phẩm hiện có ==> xóa hết số sản phẩm đó
                         // Xóa ở các mảng sản phẩm
                         if (sanPham[i][j].brand === "Nike") {
-                            nike.splice(j, 1);
+                            Nike.splice(j, 1);
                         } else if (sanPham[i][j].brand === "Adidas") {
-                            adidas.splice(j, 1);
-                        } else if (sanPham[i][j].brand === "Jordan") {
-                            jordan.splice(j, 1);
-                        } else if (sanPham[i][j].brand === "Men") {
-                            men.splice(j, 1);
+                            Adidas.splice(j, 1);
+                        } else if (sanPham[i][j].brand === "Puma") {
+                            Puma.splice(j, 1);
+                        } else if (sanPham[i][j].brand === "Converse") {
+                            Converse.splice(j, 1);
                         } else {
-                            bitis.splice(j, 1);
+                            Vans.splice(j, 1);
                         }
-                    } else {
-                        console.log("Số lượng", a.quantity);
+                    } else { // mua 1 số lượng của sản phẩm ==> cập nhật lại số lượng sản phẩm
+
                         if (sanPham[i][j].brand === "Nike") {
-                            nike[j].quantity -= a.quantity;
-                            console.log(nike[j].quantity);
+                            Nike[j].quantity -= a.quantity;
+
                         } else if (sanPham[i][j].brand === "Adidas") {
-                            adidas[j].quantity -= a.quantity;
-                            console.log(adidas[j].quantity);
-                        } else if (sanPham[i][j].brand === "Jordan") {
-                            jordan[j].quantity -= a.quantity;
-                            console.log(jordan[j].quantity);
-                        } else if (sanPham[i][j].brand === "Men") {
-                            men[j].quantity -= a.quantity;
-                            console.log(men[j].quantity);
+                            Adidas[j].quantity -= a.quantity;
+
+                        } else if (sanPham[i][j].brand === "Puma") {
+                            Puma[j].quantity -= a.quantity;
+
+                        } else if (sanPham[i][j].brand === "Converse") {
+                            Converse[j].quantity -= a.quantity;
+
                         } else {
-                            bitis[j].quantity -= a.quantity;
-                            console.log(bitis[j].quantity);
+                            Vans[j].quantity -= a.quantity;
+
                         }
                     }
 
@@ -940,13 +1241,14 @@ function duyetDonHang(button) {
 
     }
 
-    sanPham = [nike, adidas, jordan, men, bitis];
-    localStorage.setItem("nike", JSON.stringify(nike));
-    localStorage.setItem("adidas", JSON.stringify(adidas));
-    localStorage.setItem("jordan", JSON.stringify(jordan));
-    localStorage.setItem("men", JSON.stringify(men));
-    localStorage.setItem("bitis", JSON.stringify(bitis));
+    sanPham = [Adidas, Nike, Puma, Converse, Vans];
+    localStorage.setItem("Nike", JSON.stringify(Nike));
+    localStorage.setItem("Adidas", JSON.stringify(Adidas));
+    localStorage.setItem("Puma", JSON.stringify(Puma));
+    localStorage.setItem("Converse", JSON.stringify(Converse));
+    localStorage.setItem("Vans", JSON.stringify(Vans));
     localStorage.setItem("sanPham", JSON.stringify(sanPham));
+    quanlydonhang();
 }
 
 
@@ -963,4 +1265,5 @@ function duyetHetDonHang() {
         }
     }
     localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
+    quanlydonhang();
 }
