@@ -267,52 +267,8 @@ function dangNhap() {
         // show Đơn hàng đã đặt
         document.getElementById("order").style.display = "block";
         // cập nhật giỏ hàng cho khách hàng (lưu lại giỏ hàng của khách khi thoát)
-        var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
-        var stt = 0;
-        var s = "";
-        var priceVND;
-        var thanhTienVND;
-        var tongtien = 0;
-        for (const a of listGioHang) {
-            if (a.matkhau === matkhau) {
-                for (const b of a.giohang) {
-                    priceVND = new Intl.NumberFormat("VietNam-VN", {
-                        style: "currency",
-                        currency: "VND",
-                    }).format(b.price);
-                    thanhTienVND = new Intl.NumberFormat("VietNam-VN", {
-                        style: "currency",
-                        currency: "VND",
-                    }).format(b.money);
-                    s += `
-                        <tr class="sanPham">
-                            <td class="stt">${++stt}</td>
-                            <td><img class="hinh" src=${b.img}></td>
-                            <td class="cotTen">${b.nameProduct}</td>
-                            <td class="soLuong">${b.quantity}</td>
-                            <td class="mauSac">${b.color}</td>
-                            <td class="Size">${b.size}</td>
-                            <td class="donGiaVND">${priceVND}</td>
-                            <td class="donGia" style="display:none">${b.price}</td>
-                            <td class="thanhTienVND">${thanhTienVND}</td>
-                            <td class="thanhTien" style="display:none">${b.money}</td>
-                            <td>
-                                <button onclick="deleteProduct(this);">Delete</button>
-                            </td>
-                        </tr>`;
-                    tongtien += parseInt(b.money);
-                }
-                document.getElementById("showShopTable").innerHTML = s;
-            }
-        }
-        console.log(stt);
-        document.getElementById("quantity").innerText = stt;
-        document.getElementById("tongTien").innerText = tongtien;
-        document.getElementById("tongTienVND").innerText =
-            new Intl.NumberFormat("VietNam-VN", {
-                style: "currency",
-                currency: "VND",
-            }).format(tongtien); // Format VNĐ;
+        inGioHang(matkhau);
+
         inDonHang();
     }
     // tài khoản đặc biệt (admin) ==> dẫn tới trang admin
@@ -368,6 +324,7 @@ function dangXuat() {
         console.log(document.getElementById("showShop").style.display);
     }
     document.getElementById("order").style.display = "none";
+    location.reload();
 }
 
 // 		Code slider
@@ -790,7 +747,6 @@ function renderProduct(mang, num) {
         }
         document.querySelector(".product").innerHTML = s;
     }
-
 }
 
 function chiTietSP(arr) {
@@ -1327,6 +1283,56 @@ function dongDonHang() {
 
 }
 
+
+function inGioHang(matkhau) {
+    var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
+    var stt = 0;
+    var s = "";
+    var priceVND;
+    var thanhTienVND;
+    var tongtien = 0;
+    for (const a of listGioHang) {
+        if (a.matkhau === matkhau) {
+            for (const b of a.giohang) {
+                priceVND = new Intl.NumberFormat("VietNam-VN", {
+                    style: "currency",
+                    currency: "VND",
+                }).format(b.price);
+                thanhTienVND = new Intl.NumberFormat("VietNam-VN", {
+                    style: "currency",
+                    currency: "VND",
+                }).format(b.money);
+                s += `
+                    <tr class="sanPham">
+                        <td class="stt">${++stt}</td>
+                        <td><img class="hinh" src=${b.img}></td>
+                        <td class="cotTen">${b.nameProduct}</td>
+                        <td class="soLuong">${b.quantity}</td>
+                        <td class="mauSac">${b.color}</td>
+                        <td class="Size">${b.size}</td>
+                        <td class="donGiaVND">${priceVND}</td>
+                        <td class="donGia" style="display:none">${b.price}</td>
+                        <td class="thanhTienVND">${thanhTienVND}</td>
+                        <td class="thanhTien" style="display:none">${b.money}</td>
+                        <td>
+                            <button onclick="deleteProduct(this);">Delete</button>
+                        </td>
+                    </tr>`;
+                tongtien += parseInt(b.money);
+            }
+            document.getElementById("showShopTable").innerHTML = s;
+        }
+    }
+    console.log(stt);
+    document.getElementById("quantity").innerText = stt;
+    document.getElementById("tongTien").innerText = tongtien;
+    document.getElementById("tongTienVND").innerText =
+        new Intl.NumberFormat("VietNam-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(tongtien); // Format VNĐ;
+}
+
 function muaHang(button) {
     // --------------------------------------------------CHUNG-----------------------------------------------------------------
 
@@ -1380,6 +1386,85 @@ function muaHang(button) {
                 giohang = a.giohang;
             }
         }
+        // kiểm tra hết hàng khi sản phẩm đang trong giỏ
+        var hetHang = [];
+        for (const a of giohang) {
+            var find = false;
+            for (const b of sanPham) {
+                for (const c of b) {
+                    if (a.nameProduct === c.name) {
+                        find = true; // còn hàng
+                    }
+                }
+            }
+            if (!find) { // hêt hàng
+                hetHang.push(a.nameProduct);
+            }
+        }
+        if (hetHang.length !== 0) {
+            alert(`Sản Phẩm ${hetHang.toString()} đã hết hàng`);
+            for (const a of hetHang) {
+                for (var index = 0; index < giohang.length; index++) {
+                    if (a == giohang[index].nameProduct) {
+                        console.log("xóa");
+                        giohang.splice(index, 1);
+                    }
+                }
+            }
+
+            for (const a of listGioHang) {
+                if (a.email === email) {
+                    a.giohang = giohang;
+                }
+            }
+            localStorage.setItem("listGioHang", JSON.stringify(listGioHang));
+            var matkhau = document.getElementById("show-matkhau").innerText;
+            inGioHang(matkhau);
+            dongDonHang();
+            return;
+        }
+        // kiểm tra số lượng không đủ
+        var khongDu = [];
+        var sl = 0;
+        for (const a of giohang) {
+            var find = true;
+            for (const b of sanPham) {
+                for (const c of b) {
+                    if (a.nameProduct === c.name && a.quantity > c.quantity) {
+                        find = false; // không đủ
+                        sl = c.quantity;
+                    }
+                }
+            }
+            if (!find) { /// không đủ
+                khongDu.push(a.nameProduct);
+                khongDu.push(sl);
+            }
+        }
+        if (khongDu.length !== 0) {
+            alert(`Sản Phẩm ${khongDu.toString()} không đủ số lượng yêu cầu`);
+            for (var i = 0; i < khongDu.length; i += 2) {
+                for (var index = 0; index < giohang.length; index++) {
+                    if (khongDu[i] == giohang[index].nameProduct) {
+                        giohang[index].quantity = khongDu[i + 1];
+                    }
+                }
+            }
+
+            for (const a of listGioHang) {
+                if (a.email === email) {
+                    a.giohang = giohang;
+                }
+            }
+            localStorage.setItem("listGioHang", JSON.stringify(listGioHang));
+            var matkhau = document.getElementById("show-matkhau").innerText;
+            inGioHang(matkhau);
+            dongDonHang();
+            return;
+        }
+
+
+
 
         var soluong;
         for (const a of giohang) { // so sánh từng sản phẩm trong giỏ với các sản phẩm trong đơn hàng

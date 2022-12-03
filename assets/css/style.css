@@ -774,6 +774,7 @@ div.product>li img {
 div.product>li div.product-info a {
     text-decoration: none;
     color: #ff0067;
+    font-size: 30px;
 }
 
 
@@ -783,6 +784,7 @@ div.product>li div.product-info div.product-price {
     background-color: #ff0000;
     padding: 5px;
     color: white;
+    font-size: 20px;
 }
 
 
