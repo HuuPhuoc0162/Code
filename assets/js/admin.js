@@ -22,7 +22,7 @@ function hienThiTrangAdmin(obj) {
             }
         case "thongkekinhdoanh":
             {
-
+                thongkekinhdoanh();
 
                 break;
             }
@@ -114,6 +114,12 @@ function thongTinKhachHang(tr) {
                 style: "currency",
                 currency: "VND",
             }).format(tong);
+            var date = new Date(a.gioDat);
+            var string1 = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+                date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+            var date2 = new Date(a.gioDuyet);
+            var string2 = date2.getDate() + "-" + (date2.getMonth() + 1) + "-" + date2.getFullYear() + "-" +
+                date2.getHours() + ":" + date2.getMinutes() + ":" + date2.getSeconds();
             document.getElementById("table-donhang").querySelector("tbody").innerHTML +=
                 `<tr>
                     <td>${++stt}</td>
@@ -122,6 +128,8 @@ function thongTinKhachHang(tr) {
                         ${s}
                     </td>
                     <td class="ThanhTien">${tongVND}</td>
+                    <td class="ngayDat">${string1}</td>
+                    <td class="ngayDuuyet">${string2}</td>
                 </tr> `;
             s = "";
             tong = 0;
@@ -1060,6 +1068,8 @@ function quanlydonhang() {
                 <th>Số Điện Thoại</th>
                 <th>Sản Phẩm</th>
                 <th>Thành Tiền</th>
+                <th>Ngày Đặt</th>
+                <th>Chi Tiết</th>
                 <th>Action</th>
             </thead>
             <tbody id="table-chuaXuLy">
@@ -1068,7 +1078,7 @@ function quanlydonhang() {
 
             <tfoot>
                 <tr>
-                    <td colspan="7">
+                    <td colspan="10">
                         <button onclick="duyetHetDonHang();">Duyệt Hết</button>
                     </td>
                 </tr>
@@ -1079,6 +1089,15 @@ function quanlydonhang() {
 
     <div class = "content">
         <h1 id="title-daXuLy">Các Đơn Hàng Đã Xử Lý</h1>
+        <div class="btn">
+            <button onclick = "toanbodonhang();">Toàn bộ</button>
+            <button onclick="donhangtheotg(this)">Lọc</button>
+            <input type="number" class="ngay" placeholder="ngày...">
+            <input type="number" class="thang" placeholder="tháng...">
+            <input type="number" class="nam" placeholder="năm...">
+            <div class="baoloi"></div>
+        </div>
+        
         <table id="quanlydonhang-daXuLy">
             <thead>
                 <th>STT</th>
@@ -1087,6 +1106,9 @@ function quanlydonhang() {
                 <th>Số Điện Thoại</th>
                 <th>Sản Phẩm</th>
                 <th>Thành Tiền</th>
+                <th>Ngày Đặt</th>
+                <th>Ngày Duyệt</th>
+                <th>Chi Tiết</th>
             </thead>
 
             <tbody id="table-daXuLy">
@@ -1116,6 +1138,13 @@ function quanlydonhang() {
                         <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
                         tong += parseInt(a.donhang[i].giohang[j].money);
                     }
+                    var tongVND = new Intl.NumberFormat("VietNam-VN", {
+                        style: "currency",
+                        currency: "VND",
+                    }).format(tong);
+                    var date = new Date(a.donhang[i].gioDat);
+                    var m = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+                        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
                     string = `
                     <tr>
                         <td>${++sttchuaXuLy}</td>
@@ -1125,7 +1154,11 @@ function quanlydonhang() {
                         <td class="SanPham">
                             ${s}
                         </td>
-                        <td class="ThanhTien">${tong}đ</td>
+                        <td class="ThanhTien">${tongVND}</td>
+                        <td class="ngayDat">${m}</td>
+                        <td>
+                            <button onclick="chiTietDonHang(this);">Chi Tiết</button>
+                        </td>
                         <td>
                             <button onclick="duyetDonHang(this);">Duyệt</button>
                         </td>
@@ -1141,6 +1174,16 @@ function quanlydonhang() {
                         <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
                         tong += parseInt(a.donhang[i].giohang[j].money);
                     }
+                    var tongVND = new Intl.NumberFormat("VietNam-VN", {
+                        style: "currency",
+                        currency: "VND",
+                    }).format(tong);
+                    var date = new Date(a.donhang[i].gioDat);
+                    var date2 = new Date(a.donhang[i].gioDuyet);
+                    var m = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+                        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                    var n = date2.getDate() + "-" + (date2.getMonth() + 1) + "-" + date2.getFullYear() + "-" +
+                        date2.getHours() + ":" + date2.getMinutes() + ":" + date2.getSeconds();
                     string = `
                     <tr>
                         <td>${++sttdaXuLy}</td>
@@ -1150,7 +1193,12 @@ function quanlydonhang() {
                         <td class="SanPham">
                             ${s}
                         </td>
-                        <td class="ThanhTien">${tong}đ</td>
+                        <td class="ThanhTien">${tongVND}</td>
+                        <td class="ngayDat">${m}</td>
+                        <td class="ngayDuyet">${n}</td>
+                        <td>
+                            <button onclick="chiTietDonHang(this);">Chi Tiết</button>
+                        </td>
                     </tr>`;
                     document.getElementById("table-daXuLy").innerHTML += string;
                     s = "";
@@ -1161,7 +1209,329 @@ function quanlydonhang() {
     }
 }
 
+function toanbodonhang() {
+    document.querySelector(".ngay").value = "";
+    document.querySelector(".thang").value = "";
+    document.querySelector(".nam").value = "";
+    quanlydonhang();
+}
 
+function ngayThangNam(ngay, thang, nam) {
+    document.getElementById("table-daXuLy").innerHTML = "";
+    var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
+    var string = "";
+    var s = "";
+    var sttdaXuLy = 0;
+    var tong = 0;
+    for (var a of listDonHang) {
+        if (a.donhang.length !== 0) { // có đơn hàng mới hiện
+            for (var i = 0; i < a.donhang.length; i++) {
+                if (a.donhang[i].duocDuyet === true) { // Chưa được duyệt ==> In trong table-chuaXuLy
+                    var date = new Date(a.donhang[i].gioDuyet);
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    if (day == ngay && month == thang && year == nam) {
+                        for (var j = 0; j < a.donhang[i].giohang.length; j++) {
+                            s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span>-
+                            <span class="Mau">(${a.donhang[i].giohang[j].color})</span>-
+                            <span class="Size">(${a.donhang[i].giohang[j].size})</span>-
+                            <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
+                            tong += parseInt(a.donhang[i].giohang[j].money);
+                        }
+                        var tongVND = new Intl.NumberFormat("VietNam-VN", {
+                            style: "currency",
+                            currency: "VND",
+                        }).format(tong);
+                        var date = new Date(a.donhang[i].gioDat);
+                        var date2 = new Date(a.donhang[i].gioDuyet);
+                        var m = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+                            date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                        var n = date2.getDate() + "-" + (date2.getMonth() + 1) + "-" + date2.getFullYear() + "-" +
+                            date2.getHours() + ":" + date2.getMinutes() + ":" + date2.getSeconds();
+                        string = `
+                        <tr>
+                            <td>${++sttdaXuLy}</td>
+                            <td class="maDonHang">${a.donhang[i].madh}</td>
+                            <td class="tenKhachHang">${a.name}</td>
+                            <td class="sdtKhachHang">${a.sdt}</td>
+                            <td class="SanPham">
+                                ${s}
+                            </td>
+                            <td class="ThanhTien">${tongVND}</td>
+                            <td class="ngayDat">${m}</td>
+                            <td class="ngayDuyet">${n}</td>
+                            <td>
+                                <button onclick="chiTietDonHang(this);">Chi Tiết</button>
+                            </td>
+                        </tr>`;
+                        document.getElementById("table-daXuLy").innerHTML += string;
+                        s = "";
+                        tong = 0;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+function thangNam(thang, nam) {
+    document.getElementById("table-daXuLy").innerHTML = "";
+    var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
+    var string = "";
+    var s = "";
+    var sttdaXuLy = 0;
+    var tong = 0;
+    for (var a of listDonHang) {
+        if (a.donhang.length !== 0) { // có đơn hàng mới hiện
+            for (var i = 0; i < a.donhang.length; i++) {
+                if (a.donhang[i].duocDuyet === true) { // Chưa được duyệt ==> In trong table-chuaXuLy
+                    var date = new Date(a.donhang[i].gioDuyet);
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    if (month == thang && year == nam) {
+                        for (var j = 0; j < a.donhang[i].giohang.length; j++) {
+                            s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span>-
+                            <span class="Mau">(${a.donhang[i].giohang[j].color})</span>-
+                            <span class="Size">(${a.donhang[i].giohang[j].size})</span>-
+                            <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
+                            tong += parseInt(a.donhang[i].giohang[j].money);
+                        }
+                        var tongVND = new Intl.NumberFormat("VietNam-VN", {
+                            style: "currency",
+                            currency: "VND",
+                        }).format(tong);
+                        var date = new Date(a.donhang[i].gioDat);
+                        var date2 = new Date(a.donhang[i].gioDuyet);
+                        var m = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+                            date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                        var n = date2.getDate() + "-" + (date2.getMonth() + 1) + "-" + date2.getFullYear() + "-" +
+                            date2.getHours() + ":" + date2.getMinutes() + ":" + date2.getSeconds();
+                        string = `
+                        <tr>
+                            <td>${++sttdaXuLy}</td>
+                            <td class="maDonHang">${a.donhang[i].madh}</td>
+                            <td class="tenKhachHang">${a.name}</td>
+                            <td class="sdtKhachHang">${a.sdt}</td>
+                            <td class="SanPham">
+                                ${s}
+                            </td>
+                            <td class="ThanhTien">${tongVND}</td>
+                            <td class="ngayDat">${m}</td>
+                            <td class="ngayDuyet">${n}</td>
+                            <td>
+                                <button onclick="chiTietDonHang(this);">Chi Tiết</button>
+                            </td>
+                        </tr>`;
+                        document.getElementById("table-daXuLy").innerHTML += string;
+                        s = "";
+                        tong = 0;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+function namXacDinh(nam) {
+    document.getElementById("table-daXuLy").innerHTML = "";
+    var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
+    var string = "";
+    var s = "";
+    var sttdaXuLy = 0;
+    var tong = 0;
+    console.log("1");
+    for (var a of listDonHang) {
+        if (a.donhang.length !== 0) { // có đơn hàng mới hiện
+            for (var i = 0; i < a.donhang.length; i++) {
+                if (a.donhang[i].duocDuyet === true) { // Chưa được duyệt ==> In trong table-chuaXuLy
+                    var date = new Date(a.donhang[i].gioDuyet);
+                    var year = date.getFullYear();
+                    console.log(year, nam);
+                    if (year == nam) {
+                        for (var j = 0; j < a.donhang[i].giohang.length; j++) {
+                            s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span>-
+                            <span class="Mau">(${a.donhang[i].giohang[j].color})</span>-
+                            <span class="Size">(${a.donhang[i].giohang[j].size})</span>-
+                            <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
+                            tong += parseInt(a.donhang[i].giohang[j].money);
+                        }
+                        var tongVND = new Intl.NumberFormat("VietNam-VN", {
+                            style: "currency",
+                            currency: "VND",
+                        }).format(tong);
+                        var date = new Date(a.donhang[i].gioDat);
+                        var date2 = new Date(a.donhang[i].gioDuyet);
+                        var m = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+                            date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                        var n = date2.getDate() + "-" + (date2.getMonth() + 1) + "-" + date2.getFullYear() + "-" +
+                            date2.getHours() + ":" + date2.getMinutes() + ":" + date2.getSeconds();
+                        string = `
+                        <tr>
+                            <td>${++sttdaXuLy}</td>
+                            <td class="maDonHang">${a.donhang[i].madh}</td>
+                            <td class="tenKhachHang">${a.name}</td>
+                            <td class="sdtKhachHang">${a.sdt}</td>
+                            <td class="SanPham">
+                                ${s}
+                            </td>
+                            <td class="ThanhTien">${tongVND}</td>
+                            <td class="ngayDat">${m}</td>
+                            <td class="ngayDuyet">${n}</td>
+                            <td>
+                                <button onclick="chiTietDonHang(this);">Chi Tiết</button>
+                            </td>
+                        </tr>`;
+                        document.getElementById("table-daXuLy").innerHTML += string;
+                        s = "";
+                        tong = 0;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+function donhangtheotg(button) {
+    // Kiểm tra
+    var date = new Date();
+    var namhientai = date.getFullYear();
+    var ngay = button.parentElement.querySelector(".ngay").value;
+    var thang = button.parentElement.querySelector(".thang").value;
+    var nam = button.parentElement.querySelector(".nam").value;
+    var loi = button.parentElement.querySelector(".baoloi");
+
+    if (nam === "" || nam < 2021 || nam > namhientai) {
+        loi.innerText = "Lỗi rồi!";
+        loi.style.color = "red";
+        return;
+    } else {
+        if (thang === "") {
+            loi.innerText = "";
+            loi.style.color = "white";
+            namXacDinh(nam);
+        } else {
+            if (thang < 1 || thang > 12) {
+                loi.innerText = "Lỗi tháng";
+                loi.style.color = "red";
+                return;
+            } else {
+                if (ngay === "") {
+                    loi.innerText = "";
+                    loi.style.color = "white";
+                    thangNam(thang, nam);
+                } else {
+                    if (thang == 4 || thang == 6 || thang == 9 || thang == 11) {
+                        if (ngay < 1 || ngay > 30) {
+                            loi.innerText = "Lỗi ngày";
+                            loi.style.color = "red";
+                        } else {
+
+                            loi.innerText = "";
+                            loi.style.color = "white";
+                            ngayThangNam(ngay, thang, nam);
+                        }
+                    } else {
+                        if (ngay < 1 || ngay > 31) {
+                            loi.innerText = "Lỗi ngày";
+                            loi.style.color = "red";
+                        } else {
+                            loi.innerText = "";
+                            loi.style.color = "white";
+                            ngayThangNam(ngay, thang, nam);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+function dongChiTietDonHang() {
+    document.getElementById("chiTietDonHang").style.display = "none";
+}
+var modalContainer = document.getElementById("main-chiTietDonHang");
+modalContainer.addEventListener('click', function(event) {
+    event.stopPropagation();
+})
+
+function chiTietDonHang(button) {
+    document.getElementById("chiTietDonHang").style.display = "block";
+    var tenKhachHang = button.parentElement.parentElement.querySelector(".tenKhachHang").innerText;
+    var maDonHang = button.parentElement.parentElement.querySelector(".maDonHang").innerText;
+    var email, sdt, ngayDat, ngayDuyet;
+    var listSanPham = [];
+    var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
+    for (const a of listDonHang) {
+        if (a.name === tenKhachHang) {
+            for (const b of a.donhang) {
+                if (b.madh === maDonHang) {
+                    listSanPham = b.giohang;
+                    ngayDat = b.gioDat;
+                    ngayDuyet = b.gioDuyet;
+                }
+            }
+            email = a.email;
+            sdt = a.sdt;
+        }
+    }
+    document.getElementById("InfoKhachHang").querySelector(".ten").innerText = tenKhachHang;
+    document.getElementById("InfoKhachHang").querySelector(".sdt").innerText = sdt;
+    document.getElementById("InfoKhachHang").querySelector(".email").innerText = email;
+    document.getElementById("InfoKhachHang").querySelector(".madh").innerText = maDonHang;
+    var date = new Date(ngayDat);
+    var string = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    document.getElementById("InfoKhachHang").querySelector(".ngayDat").innerText = string;
+    if (ngayDuyet === false) {
+        document.getElementById("InfoKhachHang").querySelector(".ngayDuyet").innerText = "Chờ Duyệt";
+
+    } else {
+        var date = new Date(ngayDuyet);
+        var string = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+            date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        document.getElementById("InfoKhachHang").querySelector(".ngayDuyet").innerText = string;
+
+    }
+
+
+    var s = "";
+    var stt = 0;
+    var tong = 0;
+    for (const a of listSanPham) {
+        var priceVND = new Intl.NumberFormat("VietNam-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(a.price);
+        var moneyVND = new Intl.NumberFormat("VietNam-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(a.money);
+        s +=
+            `<tr>
+                <td>${++stt}</td>
+                <td>${a.nameProduct}</td>
+                <td><img src="${a.img}" alt=""></td>
+                <td>${a.color}</td>
+                <td>${a.size}</td>
+                <td>${a.quantity}</td>
+                <td>${priceVND}</td>
+                <td>${moneyVND}</td>
+            </tr>`;
+        tong += a.money;
+    }
+    document.getElementById("donHangChiTiet").querySelector("tbody").innerHTML = s;
+    var tongVND = new Intl.NumberFormat("VietNam-VN", {
+        style: "currency",
+        currency: "VND",
+    }).format(tong);
+    document.getElementById("donHangChiTiet").querySelector(".tongTienSanPham").innerHTML = tongVND;
+}
 /** Khi bấm duyệt
  * chuyển thuộc tính duocDuyet của đơn hàng =>true => in ra trong table listDonHang daXuLy
  * xóa số đi số lượng sản phẩm trên localStorage: Nike/Adidas/Puma/Converse/Vans , sanPham
@@ -1169,23 +1539,37 @@ function quanlydonhang() {
  */
 function duyetDonHang(button) {
     alert("Duyệt Thành Công!");
-
+    var daBan = localStorage.getItem("daBan") ? JSON.parse(localStorage.getItem("daBan")) : [];
     // Chuyển đơn hàng từ chưa xử lý sang xử lý
     var tenKhachHang = button.parentElement.parentElement.querySelector(".tenKhachHang").innerText;
     var maDonHang = button.parentElement.parentElement.querySelector(".maDonHang").innerText;
     var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
     var listSanPham = [];
+    var date = new Date();
     for (var a of listDonHang) {
         if (a.name === tenKhachHang) {
             for (var i = 0; i < a.donhang.length; i++) {
                 if (a.donhang[i].madh === maDonHang) {
                     a.donhang[i].duocDuyet = true;
                     listSanPham = a.donhang[i].giohang;
+                    a.donhang[i].gioDuyet = date;
+                    for (const b of a.donhang[i].giohang) {
+                        daBan.push({
+                            nameProduct: b.nameProduct,
+                            img: b.img,
+                            price: b.price,
+                            quantity: b.quantity,
+                            money: b.money,
+                            ngayBan: a.donhang[i].gioDuyet,
+                        });
+                    }
                 }
             }
         }
     }
     localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
+    localStorage.setItem("daBan", JSON.stringify(daBan));
+
 
 
 
@@ -1251,19 +1635,700 @@ function duyetDonHang(button) {
     quanlydonhang();
 }
 
+function xoaSanPham(b) {
+    var Nike = JSON.parse(localStorage.getItem("Nike"));
+    var Adidas = JSON.parse(localStorage.getItem("Adidas"));
+    var Puma = JSON.parse(localStorage.getItem("Puma"));
+    var Converse = JSON.parse(localStorage.getItem("Converse"));
+    var Vans = JSON.parse(localStorage.getItem("Vans"));
+    var sanPham = JSON.parse(localStorage.getItem("sanPham"));
+
+
+    for (var i = 0; i < sanPham.length; i++) {
+        for (var j = 0; j < sanPham[i].length; j++) {
+            if (b.nameProduct === sanPham[i][j].name) {
+                if (b.quantity === sanPham[i][j].quantity) { // mua hết số lượng sản phẩm hiện có ==> xóa hết số sản phẩm đó
+                    // Xóa ở các mảng sản phẩm
+                    if (sanPham[i][j].brand === "Nike") {
+                        Nike.splice(j, 1);
+                    } else if (sanPham[i][j].brand === "Adidas") {
+                        Adidas.splice(j, 1);
+                    } else if (sanPham[i][j].brand === "Puma") {
+                        Puma.splice(j, 1);
+                    } else if (sanPham[i][j].brand === "Converse") {
+                        Converse.splice(j, 1);
+                    } else {
+                        Vans.splice(j, 1);
+                    }
+                } else { // mua 1 số lượng của sản phẩm ==> cập nhật lại số lượng sản phẩm
+
+                    if (sanPham[i][j].brand === "Nike") {
+                        Nike[j].quantity -= b.quantity;
+
+                    } else if (sanPham[i][j].brand === "Adidas") {
+                        Adidas[j].quantity -= b.quantity;
+
+                    } else if (sanPham[i][j].brand === "Puma") {
+                        Puma[j].quantity -= b.quantity;
+
+                    } else if (sanPham[i][j].brand === "Converse") {
+                        Converse[j].quantity -= b.quantity;
+
+                    } else {
+                        Vans[j].quantity -= b.quantity;
+
+                    }
+                }
+
+            }
+        }
+    }
+
+    sanPham = [Adidas, Nike, Puma, Converse, Vans];
+    localStorage.setItem("Nike", JSON.stringify(Nike));
+    localStorage.setItem("Adidas", JSON.stringify(Adidas));
+    localStorage.setItem("Puma", JSON.stringify(Puma));
+    localStorage.setItem("Converse", JSON.stringify(Converse));
+    localStorage.setItem("Vans", JSON.stringify(Vans));
+    localStorage.setItem("sanPham", JSON.stringify(sanPham));
+}
 
 function duyetHetDonHang() {
     alert("Đã Duyệt Hết!");
+    var date = new Date();
+    var daBan = localStorage.getItem("daBan") ? JSON.parse(localStorage.getItem("daBan")) : [];
     var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
+
     for (var a of listDonHang) {
         if (a.donhang.length !== 0) {
             for (var i = 0; i < a.donhang.length; i++) {
                 if (a.donhang[i].duocDuyet === false) {
                     a.donhang[i].duocDuyet = true;
+                    a.donhang[i].gioDuyet = date;
+                    for (const b of a.donhang[i].giohang) {
+                        daBan.push({
+                            nameProduct: b.nameProduct,
+                            img: b.img,
+                            price: b.price,
+                            quantity: b.quantity,
+                            money: b.money,
+                            ngayBan: date,
+                        });
+                        xoaSanPham(b);
+                    }
+
+
                 }
             }
         }
     }
     localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
+    localStorage.setItem("daBan", JSON.stringify(daBan));
+
     quanlydonhang();
+}
+
+
+
+
+function thongkekinhdoanh() {
+    document.getElementById("container").innerHTML =
+        `
+        <div id="thongkekinhdoanh">
+        <h1 id="title">Thống kê kinh doanh</h1>
+        <div class="selector-thongke">
+            <button id="toanbo-active" class="toanbo" onclick="choose(this);">Toàn bộ</button>
+            <button id="loc-active" class="loc" onclick="choose(this);">Lọc</button>
+            <input type="number" id="ngay-check" class="ngay" placeholder="ngày...">
+            <input type="number" id="thang-check" class="thang" placeholder="tháng...">
+            <input type="number" id="nam-check" class="nam" placeholder="năm...">
+            <div class="baoloi"></div>
+        </div>
+        <div class="selector-sanpham">
+            <button onclick="thongke(this);">Toàn Bộ Sản Phẩm</button>
+            <button onclick="thongke(this)">Adidas</button>
+            <button onclick="thongke(this)">Nike</button>
+            <button onclick="thongke(this)">Puma</button>
+            <button onclick="thongke(this)">Converse</button>
+            <button onclick="thongke(this)">Vans</button>
+        </div>
+        <div id="content">
+            <table id="table-thongke">
+                <caption>Nike</caption>
+                <thead>
+
+                </thead>
+                <tbody>
+
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    `;
+}
+
+function choose(button) {
+    var loi = button.parentElement.querySelector(".baoloi");
+    if (button.classList.contains("toanbo")) {
+        loi.innerText = "";
+        loi.style.color = "white";
+        var arr = button.parentElement.querySelectorAll("button");
+        for (const a of arr) {
+            a.classList.remove("active");
+        }
+        button.classList.add("active");
+        document.querySelector(".selector-sanpham").style.display = "block";
+    } else if (button.classList.contains("loc")) {
+        var date = new Date();
+        var namhientai = date.getFullYear();
+        var ngay = button.parentElement.querySelector(".ngay").value;
+        var thang = button.parentElement.querySelector(".thang").value;
+        var nam = button.parentElement.querySelector(".nam").value;
+
+
+        if (nam === "" || nam < 2021 || nam > namhientai) {
+            loi.innerText = "Lỗi rồi!";
+            loi.style.color = "red";
+            document.querySelector(".selector-sanpham").style.display = "none";
+            return;
+
+        } else {
+            if (thang === "") {
+                loi.innerText = "";
+                loi.style.color = "white";
+                // namXacDinh(nam);
+
+                var arr = button.parentElement.querySelectorAll("button");
+                for (const a of arr) {
+                    a.classList.remove("active");
+                }
+                button.classList.add("active");
+                document.querySelector(".selector-sanpham").style.display = "block";
+            } else {
+                if (thang < 1 || thang > 12) {
+                    loi.innerText = "Lỗi tháng";
+                    loi.style.color = "red";
+                    document.querySelector(".selector-sanpham").style.display = "none";
+                    return;
+                } else {
+                    if (ngay === "") {
+                        loi.innerText = "";
+                        loi.style.color = "white";
+                        // thangNam(thang, nam);
+
+                        var arr = button.parentElement.querySelectorAll("button");
+                        for (const a of arr) {
+                            a.classList.remove("active");
+                        }
+                        button.classList.add("active");
+                        document.querySelector(".selector-sanpham").style.display = "block";
+                    } else {
+                        if (thang == 4 || thang == 6 || thang == 9 || thang == 11) {
+                            if (ngay < 1 || ngay > 30) {
+                                loi.innerText = "Lỗi ngày";
+                                loi.style.color = "red";
+                                document.querySelector(".selector-sanpham").style.display = "none";
+                                return
+                            } else {
+
+                                loi.innerText = "";
+                                loi.style.color = "white";
+                                // ngayThangNam(ngay, thang, nam);
+
+                                var arr = button.parentElement.querySelectorAll("button");
+                                for (const a of arr) {
+                                    a.classList.remove("active");
+                                }
+                                button.classList.add("active");
+                                document.querySelector(".selector-sanpham").style.display = "block";
+                            }
+                        } else {
+                            if (ngay < 1 || ngay > 31) {
+                                loi.innerText = "Lỗi ngày";
+                                loi.style.color = "red";
+                                document.querySelector(".selector-sanpham").style.display = "none";
+                                return
+                            } else {
+                                loi.innerText = "";
+                                loi.style.color = "white";
+                                // ngayThangNam(ngay, thang, nam);
+
+
+                                var arr = button.parentElement.querySelectorAll("button");
+                                for (const a of arr) {
+                                    a.classList.remove("active");
+                                }
+                                button.classList.add("active");
+                                document.querySelector(".selector-sanpham").style.display = "block";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+function ktSanPham(nameProduct) {
+    var listSanPham = JSON.parse(localStorage.getItem("sanPham"));
+    for (const a of listSanPham) {
+        for (const b of a) {
+            if (b.name === nameProduct)
+                return b.brand;
+        }
+    }
+    return false;
+}
+
+
+function daBanToanBo(choose) {
+    var daBan = JSON.parse(localStorage.getItem("daBan"));
+    console.log("đã bán", daBan);
+    var arr = [];
+    for (const b of daBan) {
+        if (ktSanPham(b.nameProduct) === choose) {
+            if (arr.length === 0) {
+                arr.push({
+                    nameProduct: b.nameProduct,
+                    img: b.img,
+                    price: b.price,
+                    quantity: b.quantity,
+                    money: b.money,
+                });
+            } else {
+                var check = false;
+                var pos;
+                for (var index = 0; index < arr.length; index++) {
+                    if (b.nameProduct === arr[index].nameProduct) {
+                        check = true;
+                        pos = index;
+                        break;
+                    }
+                }
+                if (check) {
+                    arr[pos].quantity += b.quantity;
+                    arr[pos].money = arr[pos].price * arr[pos].quantity;
+                } else {
+                    arr.push({
+                        nameProduct: b.nameProduct,
+                        img: b.img,
+                        price: b.price,
+                        quantity: b.quantity,
+                        money: b.money,
+                    });
+                }
+            }
+
+        } else {
+            if (choose === "Toàn Bộ Sản Phẩm") {
+                if (arr.length === 0) {
+                    arr.push({
+                        nameProduct: b.nameProduct,
+                        img: b.img,
+                        price: b.price,
+                        quantity: b.quantity,
+                        money: b.money,
+                    });
+                } else {
+                    var check = false;
+                    var pos;
+                    for (var index = 0; index < arr.length; index++) {
+                        if (b.nameProduct === arr[index].nameProduct) {
+                            check = true;
+                            pos = index;
+                            break;
+                        }
+                    }
+                    if (check) {
+                        arr[pos].quantity += b.quantity;
+                        arr[pos].money = arr[pos].price * arr[pos].quantity;
+                    } else {
+                        arr.push({
+                            nameProduct: b.nameProduct,
+                            img: b.img,
+                            price: b.price,
+                            quantity: b.quantity,
+                            money: b.money,
+                        });
+                    }
+                }
+            }
+        }
+
+    }
+    console.log("arr", arr);
+    return arr;
+}
+
+function daBanLocNam(choose, nam) {
+    var daBan = JSON.parse(localStorage.getItem("daBan"));
+    console.log("đã bán", daBan);
+    var arr = [];
+    for (const b of daBan) {
+        var date = new Date(b.ngayBan);
+        var year = date.getFullYear();
+        if (ktSanPham(b.nameProduct) === choose && year == nam) {
+            if (arr.length === 0) {
+                arr.push({
+                    nameProduct: b.nameProduct,
+                    img: b.img,
+                    price: b.price,
+                    quantity: b.quantity,
+                    money: b.money,
+                });
+            } else {
+                var check = false;
+                var pos;
+                for (var index = 0; index < arr.length; index++) {
+                    if (b.nameProduct === arr[index].nameProduct) {
+                        check = true;
+                        pos = index;
+                        break;
+                    }
+                }
+                if (check) {
+                    arr[pos].quantity += b.quantity;
+                    arr[pos].money = arr[pos].price * arr[pos].quantity;
+                } else {
+                    arr.push({
+                        nameProduct: b.nameProduct,
+                        img: b.img,
+                        price: b.price,
+                        quantity: b.quantity,
+                        money: b.money,
+                    });
+                }
+            }
+
+        } else {
+            if (choose === "Toàn Bộ Sản Phẩm" && year == nam) {
+                if (arr.length === 0) {
+                    arr.push({
+                        nameProduct: b.nameProduct,
+                        img: b.img,
+                        price: b.price,
+                        quantity: b.quantity,
+                        money: b.money,
+                    });
+                } else {
+                    var check = false;
+                    var pos;
+                    for (var index = 0; index < arr.length; index++) {
+                        if (b.nameProduct === arr[index].nameProduct) {
+                            check = true;
+                            pos = index;
+                            break;
+                        }
+                    }
+                    if (check) {
+                        arr[pos].quantity += b.quantity;
+                        arr[pos].money = arr[pos].price * arr[pos].quantity;
+                    } else {
+                        arr.push({
+                            nameProduct: b.nameProduct,
+                            img: b.img,
+                            price: b.price,
+                            quantity: b.quantity,
+                            money: b.money,
+                        });
+                    }
+                }
+            }
+        }
+
+    }
+    console.log("arr", arr);
+    return arr;
+}
+
+function daBanLocThangNam(choose, thang, nam) {
+    var daBan = JSON.parse(localStorage.getItem("daBan"));
+    console.log("đã bán", daBan);
+    var arr = [];
+    for (const b of daBan) {
+        var date = new Date(b.ngayBan);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        if (ktSanPham(b.nameProduct) === choose && year == nam && month == thang) {
+            if (arr.length === 0) {
+                arr.push({
+                    nameProduct: b.nameProduct,
+                    img: b.img,
+                    price: b.price,
+                    quantity: b.quantity,
+                    money: b.money,
+                });
+            } else {
+                var check = false;
+                var pos;
+                for (var index = 0; index < arr.length; index++) {
+                    if (b.nameProduct === arr[index].nameProduct) {
+                        check = true;
+                        pos = index;
+                        break;
+                    }
+                }
+                if (check) {
+                    arr[pos].quantity += b.quantity;
+                    arr[pos].money = arr[pos].price * arr[pos].quantity;
+                } else {
+                    arr.push({
+                        nameProduct: b.nameProduct,
+                        img: b.img,
+                        price: b.price,
+                        quantity: b.quantity,
+                        money: b.money,
+                    });
+                }
+            }
+
+        } else {
+            if (choose === "Toàn Bộ Sản Phẩm" && year == nam && month == thang) {
+                if (arr.length === 0) {
+                    arr.push({
+                        nameProduct: b.nameProduct,
+                        img: b.img,
+                        price: b.price,
+                        quantity: b.quantity,
+                        money: b.money,
+                    });
+                } else {
+                    var check = false;
+                    var pos;
+                    for (var index = 0; index < arr.length; index++) {
+                        if (b.nameProduct === arr[index].nameProduct) {
+                            check = true;
+                            pos = index;
+                            break;
+                        }
+                    }
+                    if (check) {
+                        arr[pos].quantity += b.quantity;
+                        arr[pos].money = arr[pos].price * arr[pos].quantity;
+                    } else {
+                        arr.push({
+                            nameProduct: b.nameProduct,
+                            img: b.img,
+                            price: b.price,
+                            quantity: b.quantity,
+                            money: b.money,
+                        });
+                    }
+                }
+            }
+        }
+
+    }
+    console.log("arr", arr);
+    return arr;
+}
+
+function daBanLocNgayThangNam(choose, ngay, thang, nam) {
+    var daBan = JSON.parse(localStorage.getItem("daBan"));
+    var arr = [];
+    for (const b of daBan) {
+        var date = new Date(b.ngayBan);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        if (ktSanPham(b.nameProduct) === choose && year == nam && month == thang && day == ngay) {
+            if (arr.length === 0) {
+                arr.push({
+                    nameProduct: b.nameProduct,
+                    img: b.img,
+                    price: b.price,
+                    quantity: b.quantity,
+                    money: b.money,
+                });
+            } else {
+                var check = false;
+                var pos;
+                for (var index = 0; index < arr.length; index++) {
+                    if (b.nameProduct === arr[index].nameProduct) {
+                        check = true;
+                        pos = index;
+                        break;
+                    }
+                }
+                if (check) {
+                    arr[pos].quantity += b.quantity;
+                    arr[pos].money = arr[pos].price * arr[pos].quantity;
+                } else {
+                    arr.push({
+                        nameProduct: b.nameProduct,
+                        img: b.img,
+                        price: b.price,
+                        quantity: b.quantity,
+                        money: b.money,
+                    });
+                }
+            }
+
+        } else {
+            if (choose === "Toàn Bộ Sản Phẩm" && year == nam && month == thang && day == ngay) {
+                if (arr.length === 0) {
+                    arr.push({
+                        nameProduct: b.nameProduct,
+                        img: b.img,
+                        price: b.price,
+                        quantity: b.quantity,
+                        money: b.money,
+                    });
+                } else {
+                    var check = false;
+                    var pos;
+                    for (var index = 0; index < arr.length; index++) {
+                        if (b.nameProduct === arr[index].nameProduct) {
+                            check = true;
+                            pos = index;
+                            break;
+                        }
+                    }
+                    if (check) {
+                        arr[pos].quantity += b.quantity;
+                        arr[pos].money = arr[pos].price * arr[pos].quantity;
+                    } else {
+                        arr.push({
+                            nameProduct: b.nameProduct,
+                            img: b.img,
+                            price: b.price,
+                            quantity: b.quantity,
+                            money: b.money,
+                        });
+                    }
+                }
+            }
+        }
+
+    }
+    console.log("arr", arr);
+    return arr;
+}
+
+function thongke(button) {
+    var toanbo = document.getElementById("toanbo-active");
+    if (button.innerText === "Adidas") {
+        var choose = "Adidas";
+    } else if (button.innerText === "Nike") {
+        var choose = "Nike";
+    } else if (button.innerText === "Puma") {
+        var choose = "Puma";
+    } else if (button.innerText === "Converse") {
+        var choose = "Converse";
+    } else if (button.innerText === "Vans") {
+        var choose = "Vans";
+    } else {
+        var choose = "Toàn Bộ Sản Phẩm";
+    }
+    console.log(choose);
+    var stt = 0;
+    var s = "";
+    var priceVND, moneyVND;
+    var tong = 0;
+    if (toanbo.classList.contains("active")) {
+        document.getElementById("table-thongke").style.display = "table";
+        document.getElementById("table-thongke").querySelector("thead").innerHTML =
+            `<tr>
+            <th>STT</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Hình Sản Phẩm</th>
+            <th>Giá Hiện tại</th>
+            <th>Bán Được</th>
+            <th>Thu Được</th>
+        </tr>`;
+        var arr = daBanToanBo(choose);
+
+        for (const a of arr) {
+            var priceVND = new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format(a.price);
+            var moneyVND = new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format(a.money);
+            s += `
+            <tr>
+                <td>${++stt}</td>
+                <td>${a.nameProduct}</td>
+                <td><img src="${a.img}" alt=""></td>
+                <td>${priceVND}</td>
+                <td>${a.quantity}</td>
+                <td>${moneyVND}</td>
+            </tr>
+            `
+            tong += a.money;
+        }
+        var tongVND = new Intl.NumberFormat("VietNam-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(tong);
+        document.getElementById("table-thongke").querySelector("tbody").innerHTML = s;
+        document.getElementById("table-thongke").querySelector("tfoot").innerHTML =
+            `<tr>
+                <th colspan="6">Tổng Thu từ ${choose}: ${tongVND}</th>
+            </tr>`;
+        document.getElementById("table-thongke").querySelector("caption").innerText = choose;
+    } else {
+        document.getElementById("table-thongke").style.display = "table";
+        document.getElementById("table-thongke").querySelector("thead").innerHTML =
+            `<tr>
+            <th>STT</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Hình Sản Phẩm</th>
+            <th>Giá Hiện tại</th>
+            <th>Bán Được</th>
+            <th>Thu Được</th>
+        </tr>`;
+        var ngay = document.getElementById("ngay-check").value;
+        var thang = document.getElementById("thang-check").value;
+        var nam = document.getElementById("nam-check").value;
+        if (ngay === "" && thang === "") {
+            var arr = daBanLocNam(choose, nam);
+
+        } else if (ngay === "") {
+            var arr = daBanLocThangNam(choose, thang, nam);
+
+        } else if (ngay !== "" && thang !== "" && nam !== "") {
+            var arr = daBanLocNgayThangNam(choose, ngay, thang, nam);
+
+        }
+
+
+        for (const a of arr) {
+            var priceVND = new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format(a.price);
+            var moneyVND = new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format(a.money);
+            s += `
+            <tr>
+                <td>${++stt}</td>
+                <td>${a.nameProduct}</td>
+                <td><img src="${a.img}" alt=""></td>
+                <td>${priceVND}</td>
+                <td>${a.quantity}</td>
+                <td>${moneyVND}</td>
+            </tr>
+            `
+            tong += a.money;
+        }
+        var tongVND = new Intl.NumberFormat("VietNam-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(tong);
+        document.getElementById("table-thongke").querySelector("tbody").innerHTML = s;
+        document.getElementById("table-thongke").querySelector("tfoot").innerHTML =
+            `<tr>
+                <th colspan="6">Tổng Thu từ ${choose}: ${tongVND}</th>
+            </tr>`;
+        document.getElementById("table-thongke").querySelector("caption").innerText = choose;
+    }
+
 }

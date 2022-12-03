@@ -1491,7 +1491,7 @@ function muaHang(button) {
 
     }
 
-
+    var date = new Date();
     // Thêm vào listDonHang
     var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
     for (var a of listDonHang) {
@@ -1500,6 +1500,8 @@ function muaHang(button) {
                 madh: `${hoten}-${so}`,
                 duocDuyet: false,
                 giohang: gioHang,
+                gioDat: date,
+                gioDuyet: false,
             })
         }
     }
@@ -1541,6 +1543,9 @@ function inDonHang() {
             style: "currency",
             currency: "VND",
         }).format(tong);
+        var date = new Date(arr[i].gioDat);
+        var string = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "-" +
+            date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         document.getElementById("order-body").innerHTML += `
             <tr>
                 <td class="sott">${++stt}</td>
@@ -1549,6 +1554,7 @@ function inDonHang() {
                     ${s}
                 </td>
                 <td id="tongtien">${tongVND}</td>
+                <td id="ngayDat">${string}</td>
                 <td>${xuLy}</td>
                 <td>${btn}</td>
             </tr>`

@@ -68,11 +68,74 @@
 
 
         <div id="container">
+            <div id="thongkekinhdoanh">
 
+            </div>
 
 
 
         </div>
+
+        <div id="chiTietDonHang" onclick="dongChiTietDonHang();">
+            <div id="main-chiTietDonHang">
+                <h2 id="title">Chi Tiết Đơn Hàng</h2>
+                <i class="fas fa-times" onclick="dongChiTietDonHang();"></i>
+                <div id="InfoKhachHang">
+                    <table id="info">
+                        <thead>
+                            <tr>
+                                <th>Tên Khách Hàng</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Email</th>
+                                <th>Mã Đơn Hàng</th>
+                                <th>Ngày Đặt</th>
+                                <th>Ngày Duyệt</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ten"></td>
+                                <td class="sdt"></td>
+                                <td class="email"></td>
+                                <td class="madh"></td>
+                                <td class="ngayDat"></td>
+                                <td class="ngayDuyet"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div id="thongTinDonHang">
+                    <table id="donHangChiTiet">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Hình Sản Phẩm</th>
+                                <th>Màu Sản Phẩm</th>
+                                <th>Size Sản Phẩm</th>
+                                <th>Số Lượng</th>
+                                <th>Giá</th>
+                                <th>Thành Tiền</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="8" class="tongTienSanPham">Tổng Tiền</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
 
         <div id="thongTinKhachHang" onclick="dongThongTin();">
             <div id="main-thongtin">
@@ -103,6 +166,9 @@
                                 <th>Mã Đơn Hàng</th>
                                 <th>Sản Phẩm</th>
                                 <th>Tổng Tiền</th>
+                                <th>Ngày Đặt</th>
+                                <th>Ngày Duyệt</th>
+
                             </tr>
 
                         </thead>
