@@ -722,7 +722,7 @@ function deletesp(button) {
 
         </select>
     `;
-    document.getElementById("thongtin").innerHTML = s;
+    document.getElementById("thongtin-xoa").innerHTML = s;
     s = "";
     for (let index = 1; index <= soluong; index++) {
         s += `<option value="${index}">${index}</option>`
@@ -742,8 +742,8 @@ function closeDelete() {
 function thietlapDelete() {
     var soluong = parseInt(document.getElementById("chon").value);
     var max = parseInt(document.getElementById("chon").lastElementChild.innerText);
-    var brand = document.getElementById("thongtin").querySelector(".hang").innerText;
-    var productId = document.getElementById("thongtin").querySelector(".ma").innerText;
+    var brand = document.getElementById("thongtin-xoa").querySelector(".hang").innerText;
+    var productId = document.getElementById("thongtin-xoa").querySelector(".ma").innerText;
 
     var sanPham = JSON.parse(localStorage.getItem("sanPham"));
     var Nike = JSON.parse(localStorage.getItem("Nike"));
@@ -819,6 +819,10 @@ function closeAdd() {
     document.getElementById("form-add").querySelector(".slsp").value = "";
     document.getElementById("form-add").querySelector(".giasp").value = "";
     document.getElementById("form-add").querySelector(".motasp").value = "";
+    var arr = document.getElementById("form-add").querySelectorAll(".error");
+    for (const a of arr) {
+        a.innerHTML = "";
+    }
     var color = document.getElementById("form-add").querySelector(".color").querySelectorAll("li");
     var size = document.getElementById("form-add").querySelector(".size").querySelectorAll("li");
     for (const a of color) {
@@ -1754,7 +1758,7 @@ function thongkekinhdoanh() {
         </div>
         <div id="content">
             <table id="table-thongke">
-                <caption>Nike</caption>
+                <caption></caption>
                 <thead>
 
                 </thead>
@@ -1885,8 +1889,10 @@ function ktSanPham(nameProduct) {
 
 
 function daBanToanBo(choose) {
-    var daBan = JSON.parse(localStorage.getItem("daBan"));
-    console.log("đã bán", daBan);
+    var daBan = localStorage.getItem("daBan") ? JSON.parse(localStorage.getItem("daBan")) : [];
+    if (daBan.length === 0) {
+        return false;
+    }
     var arr = [];
     for (const b of daBan) {
         if (ktSanPham(b.nameProduct) === choose) {
@@ -1964,8 +1970,10 @@ function daBanToanBo(choose) {
 }
 
 function daBanLocNam(choose, nam) {
-    var daBan = JSON.parse(localStorage.getItem("daBan"));
-    console.log("đã bán", daBan);
+    var daBan = localStorage.getItem("daBan") ? JSON.parse(localStorage.getItem("daBan")) : [];
+    if (daBan.length === 0) {
+        return false;
+    }
     var arr = [];
     for (const b of daBan) {
         var date = new Date(b.ngayBan);
@@ -2045,8 +2053,10 @@ function daBanLocNam(choose, nam) {
 }
 
 function daBanLocThangNam(choose, thang, nam) {
-    var daBan = JSON.parse(localStorage.getItem("daBan"));
-    console.log("đã bán", daBan);
+    var daBan = localStorage.getItem("daBan") ? JSON.parse(localStorage.getItem("daBan")) : [];
+    if (daBan.length === 0) {
+        return false;
+    }
     var arr = [];
     for (const b of daBan) {
         var date = new Date(b.ngayBan);
@@ -2127,7 +2137,10 @@ function daBanLocThangNam(choose, thang, nam) {
 }
 
 function daBanLocNgayThangNam(choose, ngay, thang, nam) {
-    var daBan = JSON.parse(localStorage.getItem("daBan"));
+    var daBan = localStorage.getItem("daBan") ? JSON.parse(localStorage.getItem("daBan")) : [];
+    if (daBan.length === 0) {
+        return false;
+    }
     var arr = [];
     for (const b of daBan) {
         var date = new Date(b.ngayBan);
@@ -2240,7 +2253,10 @@ function thongke(button) {
             <th>Thu Được</th>
         </tr>`;
         var arr = daBanToanBo(choose);
-
+        if (arr === false) {
+            document.getElementById("table-thongke").querySelector("caption").innerText = "Không có dữ liệu";
+            return;
+        }
         for (const a of arr) {
             var priceVND = new Intl.NumberFormat("VietNam-VN", {
                 style: "currency",
@@ -2288,12 +2304,24 @@ function thongke(button) {
         var nam = document.getElementById("nam-check").value;
         if (ngay === "" && thang === "") {
             var arr = daBanLocNam(choose, nam);
+            if (arr === false) {
+                document.getElementById("table-thongke").querySelector("caption").innerText = "Không có dữ liệu";
+                return;
+            }
 
         } else if (ngay === "") {
             var arr = daBanLocThangNam(choose, thang, nam);
+            if (arr === false) {
+                document.getElementById("table-thongke").querySelector("caption").innerText = "Không có dữ liệu";
+                return;
+            }
 
         } else if (ngay !== "" && thang !== "" && nam !== "") {
             var arr = daBanLocNgayThangNam(choose, ngay, thang, nam);
+            if (arr === false) {
+                document.getElementById("table-thongke").querySelector("caption").innerText = "Không có dữ liệu";
+                return;
+            }
 
         }
 

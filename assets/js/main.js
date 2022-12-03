@@ -10,12 +10,11 @@ function giay(productId, brand, img, name, size, color, price, quantity, detail)
     this.price = price;
     this.quantity = quantity;
     this.detail = detail;
-    // this.rating = rating;
 }
 var colorArray = ['Trắng', 'Đen', 'Đỏ', 'Xanh Dương', 'Xanh Lam', 'Xanh Lá', 'Hồng', 'Cam', 'Vàng', 'Xám'];
 var sizeArray = [35, 36, 37, 38, 39, 40, 41, 42, 43];
 var Adidas = [
-    new giay("A01", "Adidas", "/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png", "Adidas Ultraboost GX5928 Women", [35, 36, 37, 38, 39], ['Trắng', 'Đen', 'Đỏ'], 5200000, 10,
+    new giay("A01", "Adidas", "/assets/img/Adidas/Adidas Ultraboost GX5928 Women.png", "Adidas Ultraboost GX5928 Women", [35, 36, 37, 38, 39], ['Trắng', 'Đen'], 5200000, 10,
         `Giày Adidas Ultraboost 22 W Gx5928 có độ bền và độ dẻo cao, nhẹ, khả năng chịu lực tốt nhờ chất liệu vải dệt.
 	Với công nghệ Adidas Primeknit, giày Adidas vừa ôm sát chân vừa hoàn trả năng lượng tốt trong từng bước chạy.
 	Đế giày làm bằng chất liệu cao su bền với nhiệt, bên cạnh đó còn gia tăng khả năng chống trượt bám chặt trên mọi địa hình.
@@ -29,7 +28,7 @@ var Adidas = [
 	Giày Adidas ULTRABOOST 21 C.RDY FZ2558 sử dụng công nghệ Primegreen thân thiện với môi trường`
     ),
 
-    new giay("A03", "Adidas", "/assets/img/Adidas/Unisex Adidas Ultraboost GY4173.jpeg", "Unisex Adidas Ultraboost GY4173", [38, 39, 42, 43], ['Trắng', 'Đen'], 5000000, 10,
+    new giay("A03", "Adidas", "/assets/img/Adidas/Unisex Adidas Ultraboost GY4173.jpg", "Unisex Adidas Ultraboost GY4173", [38, 39, 42, 43], ['Trắng', 'Đen'], 5000000, 10,
         `Giày Adidas Ultraboost Web DNA GY4173 được làm từ chất liệu vải dệt Primeknit đảm bảo tính thoải mái, độ linh hoạt 
 	mà vẫn nhẹ chân, đem tới cảm giác êm ái cho từng bộ phận trên bàn chân
 	Mẫu giày Adidas sử dụng công nghệ Primeblue hỗ trợ giảm thiểu rác thải đại dương, góp phần bảo vệ môi trường

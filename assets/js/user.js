@@ -1,8 +1,7 @@
-//Tài Khoản Admin---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------Tài Khoản Admin----------------------------------------------------
 var adminTk = "admin";
 var adminMk = "1111";
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------Tài Khoản Admin----------------------------------------------------
 ({
     plugin: ["jsdom-quokka-plugin"],
     jsdom: {
@@ -766,25 +765,32 @@ function renderProduct(mang, num) {
         else
             array.push(0);
     }
+    console.log("array", array);
+    console.log("array", num);
     var s = "";
-    for (var i = 0; i < array[num - 1].length; i++) {
-        var price = new Intl.NumberFormat("VietNam-VN", {
-            style: "currency",
-            currency: "VND",
-        }).format((array[num - 1][i]).price); // Format VNĐ
-        s += `<li onclick = "chiTietSP(array[${num-1}][${i}])">
-                        <div class="product-item">
-                            <img src="${array[num-1][i].img}" alt=""
-                                class="product-img">
-                            <div class="product-info" align="center">
-                                <a href="" class="product-name">${array[num-1][i].name}</a>
-                                <br>
-                                <div class="product-price">${price}</div>
+    if (array.length === 0) {
+        document.querySelector(".product").innerHTML = s;
+    } else {
+        for (var i = 0; i < array[num - 1].length; i++) {
+            var price = new Intl.NumberFormat("VietNam-VN", {
+                style: "currency",
+                currency: "VND",
+            }).format((array[num - 1][i]).price); // Format VNĐ
+            s += `<li onclick = "chiTietSP(array[${num-1}][${i}])">
+                            <div class="product-item">
+                                <img src="${array[num-1][i].img}" alt=""
+                                    class="product-img">
+                                <div class="product-info" align="center">
+                                    <a href="" class="product-name">${array[num-1][i].name}</a>
+                                    <br>
+                                    <div class="product-price">${price}</div>
+                                </div>
                             </div>
-                        </div>
-                    </li>`;
+                        </li>`;
+        }
+        document.querySelector(".product").innerHTML = s;
     }
-    document.querySelector(".product").innerHTML = s;
+
 }
 
 function chiTietSP(arr) {
