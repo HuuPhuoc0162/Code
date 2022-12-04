@@ -107,23 +107,7 @@
                 <div id="order">
                     <i class="far fa-bell"></i>
                     <a href="#" onclick="showOrder();">Đơn Hàng</a>
-                    <div id="main-order">
-                        <table id="order-table">
-                            <thead>
-                                <th>STT</th>
-                                <th>Mã Đơn Hàng</th>
-                                <th>Sản Phẩm</th>
-                                <th>Thành Tiền</th>
-                                <th>Ngày Đặt</th>
-                                <th>Trạng Thái</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody id="order-body">
 
-
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
 
                 <div id="user" onclick="showInfo();">
@@ -232,8 +216,70 @@
         </div>
 
 
+        <!-- Chi Tiết Đơn Hàng -->
 
 
+
+
+        <div id="chiTietDonHang" onclick="dongChiTietDH();">
+            <div id="main-chiTietDH">
+                <h2 id="title">Chi Tiết Đơn Hàng</h2>
+                <i class="fas fa-times" onclick="dongChiTietDH();"></i>
+                <div id="InfoKhachHang-user">
+                    <table id="info-user">
+                        <thead>
+                            <tr>
+                                <th>Tên Khách Hàng</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Email</th>
+                                <th>Mã Đơn Hàng</th>
+                                <th>Ngày Đặt</th>
+                                <th>Ngày Duyệt</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ten-user"></td>
+                                <td class="sdt-user"></td>
+                                <td class="email-user"></td>
+                                <td class="madh-user"></td>
+                                <td class="ngayDat-user"></td>
+                                <td class="ngayDuyet-user"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div id="thongTinDonHang-user">
+                    <table id="donHangChiTiet-user">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Hình Sản Phẩm</th>
+                                <th>Màu Sản Phẩm</th>
+                                <th>Size Sản Phẩm</th>
+                                <th>Số Lượng</th>
+                                <th>Giá</th>
+                                <th>Thành Tiền</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="8" class="tongTienSanPham-user">Tổng Tiền</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
         <!-- Chi tiết sản phẩm -->
         <div id="chiTietSP" onclick="dongChiTietSP();">
             <div id="main-chiTiet">
@@ -245,6 +291,7 @@
                         <div id="title">
                             <div id="favourite">Yêu Thích</div>
                             <h3 id="name" class="tenSP"></h3>
+                            <h3 id="name" class="hangSP" style="display: none;"></h3>
                         </div>
                         <div id="sub-title">
                             <div id="rate">
@@ -313,32 +360,29 @@
 
 
         <div class="container">
-
-            <!--	 Nội dung		 -->
             <div class="all-content">
-                <!--	 Trang chủ		 -->
                 <div class="content">
+
+
                     <div class="slider">
-                        <!--	 Banner		 -->
+
                         <div class="slide active">
                             <img src="/assets/img/Slider/Nike.png" alt="">
                         </div>
                         <div class="slide">
                             <img src="/assets/img/Slider/Adidas.png" alt="">
                         </div>
-                        <!--	 End---Banner---End		 -->
-                        <!--	 Phím trái phải		 -->
+
                         <div class="left-right">
                             <i class="fa-solid fa-chevron-left prev"></i>
                             <i class="fa-solid fa-chevron-right next"></i>
                         </div>
-                        <!--	 End---Phím trái phải---End		 -->
-                        <!--	 Vị trí trang banner		 -->
+
                         <div class="slide-mark">
                             <div class="slide-icon active"></div>
                             <div class="slide-icon"></div>
                         </div>
-                        <!--	End--- Vị trí trang banner---End		 -->
+
                     </div>
                     <div class="information">
                         <li>
